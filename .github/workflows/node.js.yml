@@ -21,6 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
       - run: chrome --version
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
