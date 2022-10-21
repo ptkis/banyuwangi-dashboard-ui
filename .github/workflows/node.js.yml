@@ -20,13 +20,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - run: chrome --version
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      #    - run: npm ci
+      - run: npm ci
       - run: npm install
       - run: npm run lint
-      - run: npm run test
       - run: npm run build --if-present
-#    - run: npm test
+      - run: npm run test:ci
+        env:
+          CHROME_BIN: "chrome"
+      - run: npm run e2e:ci
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
