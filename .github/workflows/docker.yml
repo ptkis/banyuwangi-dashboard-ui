@@ -7,7 +7,7 @@ on:
   push:
     branches: [main, master]
 concurrency:
-  group: ${{ github.actor }}
+  group: ${{ github.workflow }}-${{ github.actor }}
   cancel-in-progress: false
 
 jobs:
