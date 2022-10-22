@@ -40,7 +40,7 @@
     "@angular/compiler-cli": "^14.2.0",
     "@cypress/schematic": "^2.2.0",
     "@types/jasmine": "~4.0.0",
-    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/eslint-plugin": "5.40.1",
     "@typescript-eslint/parser": "5.37.0",
     "cypress": "latest",
     "eslint": "^8.23.1",
