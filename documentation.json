@@ -92,7 +92,7 @@
     },
     {
       "name": "ButtonComponent",
-      "id": "component-ButtonComponent-4ef205c97a334c309aa4001c8ab4a6d9571dcae18d0e85aaf0d367467ab5d3a9f13ab3573726f1fcb409bc9b49894dadfb80b1bbe1b6ba7041455ad9d4922004",
+      "id": "component-ButtonComponent-ecbdb3f44e60deb31172a33a457f445a2210a55acadb5fd2158455acf38f6e5de554ae8060e75538a213c3608f0c5a1b1e07c3cd230623c5e65c6152c938789e",
       "file": "src/stories/button.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -118,20 +118,20 @@
         },
         {
           "name": "label",
-          "defaultValue": "'Button'",
+          "defaultValue": "\"Button\"",
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
             {
-              "pos": 711,
-              "end": 724,
+              "pos": 707,
+              "end": 720,
               "flags": 4227072,
               "modifierFlagsCache": 0,
               "transformFlags": 0,
               "kind": 325,
               "tagName": {
-                "pos": 712,
-                "end": 720,
+                "pos": 708,
+                "end": 716,
                 "flags": 4227072,
                 "modifierFlagsCache": 0,
                 "transformFlags": 0,
@@ -160,7 +160,7 @@
         },
         {
           "name": "size",
-          "defaultValue": "'medium'",
+          "defaultValue": "\"medium\"",
           "deprecated": false,
           "deprecationMessage": "",
           "rawdescription": "\n\nHow large should the button be?\n",
@@ -191,11 +191,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\n\n@Component({\n  selector: 'storybook-button',\n  template: ` <button\n    type=\"button\"\n    (click)=\"onClick.emit($event)\"\n    [ngClass]=\"classes\"\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\n  >\n    {{ label }}\n  </button>`,\n  styleUrls: ['./button.css'],\n})\nexport default class ButtonComponent {\n  /**\n   * Is this the principal call to action on the page?\n   */\n  @Input()\n  primary = false;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  backgroundColor?: string;\n\n  /**\n   * How large should the button be?\n   */\n  @Input()\n  size: 'small' | 'medium' | 'large' = 'medium';\n\n  /**\n   * Button contents\n   *\n   * @required\n   */\n  @Input()\n  label = 'Button';\n\n  /**\n   * Optional click handler\n   */\n  @Output()\n  onClick = new EventEmitter<Event>();\n\n  public get classes(): string[] {\n    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';\n\n    return ['storybook-button', `storybook-button--${this.size}`, mode];\n  }\n}\n",
+      "sourceCode": "import { Component, Input, Output, EventEmitter } from \"@angular/core\"\n\n@Component({\n  selector: \"storybook-button\",\n  template: ` <button\n    type=\"button\"\n    (click)=\"onClick.emit($event)\"\n    [ngClass]=\"classes\"\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\n  >\n    {{ label }}\n  </button>`,\n  styleUrls: [\"./button.css\"],\n})\nexport default class ButtonComponent {\n  /**\n   * Is this the principal call to action on the page?\n   */\n  @Input()\n  primary = false\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  backgroundColor?: string\n\n  /**\n   * How large should the button be?\n   */\n  @Input()\n  size: \"small\" | \"medium\" | \"large\" = \"medium\"\n\n  /**\n   * Button contents\n   *\n   * @required\n   */\n  @Input()\n  label = \"Button\"\n\n  /**\n   * Optional click handler\n   */\n  @Output()\n  onClick = new EventEmitter<Event>()\n\n  public get classes(): string[] {\n    const mode = this.primary\n      ? \"storybook-button--primary\"\n      : \"storybook-button--secondary\"\n\n    return [\"storybook-button\", `storybook-button--${this.size}`, mode]\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": ".storybook-button {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-weight: 700;\n  border: 0;\n  border-radius: 3em;\n  cursor: pointer;\n  display: inline-block;\n  line-height: 1;\n}\n.storybook-button--primary {\n  color: white;\n  background-color: #1ea7fd;\n}\n.storybook-button--secondary {\n  color: #333;\n  background-color: transparent;\n  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\n}\n.storybook-button--small {\n  font-size: 12px;\n  padding: 10px 16px;\n}\n.storybook-button--medium {\n  font-size: 14px;\n  padding: 11px 20px;\n}\n.storybook-button--large {\n  font-size: 16px;\n  padding: 12px 24px;\n}\n",
+          "data": ".storybook-button {\n  font-family: \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-weight: 700;\n  border: 0;\n  border-radius: 3em;\n  cursor: pointer;\n  display: inline-block;\n  line-height: 1;\n}\n.storybook-button--primary {\n  color: white;\n  background-color: #1ea7fd;\n}\n.storybook-button--secondary {\n  color: #333;\n  background-color: transparent;\n  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\n}\n.storybook-button--small {\n  font-size: 12px;\n  padding: 10px 16px;\n}\n.storybook-button--medium {\n  font-size: 14px;\n  padding: 11px 20px;\n}\n.storybook-button--large {\n  font-size: 16px;\n  padding: 12px 24px;\n}\n",
           "styleUrl": "./button.css"
         }
       ],
@@ -214,7 +214,7 @@
     },
     {
       "name": "ChartPanelComponent",
-      "id": "component-ChartPanelComponent-0d80f68ee81e6f6ce77c9acb3c80d6244b9969638de364ef64d4ed0666df39af5fe904fdbba289b73781b8c07cd1d9e82f49035b9e9e4eda70962784665da128",
+      "id": "component-ChartPanelComponent-6dfa5f2605447fbaba6e72721827591e9b1ced237796eed89e7d31d3fc291cda88b18a7ee30ff97f03942a4ffc51252a9ffff4e9d7003b583f066a9fb30683d1",
       "file": "src/app/shared/components/chart-panel/chart-panel.component.ts",
       "encapsulation": ["ViewEncapsulation.None"],
       "entryComponents": [],
@@ -229,10 +229,10 @@
       "inputsClass": [
         {
           "name": "title",
-          "defaultValue": "''",
+          "defaultValue": "\"\"",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 11,
+          "line": 17,
           "type": "string",
           "decorators": []
         }
@@ -246,11 +246,11 @@
           "type": "TemplateRef<any>",
           "optional": false,
           "description": "",
-          "line": 14,
+          "line": 22,
           "decorators": [
             {
               "name": "ContentChild",
-              "stringifiedArguments": "'body', {static: false}"
+              "stringifiedArguments": "'contentBody', {static: false}"
             }
           ]
         },
@@ -261,7 +261,7 @@
           "type": "TemplateRef<any>",
           "optional": false,
           "description": "",
-          "line": 13,
+          "line": 20,
           "decorators": [
             {
               "name": "ContentChild",
@@ -277,7 +277,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 18,
+          "line": 26,
           "deprecated": false,
           "deprecationMessage": ""
         }
@@ -289,11 +289,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component, ContentChild, Input, OnInit, TemplateRef, ViewEncapsulation } from \"@angular/core\"\n\n@Component({\n  selector: \"app-chart-panel\",\n  templateUrl: \"./chart-panel.component.html\",\n  styleUrls: [\"./chart-panel.component.scss\"],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class ChartPanelComponent implements OnInit {\n\n  @Input() title = ''\n\n  @ContentChild('customTitle', {static: false}) titleTemplateRef!: TemplateRef<any>;\n  @ContentChild('body', {static: false}) bodyTemplateRef!: TemplateRef<any>;\n\n  constructor() { }\n\n  ngOnInit(): void {\n    undefined\n  }\n\n}\n",
+      "sourceCode": "import {\n  Component,\n  ContentChild,\n  Input,\n  OnInit,\n  TemplateRef,\n  ViewEncapsulation,\n} from \"@angular/core\"\n\n@Component({\n  selector: \"app-chart-panel\",\n  templateUrl: \"./chart-panel.component.html\",\n  styleUrls: [\"./chart-panel.component.scss\"],\n  encapsulation: ViewEncapsulation.None,\n})\nexport class ChartPanelComponent implements OnInit {\n  @Input() title = \"\"\n\n  @ContentChild(\"customTitle\", { static: false })\n  titleTemplateRef!: TemplateRef<any>\n  @ContentChild(\"contentBody\", { static: false })\n  bodyTemplateRef!: TemplateRef<any>\n\n  constructor() {}\n\n  ngOnInit(): void {\n    undefined\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": ".chart-panel-container {\r\n  width: 100%;\r\n  border: 1px solid #23639E;\r\n  color: #FFFFFF;\r\n\r\n  .panel-title-container {\r\n    padding: 7px 12px;\r\n    min-height: 35px;\r\n    display: flex;\r\n    align-items: center;\r\n    position: relative;\r\n    z-index: 1;\r\n    .title {\r\n      flex-grow: 1;\r\n    }\r\n\r\n    &::after {\r\n      content: \"\";\r\n      position: absolute;\r\n      top: 0;\r\n      left: 0;\r\n      width: 100%;\r\n      height: 100%;\r\n      opacity: .31;\r\n      z-index: -1;\r\n      background: transparent linear-gradient(180deg, #23639E 0%, #1E51809C 27%, #1B4B7781 80%, #29669F 100%) 0% 0% no-repeat padding-box;\r\n    }\r\n  }\r\n  .panel-body {\r\n    position: relative;\r\n    z-index: 1;\r\n\r\n    &::after {\r\n      content: \"\";\r\n      position: absolute;\r\n      top: 0;\r\n      left: 0;\r\n      width: 100%;\r\n      height: 100%;\r\n      opacity: 1;\r\n      z-index: -1;\r\n      background: transparent linear-gradient(0deg, rgba(22, 50, 82, 0.4) 50%, transparent 100%) 0% 0% no-repeat padding-box;\r\n    }\r\n  }\r\n}\r\n",
+          "data": ".chart-panel-container {\n  width: 100%;\n  border: 1px solid #23639e;\n  color: #ffffff;\n\n  .panel-title-container {\n    padding: 7px 12px;\n    min-height: 35px;\n    display: flex;\n    align-items: center;\n    position: relative;\n    z-index: 1;\n    .title {\n      flex-grow: 1;\n    }\n\n    &::after {\n      content: \"\";\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      opacity: 0.31;\n      z-index: -1;\n      background: transparent\n        linear-gradient(\n          180deg,\n          #23639e 0%,\n          #1e51809c 27%,\n          #1b4b7781 80%,\n          #29669f 100%\n        )\n        0% 0% no-repeat padding-box;\n    }\n  }\n  .panel-body {\n    position: relative;\n    z-index: 1;\n\n    &::after {\n      content: \"\";\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      opacity: 1;\n      z-index: -1;\n      background: transparent\n        linear-gradient(0deg, rgba(22, 50, 82, 0.4) 50%, transparent 100%) 0% 0%\n        no-repeat padding-box;\n    }\n  }\n}\n",
           "styleUrl": "./chart-panel.component.scss"
         }
       ],
@@ -304,14 +304,14 @@
         "deprecated": false,
         "deprecationMessage": "",
         "args": [],
-        "line": 14
+        "line": 22
       },
       "implements": ["OnInit"],
-      "templateData": "<div class=\"chart-panel-container\">\n  <div class=\"panel-title-container\">\n    <ng-container\n      *ngIf=\"titleTemplateRef; else defaultTitle\"\n      [ngTemplateOutlet]=\"titleTemplateRef\">\n    </ng-container>\n    <ng-template #defaultTitle>\n      <div class=\"title\">{{ title }}</div>\n    </ng-template>\n\n  </div>\n  <div class=\"panel-body\">\n    <ng-container\n      *ngIf=\"bodyTemplateRef\"\n      [ngTemplateOutlet]=\"bodyTemplateRef\">\n    </ng-container>\n    <ng-content></ng-content>\n  </div>\n</div>\n"
+      "templateData": "<div class=\"chart-panel-container\">\n  <div class=\"panel-title-container\">\n    <ng-container\n      *ngIf=\"titleTemplateRef; else defaultTitle\"\n      [ngTemplateOutlet]=\"titleTemplateRef\"\n    >\n    </ng-container>\n    <ng-template #defaultTitle>\n      <div class=\"title\">{{ title }}</div>\n    </ng-template>\n  </div>\n  <div class=\"panel-body\">\n    <ng-container\n      *ngIf=\"bodyTemplateRef; else emptyBody\"\n      [ngTemplateOutlet]=\"bodyTemplateRef\"\n    >\n    </ng-container>\n    <ng-template #emptyBody> Body is empty </ng-template>\n  </div>\n</div>\n"
     },
     {
       "name": "HeaderComponent",
-      "id": "component-HeaderComponent-a557eec14f72c438a8033301f4d6ce023e0a1844a3b06ec2b38794a612acc31735ae78a5ee10071b230c8c20d699eb914554e69d07ade54adb371da8efb464cc",
+      "id": "component-HeaderComponent-daeceaa3bb2044f2a961f6531a3b56331a030b5d4073437aa4870ef3d16dcf208c2469ba651641d0a4667678ec4bdb7d1cbbeded53c7230aee4d0554aef638cf",
       "file": "src/stories/header.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -321,7 +321,7 @@
       "selector": "storybook-header",
       "styleUrls": ["./header.css"],
       "styles": [],
-      "template": "<header>    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>",
+      "template": "<header>    <div class=\"wrapper\">\n      <div>\n        <svg\n          width=\"32\"\n          height=\"32\"\n          viewBox=\"0 0 32 32\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>",
       "templateUrl": [],
       "viewProviders": [],
       "inputsClass": [
@@ -330,7 +330,7 @@
           "defaultValue": "null",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 66,
+          "line": 71,
           "type": "User | null",
           "decorators": []
         }
@@ -341,7 +341,7 @@
           "defaultValue": "new EventEmitter<Event>()",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 75,
+          "line": 80,
           "type": "EventEmitter"
         },
         {
@@ -349,7 +349,7 @@
           "defaultValue": "new EventEmitter<Event>()",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 69,
+          "line": 74,
           "type": "EventEmitter"
         },
         {
@@ -357,7 +357,7 @@
           "defaultValue": "new EventEmitter<Event>()",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 72,
+          "line": 77,
           "type": "EventEmitter"
         }
       ],
@@ -370,11 +370,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { User } from './User';\n\n@Component({\n  selector: 'storybook-header',\n  template: `<header>\n    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>`,\n  styleUrls: ['./header.css'],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+      "sourceCode": "import { Component, Input, Output, EventEmitter } from \"@angular/core\"\nimport { User } from \"./User\"\n\n@Component({\n  selector: \"storybook-header\",\n  template: `<header>\n    <div class=\"wrapper\">\n      <div>\n        <svg\n          width=\"32\"\n          height=\"32\"\n          viewBox=\"0 0 32 32\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>`,\n  styleUrls: [\"./header.css\"],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: User | null = null\n\n  @Output()\n  onLogin = new EventEmitter<Event>()\n\n  @Output()\n  onLogout = new EventEmitter<Event>()\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>()\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": ".wrapper {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n\n.welcome {\n  color: #333;\n  font-size: 14px;\n  margin-right: 10px;\n}\n",
+          "data": ".wrapper {\n  font-family: \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n\n.welcome {\n  color: #333;\n  font-size: 14px;\n  margin-right: 10px;\n}\n",
           "styleUrl": "./header.css"
         }
       ],
@@ -382,7 +382,7 @@
     },
     {
       "name": "HeaderComponent",
-      "id": "component-HeaderComponent-403e703d3483d94b6fc28f7b934045fcb8e00d97a529925b6de72ccb8dc053ef41c15f7aaa17a13b8bf443a9e89b16c576cffe75c632d0a9784ff9de460b2a10-1",
+      "id": "component-HeaderComponent-8c9bd0d445734f695804a8569401a8cb095309b5bcc482b2d23843da908b3150afdb35241e5657667b43a7827dfc939517d0a5e71eea7f1429ec7aa9a417cb0c-1",
       "file": "src/app/header/header.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -405,7 +405,7 @@
           "type": "Observable<Date>",
           "optional": false,
           "description": "",
-          "line": 11
+          "line": 10
         }
       ],
       "methodsClass": [],
@@ -416,11 +416,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component } from '@angular/core'\nimport { map, Observable, timer } from 'rxjs'\n\n@Component({\n  selector: 'app-header',\n  templateUrl: './header.component.html',\n  styleUrls: ['./header.component.scss']\n})\nexport class HeaderComponent {\n\n  time$: Observable<Date> = timer(0, 1000).pipe(map(() => new Date()))\n\n  constructor() { }\n\n}\n",
+      "sourceCode": "import { Component } from \"@angular/core\"\nimport { map, Observable, timer } from \"rxjs\"\n\n@Component({\n  selector: \"app-header\",\n  templateUrl: \"./header.component.html\",\n  styleUrls: [\"./header.component.scss\"],\n})\nexport class HeaderComponent {\n  time$: Observable<Date> = timer(0, 1000).pipe(map(() => new Date()))\n\n  constructor() {}\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": "header {\r\n  color: white;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  height: 41px;\r\n  background: linear-gradient(90deg, rgba(35,99,158,1) 0%, rgba(2,12,28,1) 10%, rgba(2,12,28,1) 90%, rgba(35,99,158,1) 100%);\r\n\r\n  padding: 0 22px;\r\n  > div {\r\n    flex: 1 1 0;\r\n    width: 0;\r\n  }\r\n\r\n  .center-content {\r\n    flex-shrink: 0;\r\n    font: normal normal normal 18px/24px Roboto;\r\n    padding: 10px 0px;\r\n    position: relative;\r\n    z-index: 1;\r\n    padding-top: 21px;\r\n    text-align: center;\r\n\r\n    &::before {\r\n      content: '';\r\n      width: 100%;\r\n      height: 100%;\r\n      // height: calc(100% + 6px);\r\n      position: absolute;\r\n      left: 0;\r\n      top: 0;\r\n      border: 2px solid #23639E;\r\n      z-index: -1;\r\n      transform: perspective(200px) rotateX(-21deg);\r\n      background: transparent linear-gradient(0deg, rgba(35, 73, 118, 0.8) 20%, rgba(0, 0, 0, 0.8) 100%) 0% 0% no-repeat padding-box;\r\n    }\r\n  }\r\n  .left-content, .right-content {\r\n    font: normal normal normal 16px/21px Roboto;\r\n  }\r\n  .right-content {\r\n    text-align: right;\r\n  }\r\n}\r\n",
+          "data": "header {\n  color: white;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 41px;\n  background: linear-gradient(\n    90deg,\n    rgba(35, 99, 158, 1) 0%,\n    rgba(2, 12, 28, 1) 10%,\n    rgba(2, 12, 28, 1) 90%,\n    rgba(35, 99, 158, 1) 100%\n  );\n\n  padding: 0 22px;\n  > div {\n    flex: 1 1 0;\n    width: 0;\n  }\n\n  .center-content {\n    flex-shrink: 0;\n    font: normal normal normal 18px/24px Roboto;\n    padding: 10px 0px;\n    position: relative;\n    z-index: 1;\n    padding-top: 21px;\n    text-align: center;\n\n    &::before {\n      content: \"\";\n      width: 100%;\n      height: 100%;\n      // height: calc(100% + 6px);\n      position: absolute;\n      left: 0;\n      top: 0;\n      border: 2px solid #23639e;\n      z-index: -1;\n      transform: perspective(200px) rotateX(-21deg);\n      background: transparent\n        linear-gradient(\n          0deg,\n          rgba(35, 73, 118, 0.8) 20%,\n          rgba(0, 0, 0, 0.8) 100%\n        )\n        0% 0% no-repeat padding-box;\n    }\n  }\n  .left-content,\n  .right-content {\n    font: normal normal normal 16px/21px Roboto;\n  }\n  .right-content {\n    text-align: right;\n  }\n}\n",
           "styleUrl": "./header.component.scss"
         }
       ],
@@ -431,16 +431,16 @@
         "deprecated": false,
         "deprecationMessage": "",
         "args": [],
-        "line": 11
+        "line": 10
       },
       "isDuplicate": true,
       "duplicateId": 1,
       "duplicateName": "HeaderComponent-1",
-      "templateData": "<header>\n  <div class=\"left-content\">{{ time$ | async | date: 'dd / MM / yy &nbsp;&nbsp; HH:mm' }} WIB</div>\n  <div class=\"center-content\">DASHBOARD BANYUWANGI</div>\n  <div class=\"right-content\">18&deg; C Cerah</div>\n</header>\n"
+      "templateData": "<header>\n  <div class=\"left-content\">\n    {{ time$ | async | date: \"dd / MM / yy &nbsp;&nbsp; HH:mm\" }} WIB\n  </div>\n  <div class=\"center-content\">DASHBOARD BANYUWANGI</div>\n  <div class=\"right-content\">18&deg; C Cerah</div>\n</header>\n"
     },
     {
       "name": "PageComponent",
-      "id": "component-PageComponent-7126d8c2607c946741c651482413b43feb72b2d63cac9d3ac173fde206a5e635eb4cdbf7ca7ac9327c7d4d05cf7ef619144c34c11609ad677081d0ee4e855064",
+      "id": "component-PageComponent-4e3a89aac260e5abd752b79e04a874e50d469452c5d1f7dae728c59febe0f92cb18a4ea425febb23f485eca0d9825682342e5727df449782509105e6cfbef4ca",
       "file": "src/stories/page.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -450,7 +450,7 @@
       "selector": "storybook-page",
       "styleUrls": ["./page.css"],
       "styles": [],
-      "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
+      "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a\n          href=\"https://componentdriven.org\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page\n        states without needing to navigate to them in your app. Here are some\n        handy patterns for managing page data in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose\n          such data from the \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock\n          these services out using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a\n          href=\"https://storybook.js.org/tutorials/\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a\n          href=\"https://storybook.js.org/docs\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg\n          width=\"10\"\n          height=\"10\"\n          viewBox=\"0 0 12 12\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
       "templateUrl": [],
       "viewProviders": [],
       "inputsClass": [],
@@ -464,7 +464,7 @@
           "type": "User | null",
           "optional": false,
           "description": "",
-          "line": 65
+          "line": 84
         }
       ],
       "methodsClass": [
@@ -474,7 +474,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 75,
+          "line": 94,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -484,7 +484,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 71,
+          "line": 90,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -494,7 +494,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 67,
+          "line": 86,
           "deprecated": false,
           "deprecationMessage": ""
         }
@@ -506,11 +506,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component } from '@angular/core';\nimport { User } from './User';\n\n@Component({\n  selector: 'storybook-page',\n  template: `<article>\n    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>`,\n  styleUrls: ['./page.css'],\n})\nexport default class PageComponent {\n  user: User | null = null;\n\n  doLogout() {\n    this.user = null;\n  }\n\n  doLogin() {\n    this.user = { name: 'Jane Doe' };\n  }\n\n  doCreateAccount() {\n    this.user = { name: 'Jane Doe' };\n  }\n}\n",
+      "sourceCode": "import { Component } from \"@angular/core\"\nimport { User } from \"./User\"\n\n@Component({\n  selector: \"storybook-page\",\n  template: `<article>\n    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a\n          href=\"https://componentdriven.org\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page\n        states without needing to navigate to them in your app. Here are some\n        handy patterns for managing page data in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose\n          such data from the \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock\n          these services out using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a\n          href=\"https://storybook.js.org/tutorials/\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a\n          href=\"https://storybook.js.org/docs\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg\n          width=\"10\"\n          height=\"10\"\n          viewBox=\"0 0 12 12\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>`,\n  styleUrls: [\"./page.css\"],\n})\nexport default class PageComponent {\n  user: User | null = null\n\n  doLogout() {\n    this.user = null\n  }\n\n  doLogin() {\n    this.user = { name: \"Jane Doe\" }\n  }\n\n  doCreateAccount() {\n    this.user = { name: \"Jane Doe\" }\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": "section {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 24px;\n  padding: 48px 20px;\n  margin: 0 auto;\n  max-width: 600px;\n  color: #333;\n}\n\nsection h2 {\n  font-weight: 900;\n  font-size: 32px;\n  line-height: 1;\n  margin: 0 0 4px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nsection p {\n  margin: 1em 0;\n}\n\nsection a {\n  text-decoration: none;\n  color: #1ea7fd;\n}\n\nsection ul {\n  padding-left: 30px;\n  margin: 1em 0;\n}\n\nsection li {\n  margin-bottom: 8px;\n}\n\nsection .tip {\n  display: inline-block;\n  border-radius: 1em;\n  font-size: 11px;\n  line-height: 12px;\n  font-weight: 700;\n  background: #e7fdd8;\n  color: #66bf3c;\n  padding: 4px 12px;\n  margin-right: 10px;\n  vertical-align: top;\n}\n\nsection .tip-wrapper {\n  font-size: 13px;\n  line-height: 20px;\n  margin-top: 40px;\n  margin-bottom: 40px;\n}\n\nsection .tip-wrapper svg {\n  display: inline-block;\n  height: 12px;\n  width: 12px;\n  margin-right: 4px;\n  vertical-align: top;\n  margin-top: 3px;\n}\n\nsection .tip-wrapper svg path {\n  fill: #1ea7fd;\n}\n",
+          "data": "section {\n  font-family: \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 24px;\n  padding: 48px 20px;\n  margin: 0 auto;\n  max-width: 600px;\n  color: #333;\n}\n\nsection h2 {\n  font-weight: 900;\n  font-size: 32px;\n  line-height: 1;\n  margin: 0 0 4px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nsection p {\n  margin: 1em 0;\n}\n\nsection a {\n  text-decoration: none;\n  color: #1ea7fd;\n}\n\nsection ul {\n  padding-left: 30px;\n  margin: 1em 0;\n}\n\nsection li {\n  margin-bottom: 8px;\n}\n\nsection .tip {\n  display: inline-block;\n  border-radius: 1em;\n  font-size: 11px;\n  line-height: 12px;\n  font-weight: 700;\n  background: #e7fdd8;\n  color: #66bf3c;\n  padding: 4px 12px;\n  margin-right: 10px;\n  vertical-align: top;\n}\n\nsection .tip-wrapper {\n  font-size: 13px;\n  line-height: 20px;\n  margin-top: 40px;\n  margin-bottom: 40px;\n}\n\nsection .tip-wrapper svg {\n  display: inline-block;\n  height: 12px;\n  width: 12px;\n  margin-right: 4px;\n  vertical-align: top;\n  margin-top: 3px;\n}\n\nsection .tip-wrapper svg path {\n  fill: #1ea7fd;\n}\n",
           "styleUrl": "./page.css"
         }
       ],
@@ -520,13 +520,13 @@
   "modules": [
     {
       "name": "AppModule",
-      "id": "module-AppModule-ff4d76ff9010105b7a032a3ff820809ddfce97c87dea1243387d72ce12f677f24ee8657111295e4d9b6e71aaf590ab2cc216dee43bf8ebebe74838de48fe7b01",
+      "id": "module-AppModule-0bb6149834fa6905661f6dedcee96ddaee6bc5157d675507f758f700ca09f3d0f65c3e2dca69ea81072bb258d525000bf1ae759c4109d75ed732a3521402cc72",
       "description": "",
       "deprecationMessage": "",
       "deprecated": false,
       "file": "src/app/app.module.ts",
       "methods": [],
-      "sourceCode": "import { DATE_PIPE_DEFAULT_TIMEZONE } from \"@angular/common\"\nimport { NgModule } from \"@angular/core\"\nimport { BrowserModule } from \"@angular/platform-browser\"\n\nimport { AppRoutingModule } from \"./app-routing.module\"\nimport { AppComponent } from \"./app.component\"\nimport { HeaderComponent } from './header/header.component'\nimport { SharedModule } from \"./shared/shared.module\"\n\n@NgModule({\n  declarations: [AppComponent, HeaderComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    SharedModule,\n  ],\n  providers: [\n    {\n      provide: DATE_PIPE_DEFAULT_TIMEZONE,\n      useValue: '+0800',\n    },\n  ],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+      "sourceCode": "import { DATE_PIPE_DEFAULT_TIMEZONE } from \"@angular/common\"\nimport { NgModule } from \"@angular/core\"\nimport { BrowserModule } from \"@angular/platform-browser\"\n\nimport { AppRoutingModule } from \"./app-routing.module\"\nimport { AppComponent } from \"./app.component\"\nimport { HeaderComponent } from \"./header/header.component\"\nimport { SharedModule } from \"./shared/shared.module\"\n\nimport { NgxEchartsModule } from 'ngx-echarts';\nimport * as echarts from 'echarts/core';\n// Import bar charts, all with Chart suffix\nimport { BarChart } from 'echarts/charts';\nimport { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';\n// Import the Canvas renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step\nimport { CanvasRenderer } from 'echarts/renderers';\nimport 'echarts/theme/macarons.js';\n\necharts.use([TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer]);\n\n@NgModule({\n  declarations: [AppComponent, HeaderComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    SharedModule,\n    NgxEchartsModule.forRoot({ echarts })\n  ],\n  providers: [\n    {\n      provide: DATE_PIPE_DEFAULT_TIMEZONE,\n      useValue: \"+0800\",\n    },\n  ],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
       "children": [
         {
           "type": "providers",
@@ -607,13 +607,13 @@
     },
     {
       "name": "SharedModule",
-      "id": "module-SharedModule-12fe663775f8df7fcfdef6a65b00019ee9d61e77554779f66eb57658deee978135ba71347532df56f7c154ec64667cce1f3215d46b60f344d9149cd513c19dcd",
+      "id": "module-SharedModule-3af64b1e77b7127bcf7e762f973d187bb7af0940738fb4547b94ca88c6732f5cae284d2c938e979e3b9e9295ec93b942192f0d13b0d74cd216712e807c53c4fb",
       "description": "",
       "deprecationMessage": "",
       "deprecated": false,
       "file": "src/app/shared/shared.module.ts",
       "methods": [],
-      "sourceCode": "import { NgModule } from \"@angular/core\"\r\nimport { CommonModule } from \"@angular/common\"\r\nimport { sharedComponents } from \"./components\"\r\n\r\n@NgModule({\r\n  declarations: [\r\n    sharedComponents,\r\n  ],\r\n  imports: [ CommonModule ],\r\n  exports: [\r\n    sharedComponents,\r\n  ],\r\n  providers: [],\r\n})\r\nexport class SharedModule {}\r\n",
+      "sourceCode": "import { NgModule } from \"@angular/core\"\nimport { CommonModule } from \"@angular/common\"\nimport { sharedComponents } from \"./components\"\n\n@NgModule({\n  declarations: [sharedComponents],\n  imports: [CommonModule],\n  exports: [sharedComponents],\n  providers: [],\n})\nexport class SharedModule {}\n",
       "children": [
         {
           "type": "providers",
@@ -653,6 +653,16 @@
   "miscellaneous": {
     "variables": [
       {
+        "name": "chartOption",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/chart-panel/chart-panel.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "EChartsOption",
+        "defaultValue": "{\n  xAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],\n    axisLine: {\n      show: true\n    },\n    axisLabel: {\n      color: '#fff',\n    }\n  },\n  grid: {\n    top: '30px',\n    left: '40px',\n    bottom: '60px',\n  },\n  legend: {\n    show: true,\n    bottom: 0,\n    left: 0,\n    textStyle: {\n      color: '#fff'\n    }\n  },\n  color: ['rgb(231 229 81)', 'rgb(35 99 158)', 'rgb(255 255 255)'],\n  yAxis: {\n    type: 'value',\n    splitLine: {\n      show: false\n    },\n    axisLine: {\n      show: true\n    },\n    axisLabel: {\n      color: '#fff',\n    }\n  },\n  series: [\n    {\n      name: 'Data 1',\n      data: [150, 230, 224, 218, 135, 147, 260],\n      type: 'line',\n      areaStyle: {\n        color: new graphic.LinearGradient(0, 0, 0, 1, [\n          {\n            offset: 0,\n            color: '#E7E551'\n          },\n          {\n            offset: 1,\n            color: 'transparent'\n          }\n        ])\n      },\n    },\n    {\n      name: 'Data 2',\n      data: [100, 30, 324, 118, 235, 47, 160],\n      type: 'line',\n      areaStyle: {\n        color: new graphic.LinearGradient(0, 0, 0, 1, [\n          {\n            offset: 0,\n            color: 'rgb(35 99 158)'\n          },\n          {\n            offset: 1,\n            color: 'transparent'\n          }\n        ])\n      },\n    },\n  ]\n}"
+      },
+      {
         "name": "ChartPanel",
         "ctype": "miscellaneous",
         "subtype": "variable",
@@ -670,7 +680,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story",
-        "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\">\r\n          <app-chart-panel>\r\n            <ng-template #customTitle>\r\n              <div class=\"title\">{{ title }}</div>\r\n              <span class=\"material-symbols-outlined\">\r\n                filter_list\r\n              </span>\r\n            </ng-template>\r\n\r\n            <div class=\"p-2\" style=\"min-height: 200px;\">\r\n              {{ body }}\r\n            </div>\r\n          </app-chart-panel>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n          <app-chart-panel>\r\n            <ng-template #customTitle>\r\n              <div class=\"title\">Genangan Air</div>\r\n              <span class=\"material-symbols-outlined\">\r\n                filter_list\r\n              </span>\r\n            </ng-template>\r\n\r\n            <div class=\"p-2\" style=\"min-height: 200px;\">\r\n              {{ body }}\r\n            </div>\r\n          </app-chart-panel>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  `,\r\n})"
+        "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n          <app-chart-panel>\n            <ng-template #customTitle>\n              <div class=\"title\">{{ title }}</div>\n              <span class=\"material-symbols-outlined\">\n                filter_list\n              </span>\n            </ng-template>\n\n            <ng-template #contentBody>\n              <div class=\"p-2\" style=\"min-height: 200px;\">\n                {{ body }}\n              </div>\n            </ng-template>\n          </app-chart-panel>\n        </div>\n        <div class=\"col-md-4\">\n          <app-chart-panel>\n            <ng-template #customTitle>\n              <div class=\"title\">Genangan Air</div>\n            </ng-template>\n\n            <ng-template #contentBody>\n              <div class=\"p-2\">\n                <div echarts [options]=\"chartOption\" style=\"height: 300px;\"></div>\n              </div>\n            </ng-template>\n          </app-chart-panel>\n        </div>\n      </div>\n    </div>\n  `,\n})"
       },
       {
         "name": "context",
@@ -799,7 +809,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
-        "defaultValue": "[\r\n  ChartPanelComponent,\r\n]"
+        "defaultValue": "[ChartPanelComponent]"
       },
       {
         "name": "Small",
@@ -849,7 +859,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story<HeaderComponent>",
-        "defaultValue": "(args: HeaderComponent) => ({\r\n  props: args,\r\n})"
+        "defaultValue": "(args: HeaderComponent) => ({\n  props: args,\n})"
       },
       {
         "name": "Template",
@@ -859,7 +869,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story<ChartPanelComponent>",
-        "defaultValue": "(args: ChartPanelComponent) => ({\r\n  props: args,\r\n})"
+        "defaultValue": "(args: ChartPanelComponent) => ({\n  props: args,\n})"
       }
     ],
     "functions": [],
@@ -867,6 +877,16 @@
     "enumerations": [],
     "groupedVariables": {
       "src/app/shared/components/chart-panel/chart-panel.stories.ts": [
+        {
+          "name": "chartOption",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/chart-panel/chart-panel.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "EChartsOption",
+          "defaultValue": "{\n  xAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],\n    axisLine: {\n      show: true\n    },\n    axisLabel: {\n      color: '#fff',\n    }\n  },\n  grid: {\n    top: '30px',\n    left: '40px',\n    bottom: '60px',\n  },\n  legend: {\n    show: true,\n    bottom: 0,\n    left: 0,\n    textStyle: {\n      color: '#fff'\n    }\n  },\n  color: ['rgb(231 229 81)', 'rgb(35 99 158)', 'rgb(255 255 255)'],\n  yAxis: {\n    type: 'value',\n    splitLine: {\n      show: false\n    },\n    axisLine: {\n      show: true\n    },\n    axisLabel: {\n      color: '#fff',\n    }\n  },\n  series: [\n    {\n      name: 'Data 1',\n      data: [150, 230, 224, 218, 135, 147, 260],\n      type: 'line',\n      areaStyle: {\n        color: new graphic.LinearGradient(0, 0, 0, 1, [\n          {\n            offset: 0,\n            color: '#E7E551'\n          },\n          {\n            offset: 1,\n            color: 'transparent'\n          }\n        ])\n      },\n    },\n    {\n      name: 'Data 2',\n      data: [100, 30, 324, 118, 235, 47, 160],\n      type: 'line',\n      areaStyle: {\n        color: new graphic.LinearGradient(0, 0, 0, 1, [\n          {\n            offset: 0,\n            color: 'rgb(35 99 158)'\n          },\n          {\n            offset: 1,\n            color: 'transparent'\n          }\n        ])\n      },\n    },\n  ]\n}"
+        },
         {
           "name": "ChartPanel",
           "ctype": "miscellaneous",
@@ -885,7 +905,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Story",
-          "defaultValue": "(args) => ({\r\n  props: args,\r\n  template: `\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\">\r\n          <app-chart-panel>\r\n            <ng-template #customTitle>\r\n              <div class=\"title\">{{ title }}</div>\r\n              <span class=\"material-symbols-outlined\">\r\n                filter_list\r\n              </span>\r\n            </ng-template>\r\n\r\n            <div class=\"p-2\" style=\"min-height: 200px;\">\r\n              {{ body }}\r\n            </div>\r\n          </app-chart-panel>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n          <app-chart-panel>\r\n            <ng-template #customTitle>\r\n              <div class=\"title\">Genangan Air</div>\r\n              <span class=\"material-symbols-outlined\">\r\n                filter_list\r\n              </span>\r\n            </ng-template>\r\n\r\n            <div class=\"p-2\" style=\"min-height: 200px;\">\r\n              {{ body }}\r\n            </div>\r\n          </app-chart-panel>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  `,\r\n})"
+          "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n          <app-chart-panel>\n            <ng-template #customTitle>\n              <div class=\"title\">{{ title }}</div>\n              <span class=\"material-symbols-outlined\">\n                filter_list\n              </span>\n            </ng-template>\n\n            <ng-template #contentBody>\n              <div class=\"p-2\" style=\"min-height: 200px;\">\n                {{ body }}\n              </div>\n            </ng-template>\n          </app-chart-panel>\n        </div>\n        <div class=\"col-md-4\">\n          <app-chart-panel>\n            <ng-template #customTitle>\n              <div class=\"title\">Genangan Air</div>\n            </ng-template>\n\n            <ng-template #contentBody>\n              <div class=\"p-2\">\n                <div echarts [options]=\"chartOption\" style=\"height: 300px;\"></div>\n              </div>\n            </ng-template>\n          </app-chart-panel>\n        </div>\n      </div>\n    </div>\n  `,\n})"
         },
         {
           "name": "Template",
@@ -895,7 +915,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Story<ChartPanelComponent>",
-          "defaultValue": "(args: ChartPanelComponent) => ({\r\n  props: args,\r\n})"
+          "defaultValue": "(args: ChartPanelComponent) => ({\n  props: args,\n})"
         }
       ],
       "src/test.ts": [
@@ -962,7 +982,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Story<HeaderComponent>",
-          "defaultValue": "(args: HeaderComponent) => ({\r\n  props: args,\r\n})"
+          "defaultValue": "(args: HeaderComponent) => ({\n  props: args,\n})"
         }
       ],
       "src/stories/Button.stories.ts": [
@@ -1090,7 +1110,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "[]",
-          "defaultValue": "[\r\n  ChartPanelComponent,\r\n]"
+          "defaultValue": "[ChartPanelComponent]"
         }
       ]
     },
@@ -1170,6 +1190,16 @@
         "name": "ChartPanelComponent",
         "coveragePercent": 0,
         "coverageCount": "0/6",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/chart-panel/chart-panel.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "chartOption",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
         "status": "low"
       },
       {

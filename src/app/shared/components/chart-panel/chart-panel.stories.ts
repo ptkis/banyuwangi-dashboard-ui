@@ -3,6 +3,27 @@ import { CommonModule } from "@angular/common"
 import type { Story, Meta } from "@storybook/angular"
 
 import { ChartPanelComponent } from "./chart-panel.component"
+import { NgxEchartsModule } from "ngx-echarts"
+import { graphic, EChartsOption } from "echarts"
+import * as echarts from "echarts/core"
+// Import bar charts, all with Chart suffix
+import { LineChart } from "echarts/charts"
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+} from "echarts/components"
+// Import the Canvas renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step
+import { CanvasRenderer } from "echarts/renderers"
+import "echarts/theme/macarons.js"
+
+echarts.use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+])
 
 export default {
   title: "Components/Panel",
@@ -10,7 +31,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [ChartPanelComponent],
-      imports: [CommonModule],
+      imports: [CommonModule, NgxEchartsModule.forRoot({ echarts })],
     }),
   ],
   parameters: {
@@ -55,8 +76,8 @@ export const ChartPanel2: Story = (args) => ({
             </ng-template>
 
             <ng-template #contentBody>
-              <div class="p-2" style="min-height: 200px;">
-                {{ body }}
+              <div class="p-2">
+                <div echarts [options]="chartOption" style="height: 300px;"></div>
               </div>
             </ng-template>
           </app-chart-panel>
@@ -65,8 +86,86 @@ export const ChartPanel2: Story = (args) => ({
     </div>
   `,
 })
+const chartOption: EChartsOption = {
+  xAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    axisLine: {
+      show: true,
+    },
+    axisLabel: {
+      color: "#fff",
+    },
+  },
+  grid: {
+    top: "30px",
+    left: "40px",
+    bottom: "60px",
+  },
+  legend: {
+    show: true,
+    bottom: 0,
+    left: 0,
+    textStyle: {
+      color: "#fff",
+      fontSize: "10px",
+    },
+    itemHeight: 10,
+    icon: "circle",
+  },
+  color: ["rgb(231, 229, 81)", "rgb(35, 99, 158)", "rgb(255, 255, 255)"],
+  yAxis: {
+    type: "value",
+    splitLine: {
+      show: false,
+    },
+    axisLine: {
+      show: true,
+    },
+    axisLabel: {
+      color: "#fff",
+    },
+  },
+  series: [
+    {
+      name: "Data 1",
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: "line",
+      areaStyle: {
+        color: new graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: "#E7E551",
+          },
+          {
+            offset: 1,
+            color: "transparent",
+          },
+        ]),
+      },
+    },
+    {
+      name: "Data 2",
+      data: [100, 30, 324, 118, 235, 47, 160],
+      type: "line",
+      areaStyle: {
+        color: new graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: "#23639e",
+          },
+          {
+            offset: 1,
+            color: "transparent",
+          },
+        ]),
+      },
+    },
+  ],
+}
 ChartPanel2.storyName = "Panel Custom Content"
 ChartPanel2.args = {
   title: "This panel has custom title and content",
   body: "This is content",
+  chartOption,
 }
