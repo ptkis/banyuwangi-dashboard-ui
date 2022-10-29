@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { SharedModule } from "src/app/shared/shared.module"
+import { dashboardDialogs } from ".."
 
 import { DialogPencarianOrangComponent } from "./dialog-pencarian-orang.component"
 
@@ -8,7 +10,8 @@ describe("DialogPencarianOrangComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DialogPencarianOrangComponent],
+      declarations: [dashboardDialogs],
+      imports: [SharedModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(DialogPencarianOrangComponent)

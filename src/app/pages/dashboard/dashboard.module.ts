@@ -14,7 +14,7 @@ import { MapDashboardComponent } from "./map-dashboard/map-dashboard.component"
 import { Map3dDashboardComponent } from "./map3d-dashboard/map3d-dashboard.component"
 import { dashboardDialogs } from "./dialogs"
 
-const routes: Routes = [
+export const dashboardRoutes: Routes = [
   {
     path: "",
     component: DashboardComponent,
@@ -36,7 +36,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(dashboardRoutes),
     NgxEchartsModule.forChild(),
     MatButtonModule,
     MatIconModule,

@@ -6,6 +6,7 @@ import { ChartOverlayComponent } from "./chart-overlay.component"
 
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
+import { RouterTestingModule } from "@angular/router/testing"
 
 describe("ChartOverlayComponent", () => {
   let component: ChartOverlayComponent
@@ -20,6 +21,7 @@ describe("ChartOverlayComponent", () => {
           // echarts
           echarts: () => import("echarts"),
         }),
+        RouterTestingModule,
         MatButtonModule,
         MatIconModule,
       ],
