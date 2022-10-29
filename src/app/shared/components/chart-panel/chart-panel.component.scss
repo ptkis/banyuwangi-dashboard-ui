@@ -4,12 +4,6 @@
   color: #ffffff;
 
   .panel-title-container {
-    padding: 7px 12px;
-    min-height: 35px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 1;
     .title {
       flex-grow: 1;
     }
@@ -19,26 +13,6 @@
       right: 0;
       top: 50%;
       transform: translateY(-55%);
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.31;
-      z-index: -1;
-      background: transparent
-        linear-gradient(
-          180deg,
-          #23639e 0%,
-          #1e51809c 27%,
-          #1b4b7781 80%,
-          #29669f 100%
-        )
-        0% 0% no-repeat padding-box;
     }
   }
   .panel-body {
