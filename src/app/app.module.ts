@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 
 import { NgxEchartsModule } from "ngx-echarts"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 
 /**
  * Testing echart lazy load
@@ -39,6 +40,7 @@ import { NgxEchartsModule } from "ngx-echarts"
       // echarts
       echarts: () => import("echarts"),
     }),
+    BrowserAnimationsModule,
   ],
   providers: [
     {

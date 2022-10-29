@@ -14,6 +14,13 @@
       flex-grow: 1;
     }
 
+    .panel_button {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-55%);
+    }
+
     &::after {
       content: "";
       position: absolute;

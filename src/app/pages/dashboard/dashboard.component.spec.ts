@@ -4,6 +4,9 @@ import { NgxEchartsModule } from "ngx-echarts"
 import { DashboardComponent } from "./dashboard.component"
 import { SharedModule } from "../../shared/shared.module"
 
+import { MatButtonModule } from "@angular/material/button"
+import { MatIconModule } from "@angular/material/icon"
+
 describe("DashboardComponent", () => {
   let component: DashboardComponent
   let fixture: ComponentFixture<DashboardComponent>
@@ -17,6 +20,8 @@ describe("DashboardComponent", () => {
           // echarts
           echarts: () => import("echarts"),
         }),
+        MatButtonModule,
+        MatIconModule,
       ],
     }).compileComponents()
 

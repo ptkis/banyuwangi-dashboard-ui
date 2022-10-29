@@ -5,6 +5,9 @@ import { SharedModule } from "src/app/shared/shared.module"
 import { DashboardComponent } from "./dashboard.component"
 import { NgxEchartsModule } from "ngx-echarts"
 
+import { MatButtonModule } from "@angular/material/button"
+import { MatIconModule } from "@angular/material/icon"
+
 const routes: Routes = [
   {
     path: "",
@@ -19,6 +22,8 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     NgxEchartsModule.forChild(),
+    MatButtonModule,
+    MatIconModule,
   ],
 })
 export class DashboardModule {}

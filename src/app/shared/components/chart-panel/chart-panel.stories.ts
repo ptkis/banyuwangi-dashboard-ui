@@ -5,25 +5,9 @@ import type { Story, Meta } from "@storybook/angular"
 import { ChartPanelComponent } from "./chart-panel.component"
 import { NgxEchartsModule } from "ngx-echarts"
 import { graphic, EChartsOption } from "echarts"
-import * as echarts from "echarts/core"
-// Import bar charts, all with Chart suffix
-import { LineChart } from "echarts/charts"
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from "echarts/components"
-// Import the Canvas renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step
-import { CanvasRenderer } from "echarts/renderers"
-import "echarts/theme/macarons.js"
 
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LineChart,
-  CanvasRenderer,
-])
+import { MatButtonModule } from "@angular/material/button"
+import { MatIconModule } from "@angular/material/icon"
 
 export default {
   title: "Components/Panel",
@@ -31,7 +15,15 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [ChartPanelComponent],
-      imports: [CommonModule, NgxEchartsModule.forRoot({ echarts })],
+      imports: [
+        CommonModule,
+        NgxEchartsModule.forRoot({
+          echarts: () => import("echarts"),
+        }),
+
+        MatButtonModule,
+        MatIconModule,
+      ],
     }),
   ],
   parameters: {
@@ -57,9 +49,9 @@ export const ChartPanel2: Story = (args) => ({
           <app-chart-panel>
             <ng-template #customTitle>
               <div class="title">{{ title }}</div>
-              <span class="material-symbols-outlined">
-                filter_list
-              </span>
+              <button mat-icon-button class="panel_button">
+                <mat-icon>filter_list</mat-icon>
+              </button>
             </ng-template>
 
             <ng-template #contentBody>
