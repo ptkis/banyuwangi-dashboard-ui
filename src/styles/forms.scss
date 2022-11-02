@@ -13,13 +13,15 @@
     input[type="radio"]:checked + .custom-radio-button {
       background: #23639e;
     }
+    &.active {
+      .custom-radio-button {
+        background: #23639e;
+      }
+    }
     .custom-radio-button {
       // &:hover{
       //   background: rgba(35, 99, 158, .5);
       // }
-      &.active {
-        background: #23639e;
-      }
       background: transparent;
       display: flex;
       align-items: center;

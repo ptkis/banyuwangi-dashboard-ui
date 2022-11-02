@@ -35,5 +35,13 @@
   .main {
     grid-area: main;
     text-align: center;
+    position: relative;
+
+    .map-select {
+      position: absolute;
+      top: -37px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }

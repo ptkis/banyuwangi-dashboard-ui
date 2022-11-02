@@ -1,0 +1,16 @@
+.btn-oval {
+  padding: 6px 16px;
+  width: min-content;
+  display: inline-block;
+  white-space: nowrap;
+  background: transparent;
+  color: #23639e;
+  border: 1px solid #23639e;
+  border-radius: 999em;
+
+  &.active,
+  &:hover {
+    background: #23639e;
+    color: white;
+  }
+}
