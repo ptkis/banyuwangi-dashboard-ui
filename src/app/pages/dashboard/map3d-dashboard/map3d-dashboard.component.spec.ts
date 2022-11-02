@@ -10,6 +10,8 @@ import { dashboardDialogs } from "../dialogs"
 
 import { Map3dDashboardComponent } from "./map3d-dashboard.component"
 
+import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+
 describe("Map3dDashboardComponent", () => {
   let component: Map3dDashboardComponent
   let fixture: ComponentFixture<Map3dDashboardComponent>
@@ -18,6 +20,7 @@ describe("Map3dDashboardComponent", () => {
     await TestBed.configureTestingModule({
       declarations: [dashboardComponents, dashboardDialogs],
       imports: [
+        NoopAnimationsModule,
         DialogModule,
         RouterTestingModule,
         SharedModule,
@@ -38,5 +41,27 @@ describe("Map3dDashboardComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should open dialog kendaraan", async () => {
+    fixture.componentInstance.openDialogKendaraan()
+
+    fixture.detectChanges()
+    const dialogContainerElement = document.querySelector(
+      "cdk-dialog-container"
+    )!
+    expect(dialogContainerElement.getAttribute("role")).toBe("dialog")
+    expect(dialogContainerElement.getAttribute("aria-modal")).toBe("true")
+  })
+
+  it("should open dialog orang", async () => {
+    fixture.componentInstance.openDialogOrang()
+
+    fixture.detectChanges()
+    const dialogContainerElement = document.querySelector(
+      "cdk-dialog-container"
+    )!
+    expect(dialogContainerElement.getAttribute("role")).toBe("dialog")
+    expect(dialogContainerElement.getAttribute("aria-modal")).toBe("true")
   })
 })

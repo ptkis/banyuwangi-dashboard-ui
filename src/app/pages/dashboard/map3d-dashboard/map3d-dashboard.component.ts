@@ -9,16 +9,16 @@ import { DialogPencarianOrangComponent } from "../dialogs/dialog-pencarian-orang
   styleUrls: ["./map3d-dashboard.component.scss"],
 })
 export class Map3dDashboardComponent {
-  constructor(private dialog: Dialog) {}
+  constructor(public dialog: Dialog) {}
 
   openDialogKendaraan() {
-    this.dialog.open<string>(DialogPencarianKendaraanComponent, {
+    return this.dialog.open(DialogPencarianKendaraanComponent, {
       width: "891px",
     })
   }
 
   openDialogOrang() {
-    this.dialog.open<string>(DialogPencarianOrangComponent, {
+    return this.dialog.open<string>(DialogPencarianOrangComponent, {
       width: "891px",
     })
   }

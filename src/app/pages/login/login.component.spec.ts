@@ -7,6 +7,7 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatIconModule } from "@angular/material/icon"
 import { MatInputModule } from "@angular/material/input"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+import { Router } from "@angular/router"
 import { RouterTestingModule } from "@angular/router/testing"
 import { SharedModule } from "src/app/shared/shared.module"
 
@@ -41,5 +42,24 @@ describe("LoginComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should allow login", () => {
+    const router = TestBed.inject(Router)
+    const spy = spyOn(router, "navigateByUrl")
+    component.loginForm.patchValue({
+      email: "test@google.com",
+      password: "pass",
+      remember: true,
+    })
+    component.formSubmit()
+    expect(spy).toHaveBeenCalledWith("/dashboard")
+  })
+
+  it("should prevent login", () => {
+    const router = TestBed.inject(Router)
+    const spy = spyOn(router, "navigateByUrl")
+    component.formSubmit()
+    expect(spy).not.toHaveBeenCalled()
   })
 })

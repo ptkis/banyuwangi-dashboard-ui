@@ -11,8 +11,8 @@ export class LoginComponent {
   hidePassword = true
 
   loginForm = this.fb.group({
-    email: [null, [Validators.required, Validators.email]],
-    password: [null, [Validators.required]],
+    email: ["", [Validators.required, Validators.email]],
+    password: ["", [Validators.required]],
     remember: [false, [Validators.required]],
   })
 
