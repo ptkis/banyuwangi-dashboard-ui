@@ -7,18 +7,18 @@
   gap: 8px;
 
   .custom-radio-container {
+    &.active {
+      .custom-radio-button {
+        background: #23639e;
+      }
+    }
+
     input[type="radio"] {
       display: none;
     }
 
     input[type="radio"]:checked + .custom-radio-button {
       background: #23639e;
-    }
-
-    &.active {
-      .custom-radio-button {
-        background: #23639e;
-      }
     }
 
     .custom-radio-button {
@@ -29,7 +29,8 @@
       width: 135px;
       height: 30px;
       cursor: pointer;
-      font: normal normal normal 12px/16px Roboto;
+      font-size: 12px;
+      line-height: 16px;
       border-radius: 7px;
     }
   }
@@ -50,7 +51,7 @@
   }
 
   .mat-form-field-wrapper {
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 
   .mat-form-field-underline {
@@ -58,7 +59,7 @@
   }
 
   &.mat-form-field-appearance-fill .mat-form-field-flex {
-    padding: 8px 21px 0px;
+    padding: 8px 21px 0;
   }
 }
 

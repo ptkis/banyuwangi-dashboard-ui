@@ -4,6 +4,7 @@ header {
   align-items: center;
   justify-content: space-between;
   height: 41px;
+  padding: 0 22px;
   background: linear-gradient(
     90deg,
     rgba(35, 99, 158, 1) 0%,
@@ -12,7 +13,6 @@ header {
     rgba(35, 99, 158, 1) 100%
   );
 
-  padding: 0 22px;
   > div {
     flex: 1 1 0;
     width: 0;
@@ -20,8 +20,9 @@ header {
 
   .center-content {
     flex-shrink: 0;
-    font: normal normal normal 18px/24px Roboto;
-    padding: 10px 0px;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 10px 0;
     position: relative;
     z-index: 1;
     padding-top: 21px;
@@ -47,10 +48,13 @@ header {
         0% 0% no-repeat padding-box;
     }
   }
+
   .left-content,
   .right-content {
-    font: normal normal normal 16px/21px Roboto;
+    font-size: 16px;
+    line-height: 21px;
   }
+
   .right-content {
     text-align: right;
   }
