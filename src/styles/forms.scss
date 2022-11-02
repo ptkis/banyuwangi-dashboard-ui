@@ -32,3 +32,33 @@
     }
   }
 }
+
+.custom-form-field {
+  background-color: #fff;
+  color: black;
+  border-radius: 10px;
+  .mat-form-field-infix {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .mat-form-field-label {
+    color: #a6a6a6;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0px;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+  &.mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 8px 21px 0px;
+  }
+}
+
+.mat-checkbox-frame {
+  border-color: white !important;
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

@@ -17,7 +17,6 @@ import { DialogPencarianOrangComponent } from "./dialog-pencarian-orang/dialog-p
 
 @Component({
   selector: "app-dummy-cmp",
-  styles: [``],
   template: `
     <div class="container">
       <div class="row">
