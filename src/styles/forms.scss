@@ -13,14 +13,6 @@
       }
     }
 
-    input[type="radio"] {
-      display: none;
-    }
-
-    input[type="radio"]:checked + .custom-radio-button {
-      background: #23639e;
-    }
-
     .custom-radio-button {
       background: transparent;
       display: flex;
@@ -32,6 +24,14 @@
       font-size: 12px;
       line-height: 16px;
       border-radius: 7px;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .custom-radio-button {
+      background: #23639e;
     }
   }
 }
