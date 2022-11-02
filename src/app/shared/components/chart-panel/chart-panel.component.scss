@@ -1,7 +1,7 @@
 .chart-panel-container {
   width: 100%;
   border: 1px solid #23639e;
-  color: #ffffff;
+  color: #fff;
 
   .panel-title-container {
     .title {
@@ -15,6 +15,7 @@
       transform: translateY(-55%);
     }
   }
+
   .panel-body {
     position: relative;
     z-index: 1;

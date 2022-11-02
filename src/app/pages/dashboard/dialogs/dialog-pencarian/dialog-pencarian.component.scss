@@ -11,12 +11,14 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
+
   .top-section {
     grid-area: top-content;
     min-height: 335px;
@@ -24,6 +26,7 @@
     padding: 20px;
     font: normal normal normal 10px/13px Roboto;
   }
+
   .bottom-section {
     grid-area: bottom-content;
     padding: 20px;

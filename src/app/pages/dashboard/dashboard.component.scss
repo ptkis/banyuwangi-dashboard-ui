@@ -1,6 +1,7 @@
 .dashboard-container {
   position: relative;
 
+  /* stylelint-disable-next-line selector-type-no-unknown */
   app-chart-overlay {
     position: absolute;
     top: 37px;

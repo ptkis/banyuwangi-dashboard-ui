@@ -8,23 +8,23 @@
     / minmax(auto, 250px) minmax(250px, 1fr) minmax(auto, 250px);
   gap: 1rem;
 
-  app-header {
-    grid-area: header;
-  }
   .left-area,
   .right-area {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
+
   .left-area {
     grid-area: left-sidebar;
     margin-left: 16px;
   }
+
   .right-area {
     grid-area: right-sidebar;
     margin-right: 16px;
   }
+
   .footer-area {
     grid-area: footer;
     margin: 0 16px;
@@ -32,6 +32,7 @@
     grid-template-columns: 232px 1fr 1fr 232px;
     gap: 16px;
   }
+
   .main {
     grid-area: main;
     text-align: center;
