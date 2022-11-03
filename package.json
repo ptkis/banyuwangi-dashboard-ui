@@ -60,7 +60,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/jasmine": "~4.0.0",
     "@typescript-eslint/eslint-plugin": "5.40.1",
-    "@typescript-eslint/parser": "5.37.0",
+    "@typescript-eslint/parser": "5.42.0",
     "babel-loader": "^8.2.5",
     "cypress": "latest",
     "eslint": "^8.23.1",
