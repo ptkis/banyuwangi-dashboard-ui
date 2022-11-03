@@ -19,8 +19,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
-            "scripts": []
+            "styles": ["src/styles.scss"],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            }
           },
           "configurations": {
             "production": {
@@ -42,6 +45,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "sourceMap": false,
               "outputHashing": "all"
             },
             "development": {
@@ -81,7 +85,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },
@@ -141,5 +145,10 @@
   },
   "cli": {
     "schematicCollections": ["@angular-eslint/schematics"]
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
   }
 }

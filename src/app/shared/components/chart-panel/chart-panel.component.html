@@ -1,0 +1,20 @@
+<div class="chart-panel-container">
+  <div class="panel-title-container gradient-bg-1">
+    <ng-container
+      *ngIf="titleTemplateRef; else defaultTitle"
+      [ngTemplateOutlet]="titleTemplateRef"
+    >
+    </ng-container>
+    <ng-template #defaultTitle>
+      <div class="title">{{ title }}</div>
+    </ng-template>
+  </div>
+  <div class="panel-body">
+    <ng-container
+      *ngIf="bodyTemplateRef; else emptyBody"
+      [ngTemplateOutlet]="bodyTemplateRef"
+    >
+    </ng-container>
+    <ng-template #emptyBody> Body is empty </ng-template>
+  </div>
+</div>

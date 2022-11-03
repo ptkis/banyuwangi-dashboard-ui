@@ -1,0 +1,37 @@
+<app-chart-panel>
+  <ng-template #customTitle>
+    <div class="title">{{ title }}</div>
+  </ng-template>
+
+  <ng-template #contentBody>
+    <div class="p-3 dialog-content">
+      <div class="image-container">
+        <img src="https://www.fillmurray.com/254/287" alt="" />
+        <ng-container
+          *ngIf="belowImageTemplateRef"
+          [ngTemplateOutlet]="belowImageTemplateRef"
+        >
+        </ng-container>
+      </div>
+      <div class="top-section">
+        <ng-container
+          *ngIf="topSectionTemplateRef; else noContentTmpl"
+          [ngTemplateOutlet]="topSectionTemplateRef"
+        >
+        </ng-container>
+      </div>
+      <div class="bottom-section">
+        <ng-container
+          *ngIf="bottomSectionTemplateRef; else noContentTmpl"
+          [ngTemplateOutlet]="bottomSectionTemplateRef"
+        >
+        </ng-container>
+      </div>
+      <ng-template #noContentTmpl>
+        <div class="d-flex h-100 justify-content-center align-items-center">
+          Belum ada data untuk ditampilkan
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</app-chart-panel>

@@ -1,0 +1,73 @@
+.custom-radio-group {
+  background: #020c1c;
+  border-radius: 7px;
+  border: 1px solid #23639e;
+  padding: 4px;
+  display: inline-flex;
+  gap: 8px;
+
+  .custom-radio-container {
+    &.active {
+      .custom-radio-button {
+        background: #23639e;
+      }
+    }
+
+    .custom-radio-button {
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 135px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 16px;
+      border-radius: 7px;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .custom-radio-button {
+      background: #23639e;
+    }
+  }
+}
+
+.custom-form-field {
+  background-color: #fff;
+  color: black;
+  border-radius: 10px;
+
+  .mat-form-field-infix {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .mat-form-field-label {
+    color: #a6a6a6;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  &.mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 8px 21px 0;
+  }
+}
+
+.mat-checkbox-frame {
+  border-color: white !important;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

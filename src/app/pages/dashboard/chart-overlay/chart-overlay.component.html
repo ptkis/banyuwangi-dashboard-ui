@@ -1,0 +1,125 @@
+<div class="chart-container">
+  <div class="main">
+    <div class="custom-radio-group map-select">
+      <label
+        class="custom-radio-container"
+        [routerLink]="['/dashboard']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <input type="radio" name="radio" />
+        <span class="custom-radio-button"> Map Dashboard </span>
+      </label>
+      <label
+        class="custom-radio-container"
+        [routerLink]="['/dashboard/3d']"
+        routerLinkActive="active"
+      >
+        <input type="radio" name="radio" />
+        <span class="custom-radio-button"> 3D Dashboard </span>
+      </label>
+    </div>
+    <ng-content select="[slot=main]"></ng-content>
+  </div>
+  <div class="left-area">
+    <div>
+      <app-chart-panel>
+        <ng-template #customTitle>
+          <div class="title">Genangan Air</div>
+        </ng-template>
+
+        <ng-template #contentBody>
+          <div class="p-2">
+            <div echarts [options]="chartOption" style="height: 163px"></div>
+          </div>
+        </ng-template>
+      </app-chart-panel>
+    </div>
+    <div>
+      <app-chart-panel>
+        <ng-template #customTitle>
+          <div class="title">Genangan Air</div>
+          <button mat-icon-button class="panel_button">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+        </ng-template>
+
+        <ng-template #contentBody>
+          <div class="p-2">
+            <div echarts [options]="chartOption" style="height: 200px"></div>
+          </div>
+        </ng-template>
+      </app-chart-panel>
+    </div>
+  </div>
+  <div class="right-area">
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Pedagang Kaki Lima</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 163px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Pengguna Masker</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 163px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+  </div>
+  <div class="footer-area">
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Genangan Air</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 133px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Genangan Air</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 133px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Genangan Air</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 133px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">Genangan Air</div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="p-2">
+          <div echarts [options]="chartOption" style="height: 133px"></div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+  </div>
+</div>
