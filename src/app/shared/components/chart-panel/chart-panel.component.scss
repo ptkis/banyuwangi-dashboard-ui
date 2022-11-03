@@ -1,0 +1,37 @@
+.chart-panel-container {
+  width: 100%;
+  border: 1px solid #23639e;
+  color: #fff;
+
+  .panel-title-container {
+    .title {
+      flex-grow: 1;
+    }
+
+    .panel_button {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-55%);
+    }
+  }
+
+  .panel-body {
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      z-index: -1;
+      background: transparent
+        linear-gradient(0deg, rgba(22, 50, 82, 0.4) 50%, transparent 100%) 0% 0%
+        no-repeat padding-box;
+    }
+  }
+}
