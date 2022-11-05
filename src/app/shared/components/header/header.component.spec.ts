@@ -1,6 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing"
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+} from "@angular/core/testing"
 
 import { HeaderComponent } from "./header.component"
+import { take } from "rxjs"
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent
@@ -19,4 +26,13 @@ describe("HeaderComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy()
   })
+
+  it("should show date", fakeAsync(() => {
+    let num: Date | undefined
+    component.time$.pipe(take(1)).subscribe((val) => (num = val))
+    tick(3000)
+    fixture.detectChanges()
+    expect(num).toBeDefined()
+    flush()
+  }))
 })
