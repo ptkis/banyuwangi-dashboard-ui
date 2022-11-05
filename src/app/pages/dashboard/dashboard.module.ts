@@ -13,11 +13,13 @@ import { DialogModule } from "@angular/cdk/dialog"
 import { MapDashboardComponent } from "./map-dashboard/map-dashboard.component"
 import { Map3dDashboardComponent } from "./map3d-dashboard/map3d-dashboard.component"
 import { dashboardDialogs } from "./dialogs"
+import { AuthGuard } from "src/app/shared/guards/auth.guard"
 
 export const dashboardRoutes: Routes = [
   {
     path: "",
     component: DashboardComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",

@@ -1,5 +1,5 @@
 import { DATE_PIPE_DEFAULT_TIMEZONE } from "@angular/common"
-import { NgModule } from "@angular/core"
+import { APP_INITIALIZER, NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 
 import { AppRoutingModule } from "./app-routing.module"
@@ -7,29 +7,28 @@ import { AppComponent } from "./app.component"
 
 import { NgxEchartsModule } from "ngx-echarts"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular"
+import { environment } from "src/environments/environment"
 
-/**
- * Testing echart lazy load
- */
-// import * as echarts from "echarts/core"
-// // Import line charts, all with Chart suffix
-// import { LineChart, PieChart } from "echarts/charts"
-// import {
-//   TitleComponent,
-//   TooltipComponent,
-//   GridComponent,
-// } from "echarts/components"
-// // Import the Canvas renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step
-// import { CanvasRenderer } from "echarts/renderers";
-
-// echarts.use([
-//   TitleComponent,
-//   TooltipComponent,
-//   GridComponent,
-//   LineChart,
-//   PieChart,
-//   CanvasRenderer,
-// ])
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: environment.keycloakUrl,
+        realm: environment.keycloakRealm,
+        clientId: environment.keycloakClientId,
+      },
+      initOptions: {
+        pkceMethod: "S256",
+        // must match to the configured value in keycloak
+        redirectUri: window.location.origin,
+        // this will solved the error
+        checkLoginIframe: false,
+        enableLogging: !environment.production,
+      },
+      enableBearerInterceptor: true,
+    })
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,11 +40,18 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
       echarts: () => import("echarts"),
     }),
     BrowserAnimationsModule,
+    KeycloakAngularModule,
   ],
   providers: [
     {
       provide: DATE_PIPE_DEFAULT_TIMEZONE,
       useValue: "+0700",
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
     },
   ],
   bootstrap: [AppComponent],
