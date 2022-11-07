@@ -32,6 +32,8 @@
     "@angular/router": "^14.2.0",
     "bootstrap": "^5.2.2",
     "echarts": "^5.4.0",
+    "keycloak-angular": "^12.1.0",
+    "keycloak-js": "^19.0.3",
     "ngx-echarts": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

@@ -60,6 +60,7 @@ describe("LoginComponent", () => {
     const router = TestBed.inject(Router)
     const spy = spyOn(router, "navigateByUrl")
     component.formSubmit()
+    component.loginWithGoogle()
     expect(spy).not.toHaveBeenCalled()
   })
 })
