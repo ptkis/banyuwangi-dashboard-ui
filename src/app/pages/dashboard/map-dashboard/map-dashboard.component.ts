@@ -2,7 +2,6 @@ import { DomPortalOutlet, TemplatePortal } from "@angular/cdk/portal"
 import {
   AfterViewInit,
   Component,
-  OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -18,6 +17,7 @@ import { CCTVData, DashboardService } from "../dashboard.service"
 export class MapDashboardComponent implements AfterViewInit {
   map!: Map
   layer!: VectorLayer
+  markers: Marker[] = []
 
   @ViewChild("infoWindowContent") infoWindowContent!: TemplateRef<any>
 
@@ -106,13 +106,15 @@ export class MapDashboardComponent implements AfterViewInit {
           +marker_data.cctv_latitude,
         ]).addTo(this.layer)
 
+        this.markers = [...this.markers, marker]
+
         this.setupMarkerInfoWindow(marker, marker_data)
       }
     })
   }
 
   setupMarkerInfoWindow(marker: Marker, marker_data: CCTVData) {
-    new ui.ToolTip(marker_data.cctv_desc, {
+    new ui.ToolTip(marker_data.cctv_title, {
       showTimeout: 0,
     }).addTo(marker)
 

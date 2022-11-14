@@ -2,19 +2,19 @@ import { Injectable } from "@angular/core"
 import { Observable, of } from "rxjs"
 
 export interface CCTVData {
-  cctv_id: string
+  cctv_id?: string
   cctv_title: string
   cctv_link: string
-  cctv_category: string
-  cctv_opd: string
+  cctv_category?: string
+  cctv_opd?: string
   cctv_latitude: string
   cctv_longitude: string
-  cctv_status: string
-  cctv_desc: string
-  insert_timestamp: string
-  insert_user: string
-  update_timestamp: string
-  update_user: string
+  cctv_status?: string
+  cctv_desc?: string
+  insert_timestamp?: string
+  insert_user?: string
+  update_timestamp?: string
+  update_user?: string
 }
 
 @Injectable({
