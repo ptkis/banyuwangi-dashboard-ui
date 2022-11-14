@@ -61,27 +61,27 @@ export class MapDashboardComponent implements AfterViewInit {
       ],
     })
 
-    this.map.on("contextmenu", (e) => {
-      console.log(e.coordinate)
-      if (this.debugMode) {
-        const coord = e.coordinate
-        this.map.removeLayer("peta_bwi")
-        this.map.addLayer([
-          new ImageLayer("peta_bwi", [
-            {
-              url: "/assets/images/peta_banyuwangi.png",
-              extent: [
-                113.70414350463886,
-                -8.844666028985074,
-                coord.x,
-                coord.y,
-              ],
-              opacity: 0.8,
-            },
-          ]),
-        ])
-      }
-    })
+    // this.map.on("contextmenu", (e) => {
+    //   console.log(e.coordinate)
+    //   if (this.debugMode) {
+    //     const coord = e.coordinate
+    //     this.map.removeLayer("peta_bwi")
+    //     this.map.addLayer([
+    //       new ImageLayer("peta_bwi", [
+    //         {
+    //           url: "/assets/images/peta_banyuwangi.png",
+    //           extent: [
+    //             113.70414350463886,
+    //             -8.844666028985074,
+    //             coord.x,
+    //             coord.y,
+    //           ],
+    //           opacity: 0.8,
+    //         },
+    //       ]),
+    //     ])
+    //   }
+    // })
 
     this.layer = new VectorLayer("vector").addTo(this.map)
   }
