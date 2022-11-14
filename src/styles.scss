@@ -251,6 +251,8 @@ $altTheme: (
 // Utilities
 @import "bootstrap/scss/utilities/api";
 
+@import "maptalks/dist/maptalks.css";
+
 // Custom styles
 @import "./styles/backgrounds.scss";
 @import "./styles/buttons.scss";
@@ -276,4 +278,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.maptalks-ui {
+  color: #000000;
 }

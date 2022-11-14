@@ -15,11 +15,18 @@ import { Map3dDashboardComponent } from "./map3d-dashboard/map3d-dashboard.compo
 import { dashboardDialogs } from "./dialogs"
 import { AuthGuard } from "src/app/shared/guards/auth.guard"
 
+import { VgCoreModule } from "@videogular/ngx-videogular/core"
+import { VgControlsModule } from "@videogular/ngx-videogular/controls"
+import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play"
+import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
+import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
+import { HttpClientModule } from "@angular/common/http"
+
 export const dashboardRoutes: Routes = [
   {
     path: "",
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: "",
@@ -37,12 +44,20 @@ export const dashboardRoutes: Routes = [
   declarations: [dashboardComponents, dashboardDialogs],
   imports: [
     CommonModule,
+    HttpClientModule,
+
     SharedModule,
     RouterModule.forChild(dashboardRoutes),
     NgxEchartsModule.forChild(),
     MatButtonModule,
     MatIconModule,
     DialogModule,
+
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgStreamingModule,
   ],
 })
 export class DashboardModule {}

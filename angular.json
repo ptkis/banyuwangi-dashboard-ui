@@ -19,11 +19,20 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": [],
+            "styles": [
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+              "src/styles.scss"
+            ],
+            "scripts": ["./node_modules/hls.js/dist/hls.min.js"],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules"]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "base64-js",
+              "js-sha256",
+              "rbush",
+              "zousan"
+            ]
           },
           "configurations": {
             "production": {
