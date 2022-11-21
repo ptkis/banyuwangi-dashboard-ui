@@ -31,7 +31,10 @@
               "base64-js",
               "js-sha256",
               "rbush",
-              "zousan"
+              "zousan",
+              "earcut",
+              "crypto-js/enc-base64",
+              "crypto-js/hmac-sha256"
             ]
           },
           "configurations": {

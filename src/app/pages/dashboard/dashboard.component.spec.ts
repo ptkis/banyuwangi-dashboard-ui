@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { NgxEchartsModule } from "ngx-echarts"
 
 import { DashboardComponent } from "./dashboard.component"
@@ -28,6 +29,7 @@ describe("DashboardComponent", () => {
         MatButtonModule,
         MatIconModule,
         DialogModule,
+        HttpClientTestingModule,
       ],
     }).compileComponents()
 

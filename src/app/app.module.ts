@@ -9,6 +9,7 @@ import { NgxEchartsModule } from "ngx-echarts"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular"
 import { environment } from "src/environments/environment"
+import { HttpClientModule } from "@angular/common/http"
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -41,6 +42,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     }),
     BrowserAnimationsModule,
     KeycloakAngularModule,
+    HttpClientModule,
   ],
   providers: [
     {

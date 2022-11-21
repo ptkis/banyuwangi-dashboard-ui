@@ -2,11 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { environment as prodEnvironment } from "./environment.prod"
+
 export const environment = {
+  ...prodEnvironment,
   production: false,
-  keycloakUrl: "https://auth.bagifoto.com/",
-  keycloakRealm: "banyuwangi",
-  keycloakClientId: "angular-banyuwangi",
 }
 
 /*

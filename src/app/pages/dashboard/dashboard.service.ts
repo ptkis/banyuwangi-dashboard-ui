@@ -1,10 +1,15 @@
+import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { Observable, of } from "rxjs"
+import { map, Observable, of } from "rxjs"
+
+import * as hmacSHA256 from "crypto-js/hmac-sha256"
+import * as Base64 from "crypto-js/enc-base64"
+import { environment } from "src/environments/environment"
 
 export interface CCTVData {
-  cctv_id?: string
+  cctv_id: string
   cctv_title: string
-  cctv_link: string
+  cctv_link?: string
   cctv_category?: string
   cctv_opd?: string
   cctv_latitude: string
@@ -17,94 +22,149 @@ export interface CCTVData {
   update_user?: string
 }
 
+interface HikResponse<T> {
+  code: string
+  msg: string
+  data: T
+}
+
+interface HikCameraData {
+  cameraIndexCode: string
+  name: string
+  unitIndexCode: string
+  gbIndexCode: string
+  deviceIndexCode: string
+  latitude: string
+  longitude: string
+  altitude: string
+  statusName: string
+}
+interface HikCameraList {
+  list: HikCameraData[]
+}
+
+interface HikStreamingURL {
+  url: string
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class DashboardService {
-  constructor() {}
+  appKey = environment.hikOpenapi.hcm.appKey
+  appSecret = environment.hikOpenapi.hcm.appSecret
+  baseUrl = environment.hikOpenapi.hcm.baseUrl
+
+  constructor(private http: HttpClient) {}
+
+  private _generateHeaders(url: string) {
+    const timestamp = new Date().valueOf().toString()
+    const uid = crypto.randomUUID()
+    const message = `POST
+*/*
+application/json
+x-ca-key:${this.appKey}
+x-ca-nonce:${uid}
+x-ca-timestamp:${timestamp}
+${url}`
+
+    const signature = Base64.stringify(hmacSHA256(message, this.appSecret))
+
+    const headers = {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+      "x-ca-timestamp": timestamp,
+      "x-ca-nonce": uid,
+      "x-ca-key": this.appKey,
+      "x-ca-signature-headers": "x-ca-key,x-ca-nonce,x-ca-timestamp",
+      "x-ca-signature": signature,
+    }
+    return headers
+  }
+
+  postData<T>(url: string, data: Record<string, any>) {
+    return this.http.post<HikResponse<T>>(this.baseUrl + url, data, {
+      headers: this._generateHeaders(url),
+    })
+  }
+
+  getCameraList() {
+    return this.postData<HikCameraList>("/artemis/api/resource/v1/cameras", {
+      pageNo: 1,
+      pageSize: 20,
+      treeCode: "0",
+    })
+  }
+
+  getStreamingURL(cctv_id: string) {
+    return this.postData<HikStreamingURL>(
+      "/artemis/api/video/v1/cameras/previewURLs",
+      {
+        cameraIndexCode: cctv_id,
+        streamType: 0,
+        protocol: "hls",
+        transmode: 0,
+        expand: "transcode=0",
+      }
+    )
+  }
 
   getCCTVData(): Observable<CCTVData[]> {
-    return of([
+    const mapLonLat = [
       {
-        cctv_id: "91",
-        cctv_title: "Malioboro_Perwakilan",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/malioboro/Malioboro_5_Perwakilan.stream/playlist.m3u8",
-        cctv_category: "3",
-        cctv_opd: "108",
-        cctv_latitude: "-8.212201062367143",
-        cctv_longitude: "114.3697169324405",
-        cctv_status: "0",
-        cctv_desc: "Jl. Perwakilan",
-        insert_timestamp: "2020-08-04 09:38:09",
-        insert_user: "JSS-A0008",
-        update_timestamp: "2022-10-19 10:50:42",
-        update_user: "JSS-A0926",
+        cctv_latitude: "-8.2125175",
+        cctv_longitude: "114.36960",
       },
       {
-        cctv_id: "92",
-        cctv_title: "Malioboro_Mall_Utara",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/malioboro/Malioboro_6_Mall_Utara.stream/playlist.m3u8",
-        cctv_category: "3",
-        cctv_opd: "108",
-        cctv_latitude: "-8.216699969227932",
-        cctv_longitude: "114.37744376884848",
-        cctv_status: "0",
-        cctv_desc: "Malioboro Mall Sisi Utara",
-        insert_timestamp: "2020-08-04 09:43:13",
-        insert_user: "JSS-A0008",
-        update_timestamp: "2022-09-12 10:41:05",
-        update_user: "JSS-A0926",
+        cctv_latitude: "-8.2200597",
+        cctv_longitude: "114.3664979",
       },
       {
-        cctv_id: "93",
-        cctv_title: "Malioboro_Mall_Selatan",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/malioboro/Malioboro_7_Mall_Selatan.stream/playlist.m3u8",
-        cctv_category: "3",
-        cctv_opd: "108",
-        cctv_latitude: "-8.224933685504567",
-        cctv_longitude: "114.37306522821723",
-        cctv_status: "0",
-        cctv_desc: "Malioboro Mall Sisi Selatan",
-        insert_timestamp: "2020-08-04 09:46:16",
-        insert_user: "JSS-A0008",
-        update_timestamp: "2022-09-12 10:41:09",
-        update_user: "JSS-A0926",
+        cctv_latitude: "-8.1993271",
+        cctv_longitude: "114.3727973",
       },
       {
-        cctv_id: "94",
-        cctv_title: "Malioboro_Pasar_Beringharjo",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/malioboro/Malioboro_30_Pasar_Beringharjo.stream/playlist.m3u8",
-        cctv_category: "3",
-        cctv_opd: "108",
-        cctv_latitude: "-8.231639369308624",
-        cctv_longitude: "114.3728076670036",
-        cctv_status: "0",
-        cctv_desc: "Pasar Beringharjo",
-        insert_timestamp: "2020-08-04 09:51:04",
-        insert_user: "JSS-A0008",
-        update_timestamp: "2022-09-12 10:41:14",
-        update_user: "JSS-A0926",
+        cctv_latitude: "-8.238748",
+        cctv_longitude: "114.3542172",
       },
       {
-        cctv_id: "129",
-        cctv_title: "Simpang UST",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/atcs/ATCS_UST.stream/playlist.m3u8",
-        cctv_category: "1",
-        cctv_opd: "16",
         cctv_latitude: "-8.37841253025448",
         cctv_longitude: "114.14263776566895",
-        cctv_status: "0",
-        cctv_desc: "Simpang UST",
-        insert_timestamp: "2020-08-28 14:49:33",
-        insert_user: "JSS-A0008",
-        update_timestamp: "2022-10-12 11:24:06",
-        update_user: "JSS-A0926",
       },
-    ])
+    ]
+
+    return this.getCameraList().pipe(
+      map((resp) => {
+        return resp.data.list.map((dt, idx) => {
+          const defLonLat = mapLonLat[idx]
+          const result = {
+            cctv_id: dt.cameraIndexCode,
+            cctv_title: dt.name,
+            cctv_latitude: dt.latitude || defLonLat.cctv_latitude,
+            cctv_longitude: dt.longitude || defLonLat.cctv_longitude,
+            cctv_status: dt.statusName,
+          }
+          return result
+        })
+      })
+    )
+    // return of([
+    // {
+    //   cctv_id: "129",
+    //   cctv_title: "Simpang UST",
+    //   cctv_link:
+    //     "https://cctvjss.jogjakota.go.id/atcs/ATCS_UST.stream/playlist.m3u8",
+    //   cctv_category: "1",
+    //   cctv_opd: "16",
+    //   cctv_latitude: "-8.37841253025448",
+    //   cctv_longitude: "114.14263776566895",
+    //   cctv_status: "0",
+    //   cctv_desc: "Simpang UST",
+    //   insert_timestamp: "2020-08-28 14:49:33",
+    //   insert_user: "JSS-A0008",
+    //   update_timestamp: "2022-10-12 11:24:06",
+    //   update_user: "JSS-A0926",
+    // },
+    // ])
   }
 }
