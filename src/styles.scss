@@ -252,11 +252,13 @@ $altTheme: (
 @import "bootstrap/scss/utilities/api";
 
 @import "maptalks/dist/maptalks.css";
+@import "ngx-toastr/toastr";
 
 // Custom styles
 @import "./styles/backgrounds.scss";
 @import "./styles/buttons.scss";
 @import "./styles/forms.scss";
+@import "./styles/loaders.scss";
 
 .cdk-overlay-dark-backdrop {
   background: rgba(2, 12, 28, 0.9);
@@ -281,4 +283,8 @@ body {
 }
 .maptalks-ui {
   color: #000000;
+}
+
+.toast-top-right {
+  top: 58px;
 }

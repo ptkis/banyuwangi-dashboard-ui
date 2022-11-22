@@ -11,6 +11,8 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular"
 import { environment } from "src/environments/environment"
 import { HttpClientModule } from "@angular/common/http"
 
+import { ToastrModule } from "ngx-toastr"
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -43,6 +45,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     KeycloakAngularModule,
     HttpClientModule,
+
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      preventDuplicates: true,
+    }),
   ],
   providers: [
     {

@@ -20,6 +20,10 @@ import * as THREE from "three"
 import { ThreeLayer } from "maptalks.three"
 import { SVGLoader, SVGResult } from "three/examples/jsm/loaders/SVGLoader"
 
+import { ToastrService } from "ngx-toastr"
+import { HttpErrorResponse } from "@angular/common/http"
+import { finalize } from "rxjs"
+
 @Component({
   selector: "app-map-dashboard",
   templateUrl: "./map-dashboard.component.html",
@@ -37,7 +41,8 @@ export class MapDashboardComponent implements AfterViewInit {
 
   constructor(
     private _viewContainerRef: ViewContainerRef,
-    private _dashboardService: DashboardService
+    private _dashboardService: DashboardService,
+    private toastr: ToastrService
   ) {}
 
   ngAfterViewInit(): void {
@@ -236,18 +241,46 @@ export class MapDashboardComponent implements AfterViewInit {
   }
 
   initMarkers() {
-    this._dashboardService.getCCTVData().subscribe((markers) => {
-      for (const marker_data of markers) {
-        const marker = this.getMarker([
-          +marker_data.cctv_longitude,
-          +marker_data.cctv_latitude,
-        ]).addTo(this.layer)
-
-        this.markers = [...this.markers, marker]
-
-        this.setupMarkerInfoWindow(marker, marker_data)
+    const loadingtoast = this.toastr.info(
+      `
+    <div class="d-flex align-items-center">
+      <div>Loading CCTV List</div>
+      <div class="mx-4 loader"></div>
+    </div>
+    `,
+      "Info",
+      {
+        disableTimeOut: true,
+        enableHtml: true,
       }
-    })
+    )
+    this._dashboardService
+      .getCCTVData()
+      .pipe(finalize(() => loadingtoast.toastRef.close()))
+      .subscribe({
+        next: (markers) => {
+          for (const marker_data of markers) {
+            const marker = this.getMarker([
+              +marker_data.cctv_longitude,
+              +marker_data.cctv_latitude,
+            ]).addTo(this.layer)
+
+            this.markers = [...this.markers, marker]
+
+            this.setupMarkerInfoWindow(marker, marker_data)
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          const status = error.statusText ? ` (${error.statusText})` : ""
+          this.toastr.error(
+            "Failed to get CCTV List!" + status,
+            "Network Error",
+            {
+              disableTimeOut: true,
+            }
+          )
+        },
+      })
   }
 
   setupMarkerInfoWindow(marker: Marker, marker_data: CCTVData) {
