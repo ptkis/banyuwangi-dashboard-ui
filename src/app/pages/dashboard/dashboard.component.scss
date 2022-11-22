@@ -1,12 +1,22 @@
+/* stylelint-disable-next-line selector-type-no-unknown */
+app-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
 .dashboard-container {
   position: relative;
 
   /* stylelint-disable-next-line selector-type-no-unknown */
   app-chart-overlay {
     position: absolute;
-    top: 37px;
+    top: 38px;
     left: 0;
     display: block;
     width: 100%;
+    max-height: calc(100vh - 41px);
+    overflow: auto;
   }
 }

@@ -1,0 +1,15 @@
+<ng-container *ngIf="isLoading; else notLoading"> Loading... </ng-container>
+<ng-template #notLoading>
+  <div class="video-player" *ngIf="url; else urlError">
+    <vg-player>
+      <video
+        #myMedia
+        [vgHls]="url"
+        id="my-video"
+        type="video/mp4"
+        autoplay
+      ></video>
+    </vg-player>
+  </div>
+  <ng-template #urlError> Invalid URL </ng-template>
+</ng-template>
