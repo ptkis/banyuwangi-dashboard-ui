@@ -4,6 +4,7 @@ import { map, Observable, of } from "rxjs"
 
 import * as hmacSHA256 from "crypto-js/hmac-sha256"
 import * as Base64 from "crypto-js/enc-base64"
+import { v4 as uuidv4 } from "uuid"
 import { environment } from "src/environments/environment"
 
 export interface CCTVData {
@@ -59,7 +60,7 @@ export class DashboardService {
 
   private _generateHeaders(url: string) {
     const timestamp = new Date().valueOf().toString()
-    const uid = crypto.randomUUID()
+    const uid = uuidv4()
     const message = `POST
 */*
 application/json
@@ -167,4 +168,8 @@ ${url}`
     // },
     // ])
   }
+
+  // getChartData() {
+  //   return this.http.get<HikStreamingURL>(`${environment.serverBaseUrl}/v1/chart/trash?startDate=2022-04-01&endDate=2022-00-02`)
+  // }
 }

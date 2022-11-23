@@ -30,6 +30,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
         enableLogging: !environment.production,
       },
       enableBearerInterceptor: true,
+      shouldAddToken(request) {
+        return request.url.includes(environment.serverBaseUrl)
+      },
     })
 }
 
