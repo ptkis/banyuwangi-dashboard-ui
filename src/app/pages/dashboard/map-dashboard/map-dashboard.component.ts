@@ -315,47 +315,50 @@ export class MapDashboardComponent implements AfterViewInit {
   }
 
   flyToMarker(marker: Marker) {
-    if (this.map.getPitch() === 0) {
-      const currCenter = this.map.getCenter()
-      this.map.setCenter(marker.getCenter())
-      const rectangle = new Polygon(
+    // if (this.map.getPitch() === 0) {
+    const currPitch = this.map.getPitch()
+    const currCenter = this.map.getCenter()
+    this.map.setCenter(marker.getCenter())
+    this.map.setPitch(0)
+    const rectangle = new Polygon(
+      [
         [
-          [
-            [this.map.getExtent().getMax().x, this.map.getExtent().getMax().y],
-            [this.map.getExtent().getMax().x, marker.getExtent().getMin().y],
-            [this.map.getExtent().getMin().x, marker.getExtent().getMin().y],
-            [this.map.getExtent().getMin().x, this.map.getExtent().getMax().y],
-          ],
+          [this.map.getExtent().getMax().x, this.map.getExtent().getMax().y],
+          [this.map.getExtent().getMax().x, marker.getExtent().getMin().y],
+          [this.map.getExtent().getMin().x, marker.getExtent().getMin().y],
+          [this.map.getExtent().getMin().x, this.map.getExtent().getMax().y],
         ],
-        {
-          symbol: {
-            lineColor: "#34495e",
-            lineWidth: 2,
-            polygonFill: "#34495e",
-            polygonOpacity: 0.4,
-          },
-        }
-      )
-      // Debug polygon
-      // new VectorLayer("vector2").addGeometry([rectangle]).addTo(this.map)
-      this.map.setCenter(currCenter)
-      this.map.animateTo(
-        {
-          center: rectangle.getCenter(),
+      ],
+      {
+        symbol: {
+          lineColor: "#34495e",
+          lineWidth: 2,
+          polygonFill: "#34495e",
+          polygonOpacity: 0.4,
         },
-        {
-          duration: 500,
-        }
-      )
-    } else {
-      this.map.animateTo(
-        {
-          center: marker.getCenter(),
-        },
-        {
-          duration: 500,
-        }
-      )
-    }
+      }
+    )
+    // Debug polygon
+    // new VectorLayer("vector2").addGeometry([rectangle]).addTo(this.map)
+    this.map.setCenter(currCenter)
+    this.map.setPitch(currPitch)
+    this.map.animateTo(
+      {
+        center: rectangle.getCenter(),
+      },
+      {
+        duration: 500,
+      }
+    )
+    // } else {
+    //   this.map.animateTo(
+    //     {
+    //       center: marker.getCenter(),
+    //     },
+    //     {
+    //       duration: 500,
+    //     }
+    //   )
+    // }
   }
 }
