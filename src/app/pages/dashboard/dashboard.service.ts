@@ -56,6 +56,8 @@ export class DashboardService {
   appSecret = environment.hikOpenapi.hcm.appSecret
   baseUrl = environment.hikOpenapi.hcm.baseUrl
 
+  streamType = 1
+
   constructor(private http: HttpClient) {}
 
   private _generateHeaders(url: string) {
@@ -102,7 +104,7 @@ ${url}`
       "/artemis/api/video/v1/cameras/previewURLs",
       {
         cameraIndexCode: cctv_id,
-        streamType: 0,
+        streamType: this.streamType,
         protocol: "hls",
         transmode: 0,
         expand: "transcode=0",

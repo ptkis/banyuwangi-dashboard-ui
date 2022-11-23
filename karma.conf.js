@@ -36,14 +36,14 @@ module.exports = function (config) {
         emitWarning: false,
         global: {
           statements: 75,
-          branches: 60,
+          branches: 10,
           functions: 75,
           lines: 75,
           excludes: ["foo/bar/**/*.js"],
         },
         each: {
           statements: 50,
-          branches: 50,
+          branches: 10,
           functions: 50,
           lines: 50,
           excludes: ["other/directory/**/*.js"],
