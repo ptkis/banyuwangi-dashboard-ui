@@ -48,6 +48,10 @@ export class MapDashboardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap()
     this.initMarkers()
+
+    // this._dashboardService.getChartData().subscribe(dt => {
+    //   console.log(dt)
+    // })
   }
 
   initMap() {
@@ -243,10 +247,8 @@ export class MapDashboardComponent implements AfterViewInit {
   initMarkers() {
     const loadingtoast = this.toastr.info(
       `
-    <div class="d-flex align-items-center">
       <div>Loading CCTV List</div>
-      <div class="mx-4 loader"></div>
-    </div>
+      <div class="loader-long"></div>
     `,
       "Info",
       {
@@ -271,6 +273,7 @@ export class MapDashboardComponent implements AfterViewInit {
           }
         },
         error: (error: HttpErrorResponse) => {
+          console.log({ error })
           const status = error.statusText ? ` (${error.statusText})` : ""
           this.toastr.error(
             "Failed to get CCTV List!" + status,
