@@ -10,20 +10,20 @@ import { dashboardComponents } from ".."
 import { dashboardDialogs } from "../dialogs"
 
 import { MapDashboardComponent } from "./map-dashboard.component"
-import { DashboardService } from "../dashboard.service"
 import { of } from "rxjs"
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
 import { VgControlsModule } from "@videogular/ngx-videogular/controls"
 import { VgCoreModule } from "@videogular/ngx-videogular/core"
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play"
 import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
-import { Marker } from "maptalks"
 import {
   API_URLS,
   HttpMocktInterceptor,
   IMockURLStructure,
 } from "src/app/shared/services/http-mock-interceptor.service"
 import { HTTP_INTERCEPTORS } from "@angular/common/http"
+
+import { ToastrModule } from "ngx-toastr"
 
 class MockDashboardService {
   getCCTVData() {
@@ -63,6 +63,9 @@ export const dashboardMockUrls: IMockURLStructure[] = [
             latitude: "0",
             longitude: "0",
           },
+          {
+            name: "test 2 without latlong",
+          },
         ],
       },
     },
@@ -95,6 +98,7 @@ describe("MapDashboardComponent", () => {
         VgStreamingModule,
 
         HttpClientTestingModule,
+        ToastrModule.forRoot(),
       ],
       providers: [
         {
@@ -122,7 +126,7 @@ describe("MapDashboardComponent", () => {
   it("should test marker", () => {
     fixture.detectChanges()
     component.markers[0].openInfoWindow()
-    expect(component.markers.length).toBe(1)
+    expect(component.markers.length).toBe(2)
   })
 
   it("should test map", () => {
@@ -138,6 +142,6 @@ describe("MapDashboardComponent", () => {
     component.threeLayer?.prepareToDraw((callback: any) => {
       callback(null, scene, camera)
     })
-    expect(component.markers.length).toBe(1)
+    expect(component.markers.length).toBe(2)
   })
 })

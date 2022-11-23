@@ -10,4 +10,5 @@ export const environment = {
       baseUrl: "https://192.168.253.81:443",
     },
   },
+  serverBaseUrl: "https://api.banyuwangi.dasbor.id"
 }
