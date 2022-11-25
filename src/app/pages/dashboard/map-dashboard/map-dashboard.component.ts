@@ -16,7 +16,7 @@ import {
   TileLayer,
 } from "maptalks"
 import { CCTVData, DashboardService } from "../dashboard.service"
-import * as THREE from "three"
+import THREE from "three"
 import { ThreeLayer } from "maptalks.three"
 import { SVGLoader, SVGResult } from "three/examples/jsm/loaders/SVGLoader"
 

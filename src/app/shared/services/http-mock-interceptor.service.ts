@@ -47,7 +47,10 @@ export class HttpMocktInterceptor implements HttpInterceptor {
       }
       if (resp) {
         const body = resp.json["default"] || resp.json
-        // console.info(`Request ${fullReqURL} intercepted by GlobalHttpMockRequestInterceptor`, {body})
+        console.info(
+          `Request ${fullReqURL} intercepted by GlobalHttpMockRequestInterceptor`,
+          { body }
+        )
         return of(new HttpResponse({ status: 200, body })).pipe(
           tap((resp) => this.reqCache.set(fullReqURL, resp))
         )
