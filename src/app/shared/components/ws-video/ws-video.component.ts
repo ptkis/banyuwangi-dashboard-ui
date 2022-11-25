@@ -30,7 +30,7 @@ export class WsVideoComponent implements AfterViewInit, OnDestroy {
   constructor(private _HCPService: HCPService) {}
 
   ngOnDestroy(): void {
-    this.jsDecoder.JS_Stop(0)
+    this.jsDecoder?.JS_Stop(0)
   }
 
   ngAfterViewInit(): void {
