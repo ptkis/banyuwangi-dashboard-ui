@@ -15,7 +15,6 @@ import {
   Polygon,
   TileLayer,
 } from "maptalks"
-import { CCTVData, DashboardService } from "../dashboard.service"
 import * as THREE from "three"
 import { ThreeLayer } from "maptalks.three"
 import { SVGLoader, SVGResult } from "three/examples/jsm/loaders/SVGLoader"
@@ -23,6 +22,9 @@ import { SVGLoader, SVGResult } from "three/examples/jsm/loaders/SVGLoader"
 import { ToastrService } from "ngx-toastr"
 import { HttpErrorResponse } from "@angular/common/http"
 import { finalize } from "rxjs"
+import { HCPService } from "src/app/shared/services/hcp.service"
+import { HCMService } from "src/app/shared/services/hcm.service"
+import { CCTVData } from "src/app/shared/services/hik.service"
 
 @Component({
   selector: "app-map-dashboard",
@@ -41,7 +43,8 @@ export class MapDashboardComponent implements AfterViewInit {
 
   constructor(
     private _viewContainerRef: ViewContainerRef,
-    private _dashboardService: DashboardService,
+    private _HCMService: HCMService,
+    private _HCPService: HCPService,
     private toastr: ToastrService
   ) {}
 
@@ -49,7 +52,7 @@ export class MapDashboardComponent implements AfterViewInit {
     this.initMap()
     this.initMarkers()
 
-    // this._dashboardService.getChartData().subscribe(dt => {
+    // this._HCMService.getChartData().subscribe(dt => {
     //   console.log(dt)
     // })
   }
@@ -232,58 +235,107 @@ export class MapDashboardComponent implements AfterViewInit {
   //   }
   // }
 
-  getMarker(coordinates: number[]) {
+  getMarker(coordinates: number[], svgFile: string) {
     return new Marker(coordinates, {
       symbol: [
         {
-          markerFile: "/assets/images/marker-cctv.svg",
+          markerFile: svgFile,
           markerWidth: 25,
           markerHeight: 35,
+          markerFill: "green",
         },
       ],
     })
   }
 
-  initMarkers() {
-    const loadingtoast = this.toastr.info(
+  showLoading(message: string, title?: string) {
+    return this.toastr.info(
       `
-      <div>Loading CCTV List</div>
+      <div>${message}</div>
       <div class="loader-long"></div>
     `,
-      "Info",
+      title || "Info",
       {
         disableTimeOut: true,
         enableHtml: true,
       }
     )
-    this._dashboardService
+  }
+
+  showError(message: string, title?: string) {
+    return this.toastr.error(message, title || "Error", {
+      disableTimeOut: true,
+    })
+  }
+
+  getCCTVHCP() {
+    const loadingtoast = this.showLoading("HCP - Loading CCTV List")
+    this._HCPService
       .getCCTVData()
       .pipe(finalize(() => loadingtoast.toastRef.close()))
       .subscribe({
         next: (markers) => {
           for (const marker_data of markers) {
-            const marker = this.getMarker([
-              +marker_data.cctv_longitude,
-              +marker_data.cctv_latitude,
-            ]).addTo(this.layer)
-
-            this.markers = [...this.markers, marker]
-
-            this.setupMarkerInfoWindow(marker, marker_data)
+            this.initMarkerFromCCTV(
+              marker_data,
+              "/assets/images/marker-cctv2.svg"
+            )
           }
         },
         error: (error: HttpErrorResponse) => {
           console.log({ error })
           const status = error.statusText ? ` (${error.statusText})` : ""
-          this.toastr.error(
-            "Failed to get CCTV List!" + status,
-            "Network Error",
-            {
-              disableTimeOut: true,
-            }
+          this.showError(
+            `HCP - Failed to get CCTV List! ${status}`,
+            "Network Error"
           )
         },
       })
+  }
+
+  getCCTVHCM() {
+    const loadingtoast = this.showLoading("HCM - Loading CCTV List")
+    this._HCMService
+      .getCCTVData()
+      .pipe(finalize(() => loadingtoast.toastRef.close()))
+      .subscribe({
+        next: (markers) => {
+          for (const marker_data of markers) {
+            this.initMarkerFromCCTV(marker_data)
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log({ error })
+          const status = error.statusText ? ` (${error.statusText})` : ""
+          this.showError(
+            `HCM - Failed to get CCTV List! ${status}`,
+            "Network Error"
+          )
+        },
+      })
+  }
+
+  initMarkers() {
+    this.getCCTVHCP()
+    this.getCCTVHCM()
+  }
+
+  initMarkerFromCCTV(
+    marker_data: CCTVData,
+    svgFile = "/assets/images/marker-cctv.svg"
+  ) {
+    let svg = svgFile
+    if (marker_data.cctv_status?.trim()?.toLowerCase() === "offline") {
+      svg = "/assets/images/marker-cctv2-offline.svg"
+    }
+    const marker = this.getMarker(
+      [+marker_data.cctv_longitude, +marker_data.cctv_latitude],
+      svg
+    ).addTo(this.layer)
+
+    this.markers = [...this.markers, marker]
+
+    this.setupMarkerInfoWindow(marker, marker_data)
   }
 
   setupMarkerInfoWindow(marker: Marker, marker_data: CCTVData) {

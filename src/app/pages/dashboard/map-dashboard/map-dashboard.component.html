@@ -1,5 +1,14 @@
 <app-chart-overlay></app-chart-overlay>
 <div id="map-container"></div>
-<ng-template #infoWindowContent let-id="cctv_id">
-  <app-hik-video [cctv_id]="id"></app-hik-video>
+<ng-template
+  #infoWindowContent
+  let-id="cctv_id"
+  let-ishcp="ishcp"
+  let-status="cctv_status"
+>
+  Status: {{ status }}
+  <app-hik-video [cctv_id]="id" *ngIf="!ishcp; else wsVideo"></app-hik-video>
+  <ng-template #wsVideo>
+    <app-ws-video [cctv_id]="id"></app-ws-video>
+  </ng-template>
 </ng-template>
