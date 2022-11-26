@@ -126,7 +126,7 @@ describe("MapDashboardComponent", () => {
   it("should test marker", () => {
     fixture.detectChanges()
     component.markers[0].openInfoWindow()
-    expect(component.markers.length).toBe(2)
+    expect(component.markers.length).toBe(4)
   })
 
   it("should test map", () => {
@@ -142,6 +142,6 @@ describe("MapDashboardComponent", () => {
     component.threeLayer?.prepareToDraw((callback: any) => {
       callback(null, scene, camera)
     })
-    expect(component.markers.length).toBe(2)
+    expect(component.markers.length).toBe(4)
   })
 })
