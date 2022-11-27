@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from "@angular/core"
 import { finalize } from "rxjs"
-import { DashboardService } from "src/app/pages/dashboard/dashboard.service"
+import { HCMService } from "../../services/hcm.service"
 
 @Component({
   selector: "app-hik-video",
@@ -13,11 +13,11 @@ export class HikVideoComponent implements AfterViewInit {
   isLoading = true
   url: string = ""
 
-  constructor(private _dashboardService: DashboardService) {}
+  constructor(private _service: HCMService) {}
 
   ngAfterViewInit(): void {
     this.isLoading = true
-    this._dashboardService
+    this._service
       .getStreamingURL(this.cctv_id)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((resp) => (this.url = resp.data.url))
