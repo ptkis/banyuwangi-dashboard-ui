@@ -36,20 +36,7 @@
       </app-chart-panel>
     </div>
     <div>
-      <app-chart-panel>
-        <ng-template #customTitle>
-          <div class="title">Sampah Jalan Raya</div>
-          <button mat-icon-button class="panel_button">
-            <mat-icon>filter_list</mat-icon>
-          </button>
-        </ng-template>
-
-        <ng-template #contentBody>
-          <div class="p-2">
-            <div echarts [options]="chartOption" style="height: 200px"></div>
-          </div>
-        </ng-template>
-      </app-chart-panel>
+      <app-chart-component panelTitle="Sampah Jalan Raya"></app-chart-component>
     </div>
   </div>
   <div class="right-area">

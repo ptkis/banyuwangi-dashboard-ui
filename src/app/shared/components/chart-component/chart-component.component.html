@@ -1,0 +1,50 @@
+<app-chart-panel>
+  <ng-template #customTitle>
+    <div class="title">{{ panelTitle }}</div>
+
+    <ng-container *ngIf="allLocations">
+      <button
+        mat-icon-button
+        class="panel_button"
+        [matMenuTriggerFor]="filterMenu"
+      >
+        <mat-icon>filter_list</mat-icon>
+      </button>
+      <mat-menu #filterMenu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="locationMenu">
+          Location ({{ selectedLocations.selected.length }}/{{
+            allLocations.length
+          }})
+        </button>
+      </mat-menu>
+
+      <mat-menu #locationMenu="matMenu">
+        <ng-template matMenuContent>
+          <button mat-menu-item (click)="listFilter.inverseSelection($event)">
+            Invert Selection
+          </button>
+          <div class="list-filter">
+            <app-list-filter
+              #listFilter
+              [items]="allLocations"
+              [selected]="selectedLocations.selected"
+              (click)="$event.stopPropagation()"
+              (selectionChanged)="locationFilterChanged($event)"
+            ></app-list-filter>
+          </div>
+        </ng-template>
+      </mat-menu>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #contentBody>
+    <div class="p-2">
+      <div
+        echarts
+        [options]="chartOption"
+        style="height: 163px"
+        (chartInit)="onChartInit($event)"
+      ></div>
+    </div>
+  </ng-template>
+</app-chart-panel>

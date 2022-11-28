@@ -1,0 +1,42 @@
+<mat-form-field class="example-form-field">
+  <mat-label>Search</mat-label>
+  <input
+    matInput
+    type="text"
+    [(ngModel)]="searchString"
+    (ngModelChange)="searchChange()"
+  />
+  <button
+    *ngIf="searchString"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="searchString = ''; searchChange()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<ul cdkListbox class="filter-listbox">
+  <li *ngIf="displayedItems?.length" cdkOption="all" class="example-option">
+    <mat-checkbox
+      color="primary"
+      [indeterminate]="someSelected(displayedItems)"
+      [checked]="allSelected(displayedItems)"
+      (click)="checkboxSelectAllClick($event)"
+    >
+      Select All
+    </mat-checkbox>
+  </li>
+  <li
+    [cdkOption]="location"
+    class="example-option"
+    *ngFor="let location of displayedItems"
+  >
+    <mat-checkbox
+      [checked]="selectedItems.isSelected(location)"
+      (click)="itemFilterClick(location, $event)"
+    >
+      {{ location }}
+    </mat-checkbox>
+  </li>
+</ul>
