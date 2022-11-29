@@ -25,6 +25,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http"
 
 import { ToastrModule } from "ngx-toastr"
 import { environment } from "src/environments/environment"
+import { FormsModule } from "@angular/forms"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -97,6 +98,8 @@ describe("MapDashboardComponent", () => {
 
         HttpClientTestingModule,
         ToastrModule.forRoot(),
+
+        FormsModule,
       ],
       providers: [
         {

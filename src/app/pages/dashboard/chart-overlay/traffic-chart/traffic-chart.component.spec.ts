@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { chartImportedModules, chartProviders } from "../chart-components"
 
 import { TrafficChartComponent } from "./traffic-chart.component"
 
@@ -9,6 +10,8 @@ describe("TrafficChartComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TrafficChartComponent],
+      imports: [...chartImportedModules],
+      providers: [chartProviders],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TrafficChartComponent)

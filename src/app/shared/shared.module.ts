@@ -18,6 +18,16 @@ import { MatInputModule } from "@angular/material/input"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { FormsModule } from "@angular/forms"
 
+export const materialModules = [
+  MatIconModule,
+  MatButtonModule,
+  MatMenuModule,
+  CdkListboxModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatFormFieldModule,
+]
+
 @NgModule({
   declarations: [sharedComponents],
   imports: [
@@ -31,13 +41,7 @@ import { FormsModule } from "@angular/forms"
 
     NgxEchartsModule,
 
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    CdkListboxModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatFormFieldModule,
+    ...materialModules,
 
     FormsModule,
   ],

@@ -18,6 +18,6 @@ export class StreetVendorChartComponent {
   getData: () => Observable<ChartResponse>
 
   constructor(private _dashboardService: DashboardService) {
-    this.getData = _dashboardService.getFloodChartData
+    this.getData = _dashboardService.getStreetVendorChartData
   }
 }
