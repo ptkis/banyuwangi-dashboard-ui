@@ -23,45 +23,16 @@
   </div>
   <div class="left-area">
     <div>
-      <app-chart-panel>
-        <ng-template #customTitle>
-          <div class="title">Genangan Air</div>
-        </ng-template>
-
-        <ng-template #contentBody>
-          <div class="p-2">
-            <div echarts [options]="chartOption" style="height: 163px"></div>
-          </div>
-        </ng-template>
-      </app-chart-panel>
+      <app-flood-chart></app-flood-chart>
     </div>
     <div>
-      <app-chart-component panelTitle="Sampah Jalan Raya"></app-chart-component>
+      <app-trash-chart></app-trash-chart>
     </div>
   </div>
   <div class="right-area">
-    <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Pedagang Kaki Lima</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 163px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel>
-    <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Pengguna Masker</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 163px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel>
+    <div>
+      <app-street-vendor-chart tooltipPosition="left"></app-street-vendor-chart>
+    </div>
   </div>
   <div class="footer-area">
     <app-chart-panel>
@@ -86,27 +57,7 @@
         </div>
       </ng-template>
     </app-chart-panel>
-    <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Kepadatan Lalu Lintas</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 133px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel>
-    <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Keramaian Orang</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 133px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel>
+    <app-traffic-chart tooltipPosition="top"></app-traffic-chart>
+    <app-crowd-chart tooltipPosition="top"></app-crowd-chart>
   </div>
 </div>

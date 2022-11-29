@@ -2,7 +2,7 @@
   <ng-template #customTitle>
     <div class="title">{{ panelTitle }}</div>
 
-    <ng-container *ngIf="allLocations">
+    <ng-container *ngIf="allLocations?.length">
       <button
         mat-icon-button
         class="panel_button"
@@ -38,7 +38,13 @@
   </ng-template>
 
   <ng-template #contentBody>
-    <div class="p-2">
+    <div class="p-2 body">
+      <div *ngIf="errorMessage" class="error-message">
+        <div class="text-center">
+          <div>{{ errorMessage }}</div>
+          <button mat-raised-button (click)="loadChartData(true)">Retry</button>
+        </div>
+      </div>
       <div
         echarts
         [options]="chartOption"

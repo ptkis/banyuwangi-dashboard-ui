@@ -1,12 +1,14 @@
-import { Component, Input, OnInit } from "@angular/core"
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core"
 import { graphic, EChartsOption, EChartsType } from "echarts"
 import {
   ChartData,
+  ChartResponse,
   DashboardService,
 } from "src/app/pages/dashboard/dashboard.service"
 import { defaultChartConfig } from "../../constants/charts"
 import { SelectionModel } from "@angular/cdk/collections"
 import { DatePipe } from "@angular/common"
+import { finalize, Observable } from "rxjs"
 
 @Component({
   selector: "app-chart-component",
@@ -15,6 +17,11 @@ import { DatePipe } from "@angular/common"
 })
 export class ChartComponentComponent {
   @Input() panelTitle = "Chart"
+  @Input() tooltipPosition: "left" | "right" | "top" = "right"
+
+  @Input() getChartData!: (...args: any[]) => Observable<ChartResponse>
+
+  @Output() chartInitialized = new EventEmitter<EChartsType>()
 
   chartOption: EChartsOption = {
     ...defaultChartConfig,
@@ -23,42 +30,6 @@ export class ChartComponentComponent {
       type: "category",
       data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     },
-    series: [
-      {
-        name: "Data 1",
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: "line",
-        areaStyle: {
-          color: new graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: "#E7E551",
-            },
-            {
-              offset: 1,
-              color: "transparent",
-            },
-          ]),
-        },
-      },
-      {
-        name: "Data 2",
-        data: [100, 30, 324, 118, 235, 47, 160],
-        type: "line",
-        areaStyle: {
-          color: new graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: "#23639e",
-            },
-            {
-              offset: 1,
-              color: "transparent",
-            },
-          ]),
-        },
-      },
-    ],
   }
 
   echartsInstance!: EChartsType
@@ -68,13 +39,29 @@ export class ChartComponentComponent {
   allLocations: string[] = []
   selectedLocations = new SelectionModel<string>(true, [])
 
+  errorMessage = ""
+
   constructor(
     private _dashboardService: DashboardService,
     private datePipe: DatePipe
   ) {}
 
+  setLoading(loading: boolean) {
+    if (this.echartsInstance) {
+      loading
+        ? this.echartsInstance.showLoading()
+        : this.echartsInstance.hideLoading()
+    }
+  }
+
+  setError(err: object) {
+    const message = "Failed to load chart data"
+    this.errorMessage = message
+  }
+
   onChartInit(ec: EChartsType) {
     this.echartsInstance = ec
+    this.chartInitialized.emit(ec)
     this.loadChartData()
   }
 
@@ -127,75 +114,79 @@ export class ChartComponentComponent {
     this.selectedLocations.select(...items)
   }
 
-  loadChartData() {
-    if (this.echartsInstance) {
-      this.echartsInstance.showLoading()
+  loadChartData(retry = false) {
+    if (this.getChartData) {
+      this.setLoading(true)
+      this.getChartData
+        .bind(this._dashboardService)(retry)
+        .pipe(finalize(() => this.setLoading(false)))
+        .subscribe({
+          next: (resp) => {
+            this.labels = resp.labels.map((val) => {
+              const tgl = new Date(val)
+              return (
+                this.datePipe
+                  .transform(tgl, "yyyy-MM-dd HH:mm:ss")
+                  ?.toString() || ""
+              )
+            })
+            this.data = resp.data
+            this.allLocations = Object.keys(this.data)
+            this.selectedLocations.select(...this.allLocations)
+            this.initCharts()
+          },
+          error: (err) => this.setError(err),
+        })
     }
-    this._dashboardService.getTrashChartData().subscribe((resp) => {
-      this.labels = resp.labels.map((val) => {
-        const tgl = new Date(val)
-        return (
-          this.datePipe.transform(tgl, "yyyy-MM-dd HH:mm:ss")?.toString() || ""
-        )
-      })
-      this.data = resp.data
-      this.allLocations = Object.keys(this.data)
-      this.selectedLocations.select(...this.allLocations)
-      const series = this.generateSeries(this.data)
+  }
 
-      const chartData = {
-        ...this.chartOption,
-        xAxis: {
-          ...this.chartOption.xAxis,
-          scale: true,
-          data: this.labels,
-          axisLabel: {
-            formatter: function (value: string, _idx: number) {
-              const tgl = new Date(value)
-              return tgl.toLocaleDateString("id-ID")
-            },
+  generateChartOptions() {
+    const series = this.generateSeries(this.data)
+    return {
+      ...this.chartOption,
+      xAxis: {
+        ...this.chartOption.xAxis,
+        scale: true,
+        data: this.labels,
+        axisLabel: {
+          color: "#fff",
+          formatter: function (value: string, _idx: number) {
+            const tgl = new Date(value)
+            return tgl.toLocaleDateString("id-ID")
           },
         },
-        series,
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-          },
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          // formatter: (componentType: 'series',
-          // seriesType: string,
-          // seriesIndex: number,
-          // seriesName: string,
-          // name: string,
-          // dataIndex: number,
-          // data: Object) => {
-          //   return data
-          // },
-          // valueFormatter: (value: any) => '$' + value,
-          position: function (
-            pos: any,
-            params: any,
-            el: any,
-            elRect: any,
-            size: any
-          ) {
-            const obj: Record<string, number> = {
-              top: -40,
-              left: 230,
+      },
+      series,
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "cross",
+        },
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        position: (pos: any, params: any, el: any, elRect: any, size: any) => {
+          let obj: Record<string, number> = {
+            top: -40,
+            // left: 230,
+          }
+          if (this.tooltipPosition === "left") {
+            obj["right"] = 230
+          }
+          if (this.tooltipPosition === "right") {
+            obj["left"] = 230
+          }
+          if (this.tooltipPosition === "top") {
+            obj = {
+              bottom: 220,
             }
-            // obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30
-            return obj
-          },
-          extraCssText: "width: 200px; text-align: left",
+          }
+          return obj
         },
-      }
+        extraCssText: "width: 200px; text-align: left",
+      },
+    }
+  }
 
-      this.chartOption = chartData as any
-
-      if (this.echartsInstance) {
-        this.echartsInstance.hideLoading()
-      }
-    })
+  initCharts() {
+    this.chartOption = this.generateChartOptions() as any
   }
 }

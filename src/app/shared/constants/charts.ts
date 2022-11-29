@@ -32,6 +32,8 @@ export const defaultChartConfig: EChartsOption = {
     axisLabel: {
       color: "#fff",
     },
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   },
   yAxis: {
     type: "value",
@@ -61,6 +63,42 @@ export const defaultChartConfig: EChartsOption = {
       labelFormatter(value: number, valStr: string) {
         const tgl = new Date(valStr)
         return tgl.toLocaleDateString("id-ID")
+      },
+    },
+  ],
+  series: [
+    {
+      name: "Data 1",
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: "line",
+      areaStyle: {
+        color: new graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: "#E7E551",
+          },
+          {
+            offset: 1,
+            color: "transparent",
+          },
+        ]),
+      },
+    },
+    {
+      name: "Data 2",
+      data: [100, 30, 324, 118, 235, 47, 160],
+      type: "line",
+      areaStyle: {
+        color: new graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: "#23639e",
+          },
+          {
+            offset: 1,
+            color: "transparent",
+          },
+        ]),
       },
     },
   ],

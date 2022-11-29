@@ -1,3 +1,18 @@
 .list-filter {
   padding: 0 16px;
 }
+.body {
+  position: relative;
+  .error-message {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    color: red;
+    z-index: 2;
+  }
+}

@@ -1,3 +1,4 @@
+import { chartComponents } from "./chart-overlay/chart-components"
 import { ChartOverlayComponent } from "./chart-overlay/chart-overlay.component"
 import { DashboardComponent } from "./dashboard.component"
 import { MapDashboardComponent } from "./map-dashboard/map-dashboard.component"
@@ -8,4 +9,6 @@ export const dashboardComponents = [
   ChartOverlayComponent,
   MapDashboardComponent,
   Map3dDashboardComponent,
+
+  ...chartComponents,
 ]

@@ -17,9 +17,99 @@ export interface ChartResponse {
 export class DashboardService {
   constructor(private http: HttpClient) {}
 
-  getTrashChartData() {
+  getFloodChartData(retry?: boolean, searchParams?: { [key: string]: string }) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
     return this.http.get<ChartResponse>(
-      `${environment.serverBaseUrl}/v1/chart/trash`
+      `${environment.serverBaseUrl}/v1/chart/flood`,
+      {
+        params,
+      }
+    )
+  }
+
+  getTrashChartData(retry?: boolean, searchParams?: { [key: string]: string }) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
+    return this.http.get<ChartResponse>(
+      `${environment.serverBaseUrl}/v1/chart/trash`,
+      {
+        params,
+      }
+    )
+  }
+
+  getTrafficChartData(
+    retry?: boolean,
+    searchParams?: { [key: string]: string }
+  ) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
+    return this.http.get<ChartResponse>(
+      `${environment.serverBaseUrl}/v1/chart/traffic`,
+      {
+        params,
+      }
+    )
+  }
+
+  getStreetVendorChartData(
+    retry?: boolean,
+    searchParams?: { [key: string]: string }
+  ) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
+    return this.http.get<ChartResponse>(
+      `${environment.serverBaseUrl}/v1/chart/streetvendor`,
+      {
+        params,
+      }
+    )
+  }
+
+  getCrowdChartData(retry?: boolean, searchParams?: { [key: string]: string }) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
+    return this.http.get<ChartResponse>(
+      `${environment.serverBaseUrl}/v1/chart/crowd`,
+      {
+        params,
+      }
     )
   }
 }
