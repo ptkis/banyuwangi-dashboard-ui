@@ -1,13 +1,14 @@
-import { Component, OnInit } from "@angular/core"
-import { graphic, EChartsOption } from "echarts"
+import { AfterViewInit, Component, OnInit } from "@angular/core"
+import { graphic, EChartsOption, EChartsType } from "echarts"
 import { defaultChartConfig } from "src/app/shared/constants/charts"
+import { DashboardService } from "../dashboard.service"
 
 @Component({
   selector: "app-chart-overlay",
   templateUrl: "./chart-overlay.component.html",
   styleUrls: ["./chart-overlay.component.scss"],
 })
-export class ChartOverlayComponent {
+export class ChartOverlayComponent implements AfterViewInit {
   chartOption: EChartsOption = {
     ...defaultChartConfig,
     xAxis: {
@@ -53,5 +54,9 @@ export class ChartOverlayComponent {
     ],
   }
 
-  constructor() {}
+  constructor(private _dashboardService: DashboardService) {}
+
+  ngAfterViewInit(): void {
+    undefined
+  }
 }
