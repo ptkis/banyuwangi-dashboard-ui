@@ -7,7 +7,7 @@ export const environment = {
     hcm: {
       appKey: "29765272",
       appSecret: "TQQN1wGxFY1J8I1NHfoz",
-      baseUrl: "https://hcm.banyuwangi.dasbor.id:443",
+      baseUrl: "https://192.168.253.81:443",
     },
     hcp: {
       appKey: "23926226",
@@ -15,5 +15,5 @@ export const environment = {
       baseUrl: "https://hcp.banyuwangikab.go.id",
     },
   },
-  serverBaseUrl: "https://api.banyuwangi.dasbor.id",
+  serverBaseUrl: "https://api.banyuwangi.dasbor.id"
 }
