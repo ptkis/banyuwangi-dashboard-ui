@@ -3,7 +3,7 @@
 var config = {
   // verbose: true,
   preset: "jest-preset-angular",
-  testEnvironment: "@happy-dom/jest-environment",
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
   roots: ["<rootDir>"],
   modulePaths: ["<rootDir>"],
@@ -17,10 +17,9 @@ var config = {
       isolatedModules: true,
     },
   },
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ["./src/app/**"],
   coveragePathIgnorePatterns: ["(.stories.ts|.html|module.ts)$"],
-  coverageReporters: "",
   coverageThreshold: {
     global: {
       lines: 90,
