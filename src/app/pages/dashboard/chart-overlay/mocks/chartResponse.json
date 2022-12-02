@@ -1,0 +1,47 @@
+{
+  "seriesNames": [
+    "Kampung Mandar",
+    "Kampung Melayu",
+    "Karangrejo",
+    "Kebalenan",
+    "Kepatihan",
+    "Kertosari",
+    "Lateng",
+    "Pakis",
+    "Panderejo",
+    "Penganjuran",
+    "Pengantigan",
+    "Singonegaran",
+    "Singotrunan",
+    "Sobo",
+    "Sumber Rejo",
+    "Taman Baru",
+    "Temenggungan",
+    "Tukang Kayu"
+  ],
+  "labels": [
+    "2022-11-29T12:17:36.299497131+07:00",
+    "2022-11-29T13:17:36.299497131+07:00",
+    "2022-11-29T14:17:36.299497131+07:00"
+  ],
+  "data": {
+    "Kampung Mandar": [8880, 8918, 4432],
+    "Kampung Melayu": [7241, 3703, 7397],
+    "Karangrejo": [3364, 9108, 7800],
+    "Kebalenan": [3500, 9801, 8037],
+    "Kepatihan": [2645, 9997, 2700],
+    "Kertosari": [2815, 3683, 3144],
+    "Lateng": [2538, 2411, 9875],
+    "Pakis": [6724, 2398, 142],
+    "Panderejo": [3238, 2273, 954],
+    "Penganjuran": [2473, 7248, 7998],
+    "Pengantigan": [1403, 5198, 7271],
+    "Singonegaran": [9144, 4212, 2826],
+    "Singotrunan": [7072, 404, 2386],
+    "Sobo": [1106, 3556, 4559],
+    "Sumber Rejo": [4780, 7527, 1500],
+    "Taman Baru": [27, 2157, 8604],
+    "Temenggungan": [3905, 4846, 5617],
+    "Tukang Kayu": [7547, 8287, 8705]
+  }
+}

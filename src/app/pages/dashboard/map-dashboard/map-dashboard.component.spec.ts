@@ -24,30 +24,29 @@ import {
 import { HTTP_INTERCEPTORS } from "@angular/common/http"
 
 import { ToastrModule } from "ngx-toastr"
-
-class MockDashboardService {
-  getCCTVData() {
-    return of([
-      {
-        cctv_title: "Malioboro_Perwakilan",
-        cctv_link:
-          "https://cctvjss.jogjakota.go.id/malioboro/Malioboro_5_Perwakilan.stream/playlist.m3u8",
-        cctv_latitude: "-8.212201062367143",
-        cctv_longitude: "114.3697169324405",
-      },
-    ])
-  }
-}
+import { environment } from "src/environments/environment"
+import { FormsModule } from "@angular/forms"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
-    urlRegex: /previewURLs/,
+    urlRegex: new RegExp(environment.hikOpenapi.hcm.baseUrl + ".+?previewURLs"),
     cache: false,
     json: {
       code: "0",
       msg: "ok",
       data: {
         url: "localhost",
+      },
+    },
+  },
+  {
+    urlRegex: new RegExp(environment.hikOpenapi.hcp.baseUrl + ".+?previewURLs"),
+    cache: false,
+    json: {
+      code: "0",
+      msg: "ok",
+      data: {
+        url: "ws://192.168.256.3/SMSEurl/AbcDEF/fdfd/sdf",
       },
     },
   },
@@ -101,6 +100,8 @@ describe("MapDashboardComponent", () => {
 
         HttpClientTestingModule,
         ToastrModule.forRoot(),
+
+        FormsModule,
       ],
       providers: [
         {
@@ -125,31 +126,27 @@ describe("MapDashboardComponent", () => {
   //   expect(component).toBeTruthy()
   // })
 
-  // it("should test marker", () => {
-  //   fixture.detectChanges()
-  //   console.log(component.markers?.length)
-  //   try {
-  //     component.markers[0].openInfoWindow()
-  //   } catch (error) {}
-  //   expect(component.markers.length).toBe(2)
-  // })
+  it("should test marker", () => {
+    fixture.detectChanges()
+    for (const marker of component.markers) {
+      marker.openInfoWindow()
+    }
+    expect(component.markers.length).toBe(4)
+  })
 
   it("should test map", async () => {
     fixture.detectChanges()
-    // component.map.setPitch(0)
-    // try {
-    //   component.markers[0].openInfoWindow()
-    // } catch (error) {}
-    // const scene = {
-    //   add: () => {},
-    // }
-    // const camera = {
-    //   add: () => {},
-    // }
-    // component.threeLayer?.prepareToDraw((callback: any) => {
-    //   callback(null, scene, camera)
-    // })
-    await fixture.whenStable()
-    expect(component.markers.length).toBe(2)
+    component.map.setPitch(0)
+    component.markers[0].openInfoWindow()
+    const scene = {
+      add: () => {},
+    }
+    const camera = {
+      add: () => {},
+    }
+    component.threeLayer?.prepareToDraw((callback: any) => {
+      callback(null, scene, camera)
+    })
+    expect(component.markers.length).toBe(4)
   })
 })

@@ -11,6 +11,14 @@ import { dashboardDialogs } from "../dialogs"
 import { Map3dDashboardComponent } from "./map3d-dashboard.component"
 
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+import { HttpClientTestingModule } from "@angular/common/http/testing"
+import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
+import { VgControlsModule } from "@videogular/ngx-videogular/controls"
+import { VgCoreModule } from "@videogular/ngx-videogular/core"
+import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play"
+import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
+import { ToastrModule } from "ngx-toastr"
+import { FormsModule } from "@angular/forms"
 
 describe("Map3dDashboardComponent", () => {
   let component: Map3dDashboardComponent
@@ -20,7 +28,6 @@ describe("Map3dDashboardComponent", () => {
     await TestBed.configureTestingModule({
       declarations: [dashboardComponents, dashboardDialogs],
       imports: [
-        NoopAnimationsModule,
         DialogModule,
         RouterTestingModule,
         SharedModule,
@@ -31,6 +38,17 @@ describe("Map3dDashboardComponent", () => {
         RouterTestingModule,
         MatButtonModule,
         MatIconModule,
+
+        VgCoreModule,
+        VgControlsModule,
+        VgOverlayPlayModule,
+        VgBufferingModule,
+        VgStreamingModule,
+
+        HttpClientTestingModule,
+        ToastrModule.forRoot(),
+
+        FormsModule,
       ],
     }).compileComponents()
 
