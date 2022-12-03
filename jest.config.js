@@ -22,10 +22,27 @@ var config = {
   },
   collectCoverage: false,
   collectCoverageFrom: ["./src/app/**"],
-  coveragePathIgnorePatterns: ["(.stories.ts|.html|module.ts|.json|guards)"],
+  coveragePathIgnorePatterns: [
+    "(.stories.ts|.html|module.ts|.json|guards|mock)",
+  ],
   coverageThreshold: {
     global: {
-      lines: 90,
+      statements: 75,
+      branches: 75,
+      functions: 75,
+      lines: 75,
+    },
+    "./src/app/pages/**/*.ts": {
+      statements: 75,
+      branches: 75,
+      functions: 75,
+      lines: 75,
+    },
+    "./src/app/shared/**/*.ts": {
+      statements: 75,
+      branches: 75,
+      functions: 75,
+      lines: 75,
     },
   },
 }

@@ -10,7 +10,7 @@ import { dashboardComponents } from ".."
 import { dashboardDialogs } from "../dialogs"
 
 import { MapDashboardComponent } from "./map-dashboard.component"
-import { of } from "rxjs"
+import { of, throwError } from "rxjs"
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
 import { VgControlsModule } from "@videogular/ngx-videogular/controls"
 import { VgCoreModule } from "@videogular/ngx-videogular/core"
@@ -27,6 +27,11 @@ import { ToastrModule } from "ngx-toastr"
 import { environment } from "src/environments/environment"
 import { FormsModule } from "@angular/forms"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+
+import { render, screen, fireEvent, waitFor } from "@testing-library/angular"
+import { DashboardService } from "../dashboard.service"
+import { HCPService } from "src/app/shared/services/hcp.service"
+import { HCMService } from "src/app/shared/services/hcm.service"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -62,6 +67,7 @@ export const dashboardMockUrls: IMockURLStructure[] = [
             name: "test",
             latitude: "0",
             longitude: "0",
+            statusName: "Offline",
           },
           {
             name: "test 2 without latlong",
@@ -75,11 +81,8 @@ export const dashboardMockUrls: IMockURLStructure[] = [
 jest.setTimeout(30000)
 
 describe("MapDashboardComponent", () => {
-  let component: MapDashboardComponent
-  let fixture: ComponentFixture<MapDashboardComponent>
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  const renderComponent = async (providers: any[] = []) => {
+    return await render(MapDashboardComponent, {
       declarations: [dashboardComponents, dashboardDialogs],
       imports: [
         NoopAnimationsModule,
@@ -115,18 +118,21 @@ describe("MapDashboardComponent", () => {
           provide: API_URLS,
           useValue: dashboardMockUrls,
         },
+        ...providers,
       ],
-    }).compileComponents()
-
-    fixture = TestBed.createComponent(MapDashboardComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
+    })
+  }
 
   it("should test map", async () => {
+    const res = await renderComponent()
+    const fixture = res.fixture
+    const component = fixture.componentInstance
     fixture.detectChanges()
     component.map.setPitch(0)
-    component.markers[0].openInfoWindow()
+    for (const marker of component.markers) {
+      marker.openInfoWindow()
+    }
+    // await fixture.whenStable()
     const scene = {
       add: () => {},
     }
@@ -140,5 +146,27 @@ describe("MapDashboardComponent", () => {
       [null, scene, camera]
     )
     expect(component.markers.length).toBe(4)
+  })
+
+  it("should test error response", async () => {
+    class mockHCPService {
+      getCCTVData() {
+        return throwError(() => ({ statusText: "Error" }))
+      }
+    }
+    const res = await renderComponent([
+      {
+        provide: HCPService,
+        useClass: mockHCPService,
+      },
+      {
+        provide: HCMService,
+        useClass: mockHCPService,
+      },
+    ])
+    const fixture = res.fixture
+    const component = fixture.componentInstance
+    fixture.detectChanges()
+    expect(component.markers.length).toBe(0)
   })
 })

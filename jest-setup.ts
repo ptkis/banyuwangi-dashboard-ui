@@ -1,4 +1,5 @@
 import "jest-preset-angular/setup-jest"
+import "@testing-library/jest-dom/extend-expect"
 import "jest-canvas-mock"
 import { jestPreviewConfigure } from "jest-preview"
 
@@ -89,9 +90,15 @@ class JSPlugin {
 
   JS_Play(url: string, data: object, window: number) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
+      if (url.includes("failed")) {
+        reject({
+          oError: {
+            statusString: "y",
+          },
+        })
+      } else {
         resolve("foo")
-      }, 300)
+      }
     })
   }
 
