@@ -26,6 +26,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http"
 import { ToastrModule } from "ngx-toastr"
 import { environment } from "src/environments/environment"
 import { FormsModule } from "@angular/forms"
+import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -81,6 +82,7 @@ describe("MapDashboardComponent", () => {
     await TestBed.configureTestingModule({
       declarations: [dashboardComponents, dashboardDialogs],
       imports: [
+        NoopAnimationsModule,
         DialogModule,
         RouterTestingModule,
         SharedModule,
@@ -121,19 +123,6 @@ describe("MapDashboardComponent", () => {
     fixture.detectChanges()
   })
 
-  // it("should create", () => {
-  //   fixture.detectChanges()
-  //   expect(component).toBeTruthy()
-  // })
-
-  it("should test marker", () => {
-    fixture.detectChanges()
-    for (const marker of component.markers) {
-      marker.openInfoWindow()
-    }
-    expect(component.markers.length).toBe(4)
-  })
-
   it("should test map", async () => {
     fixture.detectChanges()
     component.map.setPitch(0)
@@ -144,9 +133,12 @@ describe("MapDashboardComponent", () => {
     const camera = {
       add: () => {},
     }
-    component.threeLayer?.prepareToDraw((callback: any) => {
-      callback(null, scene, camera)
-    })
+    component.threeLayer?.prepareToDraw.apply(
+      (callback: any) => {
+        callback(null, scene, camera)
+      },
+      [null, scene, camera]
+    )
     expect(component.markers.length).toBe(4)
   })
 })

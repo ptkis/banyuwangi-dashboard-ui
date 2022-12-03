@@ -1,5 +1,8 @@
 import "jest-preset-angular/setup-jest"
 import "jest-canvas-mock"
+import { jestPreviewConfigure } from "jest-preview"
+
+jestPreviewConfigure({ autoPreview: true })
 
 const nodeCrypto = require("crypto")
 
@@ -29,6 +32,45 @@ jest.mock("three", () => {
   }
 })
 
+jest.mock("three/examples/jsm/loaders/SVGLoader", () => {
+  const svgL = jest.requireActual("three/examples/jsm/loaders/SVGLoader")
+  const svgLoader = new svgL.SVGLoader()
+  const data = svgLoader.parse(`<svg height="100" width="100">
+      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+      Sorry, your browser does not support inline SVG.
+    </svg> `)
+  class mockSVGLoader extends svgL.SVGLoader {
+    constructor() {
+      super()
+    }
+
+    load = (dt, cb) => {
+      cb(data)
+    }
+  }
+  return {
+    ...svgL,
+    SVGLoader: mockSVGLoader,
+  }
+})
+
+jest.mock("maptalks.three", () => {
+  const mapthree = jest.requireActual("maptalks.three")
+  class mockThreeLayer extends mapthree["ThreeLayer"] {
+    getScene() {
+      return {
+        add: jest.fn(),
+        children: [],
+      }
+    }
+  }
+
+  return {
+    ...mapthree,
+    ThreeLayer: mockThreeLayer,
+  }
+})
+
 // class mockXHR {
 //   open = jest.fn()
 //   send = jest.fn()
@@ -41,3 +83,21 @@ jest.mock("three", () => {
 // Object.defineProperty(window, "XMLHttpRequest", {
 //   value: mockXHR
 // })
+
+class JSPlugin {
+  constructor(obj: object) {}
+
+  JS_Play(url: string, data: object, window: number) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("foo")
+      }, 300)
+    })
+  }
+
+  JS_Stop(foo: any) {
+    return true
+  }
+}
+
+;(window as any)["JSPlugin"] = JSPlugin
