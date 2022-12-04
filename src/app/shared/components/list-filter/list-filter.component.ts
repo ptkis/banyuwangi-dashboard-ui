@@ -40,7 +40,7 @@ export class ListFilterComponent {
   constructor() {}
 
   runFilter() {
-    if (this.searchString?.length > 0) {
+    if (this.searchString.length > 0) {
       this.displayedItems = this.items.filter((s) =>
         s.toLowerCase().includes(this.searchString.toLowerCase())
       )
@@ -49,49 +49,49 @@ export class ListFilterComponent {
     }
   }
 
-  someSelected(items?: string[]) {
-    const theItems = items || this.items
-    const selectedItems = this.selectedItems?.selected.filter((itm) =>
+  someSelected(items: string[]) {
+    const theItems = items
+    const selectedItems = this.selectedItems.selected.filter((itm) =>
       theItems.includes(itm)
     )
-    return !!selectedItems?.length && !this.allSelected(theItems)
+    return !!selectedItems.length && !this.allSelected(theItems)
   }
 
-  allSelected(items?: string[]) {
-    const theItems = items || this.items
-    const selectedItems = this.selectedItems?.selected.filter((itm) =>
+  allSelected(items: string[]) {
+    const theItems = items
+    const selectedItems = this.selectedItems.selected.filter((itm) =>
       theItems.includes(itm)
     )
-    return theItems?.length === selectedItems?.length
+    return theItems?.length === selectedItems.length
   }
 
-  itemFilterClick(value: string, event?: Event) {
-    event?.stopPropagation?.()
-    event?.preventDefault?.()
+  itemFilterClick(value: string, event: Event) {
+    event.stopPropagation()
+    event.preventDefault()
     this.selectedItems.toggle(value)
     this.emitValue()
   }
 
-  checkboxSelectAllClick(event?: Event) {
-    event?.stopPropagation?.()
-    event?.preventDefault?.()
+  checkboxSelectAllClick(event: Event) {
+    event.stopPropagation()
+    event.preventDefault()
     if (this.allSelected(this.displayedItems)) {
-      this.unSelectAll(this.displayedItems)
+      this.unSelectAll(this.displayedItems, event)
     } else {
-      this.selectAll(this.displayedItems)
+      this.selectAll(this.displayedItems, event)
     }
   }
 
-  selectAll(items: string[], event?: Event) {
-    event?.stopPropagation?.()
+  selectAll(items: string[], event: Event) {
+    event.stopPropagation()
     this.selectedItems.clear()
     this.selectedItems.select(...items)
     this.emitValue()
   }
 
-  unSelectAll(items: string[], event?: Event) {
-    event?.stopPropagation?.()
-    const filteredItems = this.selectedItems?.selected?.filter(
+  unSelectAll(items: string[], event: Event) {
+    event.stopPropagation()
+    const filteredItems = this.selectedItems.selected.filter(
       (itm) => !items.includes(itm)
     )
     this.selectedItems.clear()
@@ -99,8 +99,8 @@ export class ListFilterComponent {
     this.emitValue()
   }
 
-  inverseSelection(event?: Event) {
-    event?.stopPropagation?.()
+  inverseSelection(event: Event) {
+    event.stopPropagation()
     const selected = this.selectedItems.selected
     const nonSelected = this.items.filter((t) => !selected.includes(t))
     this.selectedItems.clear()

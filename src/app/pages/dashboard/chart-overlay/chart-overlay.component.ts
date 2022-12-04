@@ -1,7 +1,12 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core"
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core"
 import { graphic, EChartsOption, EChartsType } from "echarts"
 import { defaultChartConfig } from "src/app/shared/constants/charts"
 import { DashboardService } from "../dashboard.service"
+import { CrowdChartComponent } from "./crowd-chart/crowd-chart.component"
+import { FloodChartComponent } from "./flood-chart/flood-chart.component"
+import { StreetVendorChartComponent } from "./street-vendor-chart/street-vendor-chart.component"
+import { TrafficChartComponent } from "./traffic-chart/traffic-chart.component"
+import { TrashChartComponent } from "./trash-chart/trash-chart.component"
 
 @Component({
   selector: "app-chart-overlay",
@@ -53,6 +58,13 @@ export class ChartOverlayComponent implements AfterViewInit {
       },
     ],
   }
+
+  @ViewChild(CrowdChartComponent) CrowdChart!: CrowdChartComponent
+  @ViewChild(FloodChartComponent) FloodChart!: FloodChartComponent
+  @ViewChild(StreetVendorChartComponent)
+  StreetVendorChart!: StreetVendorChartComponent
+  @ViewChild(TrafficChartComponent) TrafficChart!: TrafficChartComponent
+  @ViewChild(TrashChartComponent) TrashChart!: TrashChartComponent
 
   constructor(private _dashboardService: DashboardService) {}
 

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 
-import * as hmacSHA256 from "crypto-js/hmac-sha256"
-import * as Base64 from "crypto-js/enc-base64"
+import hmacSHA256 from "crypto-js/hmac-sha256"
+import Base64 from "crypto-js/enc-base64"
 import { v4 as uuidv4 } from "uuid"
 
 export interface CCTVData {

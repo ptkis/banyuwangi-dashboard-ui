@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from "@angular/core"
+import { Component, NgZone, ViewEncapsulation } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
 
@@ -16,13 +16,18 @@ export class LoginComponent {
     remember: [false, [Validators.required]],
   })
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   formSubmit() {
     this.loginForm.markAllAsTouched()
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
-      this.router.navigateByUrl("/dashboard")
+      this.zone.run(() => {
+        this.router.navigateByUrl("/dashboard")
+      })
     }
   }
 

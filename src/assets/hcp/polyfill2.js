@@ -2643,7 +2643,6 @@
         _dereq_(23).inspectSource = function (it) {
           return $toString.call(it)
         }
-
         ;(module.exports = function (O, key, val, safe) {
           var isFunction = typeof val == "function"
           if (isFunction) has(val, "name") || hide(val, "name", key)

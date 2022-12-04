@@ -46,7 +46,7 @@ describe("LoginComponent", () => {
 
   it("should allow login", () => {
     const router = TestBed.inject(Router)
-    const spy = spyOn(router, "navigateByUrl")
+    const spy = jest.spyOn(router, "navigateByUrl")
     component.loginForm.patchValue({
       email: "test@google.com",
       password: "pass",
@@ -58,7 +58,7 @@ describe("LoginComponent", () => {
 
   it("should prevent login", () => {
     const router = TestBed.inject(Router)
-    const spy = spyOn(router, "navigateByUrl")
+    const spy = jest.spyOn(router, "navigateByUrl")
     component.formSubmit()
     component.loginWithGoogle()
     expect(spy).not.toHaveBeenCalled()

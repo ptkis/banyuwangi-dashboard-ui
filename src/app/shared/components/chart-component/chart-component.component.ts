@@ -61,7 +61,6 @@ export class ChartComponentComponent {
 
   onChartInit(ec: EChartsType) {
     this.echartsInstance = ec
-    this.chartInitialized.emit(ec)
     this.loadChartData()
   }
 
@@ -142,6 +141,20 @@ export class ChartComponentComponent {
 
   generateChartOptions() {
     const series = this.generateSeries(this.data)
+    let tooltipPos: Record<string, number> = {
+      top: -40,
+    }
+    if (this.tooltipPosition === "left") {
+      tooltipPos["right"] = 230
+    }
+    if (this.tooltipPosition === "right") {
+      tooltipPos["left"] = 230
+    }
+    if (this.tooltipPosition === "top") {
+      tooltipPos = {
+        bottom: 220,
+      }
+    }
     return {
       ...this.chartOption,
       xAxis: {
@@ -162,25 +175,9 @@ export class ChartComponentComponent {
         axisPointer: {
           type: "cross",
         },
+        className: "echarts-tooltip",
         backgroundColor: "rgba(255, 255, 255, 0.8)",
-        position: (pos: any, params: any, el: any, elRect: any, size: any) => {
-          let obj: Record<string, number> = {
-            top: -40,
-            // left: 230,
-          }
-          if (this.tooltipPosition === "left") {
-            obj["right"] = 230
-          }
-          if (this.tooltipPosition === "right") {
-            obj["left"] = 230
-          }
-          if (this.tooltipPosition === "top") {
-            obj = {
-              bottom: 220,
-            }
-          }
-          return obj
-        },
+        position: tooltipPos,
         extraCssText: "width: 200px; text-align: left",
       },
     }
@@ -188,5 +185,8 @@ export class ChartComponentComponent {
 
   initCharts() {
     this.chartOption = this.generateChartOptions() as any
+    setTimeout(() => {
+      this.chartInitialized.emit(this.echartsInstance)
+    }, 500)
   }
 }

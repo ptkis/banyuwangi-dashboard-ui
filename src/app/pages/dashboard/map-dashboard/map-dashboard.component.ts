@@ -106,7 +106,6 @@ export class MapDashboardComponent implements AfterViewInit {
       }
       // console.log(gl, scene, camera)
       const svgLoader = new SVGLoader()
-
       svgLoader.load("/assets/images/map2d.svg", (svgData) => {
         const { object } = this.renderSVG(150, svgData)
         this.peta3d = object

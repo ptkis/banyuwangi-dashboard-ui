@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { TestBed } from "@angular/core/testing"
 
 import { ChartOverlayComponent } from "./chart-overlay.component"
 
@@ -10,27 +10,20 @@ import {
   chartImportedModules,
   chartProviders,
 } from "./chart-components"
-import { HarnessLoader } from "@angular/cdk/testing"
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed"
 import { MatButtonHarness } from "@angular/material/button/testing"
 import { MatCheckboxHarness } from "@angular/material/checkbox/testing"
 import { MatInputHarness } from "@angular/material/input/testing"
 import { MatMenuItemHarness } from "@angular/material/menu/testing"
 import { DashboardService } from "../dashboard.service"
-import { HttpClient } from "@angular/common/http"
-import { HttpTestingController } from "@angular/common/http/testing"
+
+import { render, screen, fireEvent, waitFor } from "@testing-library/angular"
+
+jest.setTimeout(15000)
 
 describe("ChartOverlayComponent", () => {
-  let component: ChartOverlayComponent
-  let fixture: ComponentFixture<ChartOverlayComponent>
-  let rootLoader: HarnessLoader
-  let service: DashboardService
-
-  let httpClient: HttpClient
-  let httpTestingController: HttpTestingController
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  const renderComponent = async () => {
+    return await render(ChartOverlayComponent, {
       declarations: [ChartOverlayComponent, chartComponents],
       imports: [
         RouterTestingModule,
@@ -39,23 +32,19 @@ describe("ChartOverlayComponent", () => {
         ...chartImportedModules,
       ],
       providers: [chartProviders],
-    }).compileComponents()
+    })
+  }
 
-    fixture = TestBed.createComponent(ChartOverlayComponent)
-    component = fixture.componentInstance
-    rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture)
-    service = TestBed.inject(DashboardService)
-    httpTestingController = TestBed.inject(HttpTestingController)
-    fixture.detectChanges()
-  })
-
-  it("should create", () => {
-    fixture.detectChanges()
-    expect(component).toBeTruthy()
+  it("should create", async () => {
+    await renderComponent()
+    expect(screen.getByText(/Genangan/)).toBeInTheDocument()
   })
 
   it("should test filter", async () => {
-    fixture.detectChanges()
+    const res = await renderComponent()
+    const fixture = res.fixture
+    const rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture)
+
     await fixture.whenStable()
 
     const filterButton = await rootLoader.getHarness(
@@ -108,28 +97,11 @@ describe("ChartOverlayComponent", () => {
   })
 
   it("should test failed requests", async () => {
+    const res = await renderComponent()
+    const fixture = res.fixture
     fixture.detectChanges()
 
-    const reqs = httpTestingController.match("chart")
-
-    for (const req of reqs) {
-      // Respond with mock error
-      console.log(req.request?.url)
-      req.flush("failed", { status: 404, statusText: "Not Found" })
-    }
-
-    fixture.detectChanges()
-
-    let filterButton = await rootLoader.getHarnessOrNull(
-      MatButtonHarness.with({
-        selector: "[mat-icon-button]",
-      })
-    )
-    if (!filterButton) {
-      filterButton = await rootLoader.getHarness(MatButtonHarness)
-    }
-    await filterButton?.click()
-    fixture.detectChanges()
+    const service = TestBed.inject(DashboardService)
 
     service.getFloodChartData(true)
     service.getTrashChartData(true)
@@ -137,6 +109,6 @@ describe("ChartOverlayComponent", () => {
     service.getStreetVendorChartData(true)
     service.getCrowdChartData(true)
 
-    expect(filterButton).toBeDefined()
+    expect(service).toBeDefined()
   })
 })
