@@ -15,5 +15,5 @@ export const environment = {
       baseUrl: "https://hcp.banyuwangikab.go.id",
     },
   },
-  serverBaseUrl: "https://api.banyuwangi.dasbor.id",
+  serverBaseUrl: "https://api.smartbanyuwangi.dasbor.id",
 }
