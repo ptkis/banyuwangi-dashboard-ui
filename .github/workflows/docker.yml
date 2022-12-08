@@ -27,10 +27,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: chmod +x build.sh
-      - run: ./build.sh
+      - run: ./build.sh staging
         env:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          configuration: staging
   deploy_production:
     runs-on: ubuntu-latest
     #    runs-on: [self-hosted, linux, x64]
@@ -47,7 +46,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: chmod +x build.sh
-      - run: ./build.sh
+      - run: ./build.sh production
         env:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          configuration: production
