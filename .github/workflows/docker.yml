@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy_staging:
     runs-on: ubuntu-latest
     #    runs-on: [self-hosted, linux, x64]
 
@@ -20,7 +20,7 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -30,3 +30,24 @@ jobs:
       - run: ./build.sh
         env:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          configuration: staging
+  deploy_production:
+    runs-on: ubuntu-latest
+    #    runs-on: [self-hosted, linux, x64]
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: chmod +x build.sh
+      - run: ./build.sh
+        env:
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          configuration: production
