@@ -29,6 +29,9 @@ export interface HikResponse<T> {
 
 export interface HikCameraList<T> {
   list: T[]
+  pageNo: number
+  pageSize: number
+  total: number
 }
 
 export interface HikStreamingURL {

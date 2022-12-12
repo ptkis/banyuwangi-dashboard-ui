@@ -21,6 +21,9 @@
   .panel-body {
     position: relative;
     z-index: 1;
+    max-height: 90vh;
+    overflow: auto;
+    overflow-x: hidden;
 
     &::after {
       content: "";

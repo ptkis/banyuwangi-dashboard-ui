@@ -1,0 +1,179 @@
+<app-chart-panel>
+  <ng-template #customTitle>
+    <div class="title">{{ title }}</div>
+    <button class="panel_button" (click)="dialogRef.close()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-template>
+
+  <ng-template #contentBody>
+    <div class="form-container">
+      <form [formGroup]="cameraForm">
+        <div class="form-body">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>vmsCameraIndexCode</mat-label>
+                <input matInput formControlName="vmsCameraIndexCode" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>vmsType</mat-label>
+                <mat-select placeholder="VMS Type" formControlName="vmsType">
+                  <mat-option *ngFor="let item of VMSType" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>name</mat-label>
+                <input matInput formControlName="name" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>location</mat-label>
+                <input matInput formControlName="location" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>latitude</mat-label>
+                <input matInput formControlName="latitude" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>longitude</mat-label>
+                <input matInput formControlName="longitude" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>host</mat-label>
+                <input matInput formControlName="host" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>httpPort</mat-label>
+                <input matInput formControlName="httpPort" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>rtspPort</mat-label>
+                <input matInput formControlName="rtspPort" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>channel</mat-label>
+                <input matInput formControlName="channel" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>captureQualityChannel</mat-label>
+                <input matInput formControlName="captureQualityChannel" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>userName</mat-label>
+                <input matInput formControlName="userName" />
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>password</mat-label>
+                <input matInput formControlName="password" />
+              </mat-form-field>
+              <div class="row my-2">
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+                </div>
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isCrowd">Crowd</mat-checkbox>
+                </div>
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isFlood">Flood</mat-checkbox>
+                </div>
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isStreetvendor"
+                    >StreetVendor</mat-checkbox
+                  >
+                </div>
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isTraffic"
+                    >Traffic</mat-checkbox
+                  >
+                </div>
+                <div class="col-sm-4">
+                  <mat-checkbox formControlName="isTrash">Trash</mat-checkbox>
+                </div>
+              </div>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>type</mat-label>
+                <mat-select placeholder="Type" formControlName="type">
+                  <mat-option *ngFor="let item of CameraType" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                class="custom-form-field2 w-100"
+                appearance="fill"
+              >
+                <mat-label>label</mat-label>
+                <input matInput formControlName="label" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button
+            mat-raised-button
+            data-testid="btn-form-cancel"
+            (click)="dialogRef.close()"
+            class="btn"
+          >
+            Cancel
+          </button>
+          <button
+            *ngIf="data?.readonly !== true"
+            mat-raised-button
+            data-testid="btn-form-submit"
+            (click)="submitForm()"
+            class="btn btn-primary"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</app-chart-panel>

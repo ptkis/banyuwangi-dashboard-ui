@@ -1,5 +1,5 @@
 <div class="text-danger" *ngIf="errorMessage">Error: {{ errorMessage }}</div>
 <div
-  id="playWind"
+  [id]="'playWind' + id"
   [ngStyle]="{ width: playerWidth, height: playerHeight }"
 ></div>

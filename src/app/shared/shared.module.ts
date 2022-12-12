@@ -17,6 +17,11 @@ import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatInputModule } from "@angular/material/input"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { FormsModule } from "@angular/forms"
+import { MatTableModule } from "@angular/material/table"
+import { RouterModule } from "@angular/router"
+import { ModalComponent } from "./components/modal/modal.component"
+import { DialogModule } from "@angular/cdk/dialog"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 
 export const materialModules = [
   MatIconModule,
@@ -26,12 +31,16 @@ export const materialModules = [
   MatCheckboxModule,
   MatInputModule,
   MatFormFieldModule,
+  MatTableModule,
+  DialogModule,
+  MatProgressSpinnerModule,
 ]
 
 @NgModule({
-  declarations: [sharedComponents],
+  declarations: [sharedComponents, ModalComponent],
   imports: [
     CommonModule,
+    RouterModule,
 
     VgCoreModule,
     VgControlsModule,

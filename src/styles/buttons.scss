@@ -14,3 +14,18 @@
     color: white;
   }
 }
+
+.btn {
+  height: 46px;
+  min-width: 141px;
+  border: 1px solid #23639e;
+  border-radius: 5px;
+  color: #23639e;
+  background: #0b1b2f;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  color: white;
+  background: #23639e;
+}
