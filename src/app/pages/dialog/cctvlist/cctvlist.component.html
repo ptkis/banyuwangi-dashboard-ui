@@ -159,7 +159,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isActive']"
                 ></mat-checkbox>
               </td>
@@ -171,7 +171,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isLiveView']"
                 ></mat-checkbox>
               </td>
@@ -183,7 +183,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isCrowd']"
                 ></mat-checkbox>
               </td>
@@ -195,7 +195,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isFlood']"
                 ></mat-checkbox>
               </td>
@@ -207,7 +207,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isStreetVendor']"
                 ></mat-checkbox>
               </td>
@@ -219,7 +219,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isTraffic']"
                 ></mat-checkbox>
               </td>
@@ -231,7 +231,7 @@
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
-                  (click)="checkboxClick($event)"
+                  (click)="$event.preventDefault()"
                   [checked]="row['isTrash']"
                 ></mat-checkbox>
               </td>
