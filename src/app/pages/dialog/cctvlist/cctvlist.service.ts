@@ -76,7 +76,7 @@ export interface ListResponse<T> {
 export class CCTVListService {
   constructor(private http: HttpClient) {}
 
-  getCCTVData(pageNo = 1, pageSize = 10) {
+  getCCTVData(pageNo: number, pageSize: number) {
     return this.http.get<ListResponse<CCTVData>>(
       `${environment.serverBaseUrl}/v1/camera`,
       {

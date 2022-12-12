@@ -1,0 +1,35 @@
+{
+  "code": "0",
+  "msg": "Success",
+  "data": {
+    "total": 2,
+    "pageNo": 1,
+    "pageSize": 40,
+    "list": [
+      {
+        "cameraIndexCode": "937",
+        "cameraName": "Camera1",
+        "capabilitySet": "ptz",
+        "devResourceType": "encodeDevice",
+        "encodeDevIndexCode": "150",
+        "recordType": "",
+        "recordLocation": "",
+        "regionIndexCode": "56",
+        "siteIndexCode": "0",
+        "status": 1
+      },
+      {
+        "cameraIndexCode": "936",
+        "cameraName": "Camera1",
+        "capabilitySet": "ptz",
+        "devResourceType": "encodeDevice",
+        "encodeDevIndexCode": "149",
+        "recordType": "",
+        "recordLocation": "",
+        "regionIndexCode": "56",
+        "siteIndexCode": "0",
+        "status": 1
+      }
+    ]
+  }
+}

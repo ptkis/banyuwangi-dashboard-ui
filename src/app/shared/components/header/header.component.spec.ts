@@ -9,6 +9,7 @@ import {
 import { HeaderComponent } from "./header.component"
 import { take } from "rxjs"
 import { materialModules } from "../../shared.module"
+import { RouterTestingModule } from "@angular/router/testing"
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent
@@ -17,7 +18,7 @@ describe("HeaderComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [...materialModules],
+      imports: [...materialModules, RouterTestingModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(HeaderComponent)

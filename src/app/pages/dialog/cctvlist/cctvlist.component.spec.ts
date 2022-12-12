@@ -84,6 +84,15 @@ describe("CCTVListComponent", () => {
     await fixture.whenStable()
   })
 
+  it("should test import HCP button", async () => {
+    const user = userEvent.setup()
+    const { fixture } = await renderComponent()
+    await fixture.whenStable()
+    const btnImport = screen.getAllByTestId("btn-import")[0]
+    await user.click(btnImport)
+    await fixture.whenStable()
+  })
+
   it("should test view button", async () => {
     const user = userEvent.setup()
     const { fixture, container } = await renderComponent()
