@@ -8,10 +8,10 @@ import { Component, Inject, OnInit, Optional } from "@angular/core"
 })
 export class ModalComponent {
   constructor(
-    @Optional() public dialogRef: DialogRef<boolean>,
+    @Optional() public dialogRef?: DialogRef<boolean>,
     @Optional()
     @Inject(DIALOG_DATA)
-    public data: {
+    public data?: {
       title?: string
       message?: string
       btnConfirm?: string
