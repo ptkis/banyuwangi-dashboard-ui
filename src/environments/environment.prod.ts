@@ -16,4 +16,5 @@ export const environment = {
     },
   },
   serverBaseUrl: "https://api.smartbanyuwangi.dasbor.id",
+  useHCPHCMData: false,
 }

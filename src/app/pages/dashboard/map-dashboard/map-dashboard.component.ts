@@ -25,6 +25,7 @@ import { finalize } from "rxjs"
 import { HCPService } from "src/app/shared/services/hcp.service"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { CCTVData } from "src/app/shared/services/hik.service"
+import { environment } from "src/environments/environment"
 
 @Component({
   selector: "app-map-dashboard",
@@ -41,6 +42,8 @@ export class MapDashboardComponent implements AfterViewInit {
   threeLayer: ThreeLayer | undefined
   peta3d: THREE.Group | undefined
 
+  useHCPHCMData = true
+
   constructor(
     private _viewContainerRef: ViewContainerRef,
     private _HCMService: HCMService,
@@ -49,8 +52,22 @@ export class MapDashboardComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.initMap()
-    this.initMarkers()
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
+    if (params["dataSourceSettings"]) {
+      sessionStorage.setItem("dataSourceSettings", params["dataSourceSettings"])
+      window.location.href = "/dashboard"
+    } else {
+      this.useHCPHCMData = environment.useHCPHCMData
+      const useHCPHCMData = sessionStorage.getItem("dataSourceSettings")
+      if (useHCPHCMData === "1") {
+        this.useHCPHCMData = true
+      } else if (useHCPHCMData === "0") {
+        this.useHCPHCMData = false
+      }
+      this.initMap()
+      this.initMarkers()
+    }
 
     // this._HCMService.getChartData().subscribe(dt => {
     //   console.log(dt)
@@ -122,6 +139,13 @@ export class MapDashboardComponent implements AfterViewInit {
     }
 
     this.threeLayer.addTo(this.map)
+
+    // Collect latlon
+    // const latlon: any[] = []
+    // this.map.on("contextmenu", (e) => {
+    //   latlon.push([e.coordinate.x, e.coordinate.y])
+    //   console.log(latlon)
+    // })
 
     // this.map.setBearing(15)
 
@@ -314,9 +338,32 @@ export class MapDashboardComponent implements AfterViewInit {
       })
   }
 
+  getCCTVNonHCP() {
+    const loadingtoast = this.showLoading("Loading CCTV List")
+    this._HCPService
+      .getNonHCPData()
+      .pipe(finalize(() => loadingtoast.toastRef.close()))
+      .subscribe({
+        next: (markers) => {
+          for (const marker_data of markers) {
+            this.initMarkerFromCCTV(marker_data)
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log({ error })
+          const status = error.statusText ? ` (${error.statusText})` : ""
+          this.showError(`Failed to get CCTV List! ${status}`, "Network Error")
+        },
+      })
+  }
+
   initMarkers() {
-    this.getCCTVHCP()
-    this.getCCTVHCM()
+    if (this.useHCPHCMData) {
+      this.getCCTVHCP()
+      this.getCCTVHCM()
+    } else {
+      this.getCCTVNonHCP()
+    }
   }
 
   initMarkerFromCCTV(

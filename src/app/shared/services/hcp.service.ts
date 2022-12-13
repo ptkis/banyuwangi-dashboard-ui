@@ -20,6 +20,8 @@ import {
   HikStreamingURL,
 } from "./hik.service"
 
+import * as latLonFeed from "./latLonFeed.json"
+
 export interface HCPEncodeDeviceData {
   encodeDevIndexCode: string
   encodeDevName: string
@@ -45,6 +47,28 @@ export interface HCPHikCameraData {
 }
 
 const statusMap = ["Unknown", "Online", "Offline"]
+
+interface NonHCPCCTVData {
+  vmsCameraIndexCode: string
+  vmsType: string
+  name: string
+  location: string
+  latitude: number
+  longitude: number
+  isActive: boolean
+  isStreetvendor: boolean
+  isTraffic: boolean
+  isCrowd: boolean
+  isTrash: boolean
+  isFlood: boolean
+  label: string
+  liveViewUrl: string
+}
+export interface NonHCPCCTVResponse<T> {
+  success: boolean
+  message: string
+  data: T
+}
 
 @Injectable({
   providedIn: "root",
@@ -172,6 +196,32 @@ export class HCPService extends HIKService {
             cctv_longitude: defLonLat[1] + "",
             cctv_status: statusMap[dt.status],
             ishcp: true,
+          }
+          return result
+        })
+      })
+    )
+  }
+
+  getNonHCPCamera() {
+    return this.http.get<NonHCPCCTVResponse<NonHCPCCTVData[]>>(
+      `${environment.serverBaseUrl}/v1/live/camera`
+    )
+  }
+
+  getNonHCPData(): Observable<CCTVData[]> {
+    return this.getNonHCPCamera().pipe(
+      map((resp) => {
+        return resp.data.map((dt, idx) => {
+          const defLonLat = latLonFeed[idx]
+          const result = {
+            cctv_id: dt.vmsCameraIndexCode,
+            cctv_title: dt.name,
+            cctv_latitude: defLonLat[1] + "",
+            cctv_longitude: defLonLat[0] + "",
+            cctv_status: statusMap[dt.liveViewUrl ? 1 : 2],
+            ishcp: false,
+            live_view_url: dt.liveViewUrl,
           }
           return result
         })

@@ -55,6 +55,25 @@ export const dashboardMockUrls: IMockURLStructure[] = [
     },
   },
   {
+    urlRegex: /live\/camera$/,
+    json: {
+      code: "0",
+      msg: "ok",
+      data: [
+        {
+          name: "test",
+          latitude: "0",
+          longitude: "0",
+          liveViewUrl: "Offline",
+        },
+        {
+          name: "test 2 without latlong",
+          liveViewUrl: "Offline",
+        },
+      ],
+    },
+  },
+  {
     urlRegex: /cameras$/,
     json: {
       code: "0",
@@ -150,6 +169,9 @@ describe("MapDashboardComponent", () => {
       getCCTVData() {
         return throwError(() => ({ statusText: "Error" }))
       }
+      getNonHCPData() {
+        return throwError(() => ({ statusText: "Error" }))
+      }
     }
     const res = await renderComponent([
       {
@@ -165,5 +187,27 @@ describe("MapDashboardComponent", () => {
     const component = fixture.componentInstance
     fixture.detectChanges()
     expect(component.markers.length).toBe(0)
+  })
+
+  it("should test non HCP", async () => {
+    sessionStorage.setItem("dataSourceSettings", "0")
+    const res = await renderComponent()
+    const fixture = res.fixture
+    fixture.detectChanges()
+    for (const marker of fixture.componentInstance.markers) {
+      marker.openInfoWindow()
+    }
+    sessionStorage.removeItem("dataSourceSettings")
+  })
+
+  it("should test use HCP HCM", async () => {
+    sessionStorage.setItem("dataSourceSettings", "1")
+    const res = await renderComponent()
+    const fixture = res.fixture
+    fixture.detectChanges()
+    for (const marker of fixture.componentInstance.markers) {
+      marker.openInfoWindow()
+    }
+    sessionStorage.removeItem("dataSourceSettings")
   })
 })

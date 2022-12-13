@@ -8,13 +8,16 @@ import { VgControlsModule } from "@videogular/ngx-videogular/controls"
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play"
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
 import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
+import { render } from "@testing-library/angular"
+import { HCMService } from "../../services/hcm.service"
+import { of } from "rxjs"
 
 describe("HikVideoComponent", () => {
-  let component: HikVideoComponent
-  let fixture: ComponentFixture<HikVideoComponent>
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  const renderComponent = async (
+    props: Partial<HikVideoComponent>,
+    providers: any[] = []
+  ) => {
+    return await render(HikVideoComponent, {
       declarations: [HikVideoComponent],
       imports: [
         HttpClientTestingModule,
@@ -24,14 +27,41 @@ describe("HikVideoComponent", () => {
         VgBufferingModule,
         VgStreamingModule,
       ],
-    }).compileComponents()
+      providers: [...providers],
+      componentProperties: props,
+    })
+  }
 
-    fixture = TestBed.createComponent(HikVideoComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
+  it("should play url", async () => {
+    const { fixture } = await renderComponent({
+      url: "xxx",
+    })
+    await fixture.whenStable()
   })
 
-  it("should create", () => {
-    expect(component).toBeTruthy()
+  it("should get URL from API", async () => {
+    class mockService {
+      getStreamingURL = jest.fn().mockReturnValue(
+        of({
+          code: "0",
+          msg: "ok",
+          data: {
+            url: "localhost",
+          },
+        })
+      )
+    }
+    const { fixture } = await renderComponent(
+      {
+        cctv_id: "xxx",
+      },
+      [
+        {
+          provide: HCMService,
+          useClass: mockService,
+        },
+      ]
+    )
+    await fixture.whenStable()
   })
 })
