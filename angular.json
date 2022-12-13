@@ -18,12 +18,20 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/hls.min.js",
+                "input": "node_modules/hls.js/dist/",
+                "output": "./assets/js/hls"
+              }
+            ],
             "styles": [
               "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/hls.js/dist/hls.min.js"],
+            "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules"]
             },
@@ -43,7 +51,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "4mb"
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -65,7 +73,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "4mb"
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",

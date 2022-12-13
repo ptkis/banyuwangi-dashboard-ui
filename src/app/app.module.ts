@@ -12,8 +12,7 @@ import { environment } from "src/environments/environment"
 import { HttpClientModule } from "@angular/common/http"
 
 import { ToastrModule } from "ngx-toastr"
-import { HeaderLayoutComponent } from "./layout/header-layout/header-layout.component"
-import { SharedModule } from "./shared/shared.module"
+import { DialogModule } from "@angular/cdk/dialog"
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -39,7 +38,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, HeaderLayoutComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,7 +49,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     KeycloakAngularModule,
     HttpClientModule,
-    SharedModule,
+    DialogModule,
 
     ToastrModule.forRoot({
       timeOut: 10000,

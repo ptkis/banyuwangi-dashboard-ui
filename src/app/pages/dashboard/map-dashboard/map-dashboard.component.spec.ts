@@ -1,8 +1,5 @@
 import { DialogModule } from "@angular/cdk/dialog"
-import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { HttpClientTestingModule } from "@angular/common/http/testing"
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
 import { RouterTestingModule } from "@angular/router/testing"
 import { NgxEchartsModule } from "ngx-echarts"
 import { SharedModule } from "src/app/shared/shared.module"
@@ -10,7 +7,7 @@ import { dashboardComponents } from ".."
 import { dashboardDialogs } from "../dialogs"
 
 import { MapDashboardComponent } from "./map-dashboard.component"
-import { of, throwError } from "rxjs"
+import { throwError } from "rxjs"
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
 import { VgControlsModule } from "@videogular/ngx-videogular/controls"
 import { VgCoreModule } from "@videogular/ngx-videogular/core"
@@ -32,6 +29,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/angular"
 import { DashboardService } from "../dashboard.service"
 import { HCPService } from "src/app/shared/services/hcp.service"
 import { HCMService } from "src/app/shared/services/hcm.service"
+import { dashboardMaterialModules } from "../dashboard.module"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -94,8 +92,7 @@ describe("MapDashboardComponent", () => {
           echarts: () => import("echarts"),
         }),
         RouterTestingModule,
-        MatButtonModule,
-        MatIconModule,
+        dashboardMaterialModules,
 
         VgCoreModule,
         VgControlsModule,

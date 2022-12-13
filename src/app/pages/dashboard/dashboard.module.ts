@@ -16,6 +16,12 @@ import { dashboardDialogs } from "./dialogs"
 import { AuthGuard } from "src/app/shared/guards/auth.guard"
 
 import { HttpClientModule } from "@angular/common/http"
+import { MatMenuModule } from "@angular/material/menu"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
+import { CdkListboxModule } from "@angular/cdk/listbox"
+import { MatCheckboxModule } from "@angular/material/checkbox"
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatInputModule } from "@angular/material/input"
 
 export const dashboardRoutes: Routes = [
   {
@@ -35,6 +41,18 @@ export const dashboardRoutes: Routes = [
   },
 ]
 
+export const dashboardMaterialModules = [
+  MatButtonModule,
+  MatIconModule,
+  MatMenuModule,
+  CdkListboxModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  DialogModule,
+]
+
 @NgModule({
   declarations: [dashboardComponents, dashboardDialogs],
   imports: [
@@ -44,9 +62,11 @@ export const dashboardRoutes: Routes = [
     SharedModule,
     RouterModule.forChild(dashboardRoutes),
     NgxEchartsModule.forChild(),
-    MatButtonModule,
-    MatIconModule,
-    DialogModule,
+
+    dashboardMaterialModules,
+
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

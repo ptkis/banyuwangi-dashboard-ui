@@ -1,7 +1,5 @@
 import { DialogModule } from "@angular/cdk/dialog"
 import { ComponentFixture, TestBed } from "@angular/core/testing"
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
 import { RouterTestingModule } from "@angular/router/testing"
 import { NgxEchartsModule } from "ngx-echarts"
 import { SharedModule } from "src/app/shared/shared.module"
@@ -19,6 +17,7 @@ import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play"
 import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
 import { ToastrModule } from "ngx-toastr"
 import { FormsModule } from "@angular/forms"
+import { dashboardMaterialModules } from "../dashboard.module"
 
 describe("Map3dDashboardComponent", () => {
   let component: Map3dDashboardComponent
@@ -36,8 +35,7 @@ describe("Map3dDashboardComponent", () => {
           echarts: () => import("echarts"),
         }),
         RouterTestingModule,
-        MatButtonModule,
-        MatIconModule,
+        dashboardMaterialModules,
 
         VgCoreModule,
         VgControlsModule,

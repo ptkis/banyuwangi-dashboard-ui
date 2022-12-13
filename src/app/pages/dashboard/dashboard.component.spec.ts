@@ -5,12 +5,10 @@ import { NgxEchartsModule } from "ngx-echarts"
 import { DashboardComponent } from "./dashboard.component"
 import { SharedModule } from "../../shared/shared.module"
 
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
-import { DialogModule } from "@angular/cdk/dialog"
 import { dashboardComponents } from "."
 import { dashboardDialogs } from "./dialogs"
 import { RouterTestingModule } from "@angular/router/testing"
+import { dashboardMaterialModules } from "./dashboard.module"
 
 describe("DashboardComponent", () => {
   let component: DashboardComponent
@@ -26,9 +24,7 @@ describe("DashboardComponent", () => {
           echarts: () => import("echarts"),
         }),
         RouterTestingModule,
-        MatButtonModule,
-        MatIconModule,
-        DialogModule,
+        dashboardMaterialModules,
         HttpClientTestingModule,
       ],
     }).compileComponents()

@@ -5,10 +5,10 @@ import {
   ChartResponse,
   DashboardService,
 } from "src/app/pages/dashboard/dashboard.service"
-import { defaultChartConfig } from "../../constants/charts"
 import { SelectionModel } from "@angular/cdk/collections"
 import { DatePipe } from "@angular/common"
 import { finalize, Observable } from "rxjs"
+import { defaultChartConfig } from "src/app/shared/constants/charts"
 
 @Component({
   selector: "app-chart-component",

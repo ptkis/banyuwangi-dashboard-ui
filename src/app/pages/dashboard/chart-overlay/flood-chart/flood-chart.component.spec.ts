@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { dashboardComponents } from "../.."
 import { chartImportedModules, chartProviders } from "../chart-components"
 
 import { FloodChartComponent } from "./flood-chart.component"
@@ -9,7 +10,7 @@ describe("FloodChartComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FloodChartComponent],
+      declarations: [...dashboardComponents],
       imports: [...chartImportedModules],
       providers: [chartProviders],
     }).compileComponents()

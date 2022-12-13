@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
-import { AppComponent } from "./app.component"
-import { HeaderLayoutComponent } from "./layout/header-layout/header-layout.component"
 
 const routes: Routes = [
   {
@@ -10,17 +8,11 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
-    path: "",
-    component: HeaderLayoutComponent,
-    children: [
-      {
-        path: "dashboard",
-        loadChildren: () =>
-          import("./pages/dashboard/dashboard.module").then(
-            (m) => m.DashboardModule
-          ),
-      },
-    ],
+    path: "dashboard",
+    loadChildren: () =>
+      import("./pages/dashboard/dashboard.module").then(
+        (m) => m.DashboardModule
+      ),
   },
   {
     path: "login",

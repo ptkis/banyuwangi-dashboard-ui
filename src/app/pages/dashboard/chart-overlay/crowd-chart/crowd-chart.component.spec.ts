@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { render } from "@testing-library/angular"
 import { throwError } from "rxjs"
-import { chartImportedModules, chartProviders } from "../chart-components"
+import { chartImportedModules } from "../chart-components"
 
 import { CrowdChartComponent } from "./crowd-chart.component"
 
 import { DashboardService } from "../../dashboard.service"
+import { dashboardComponents } from "../.."
 
 describe("CrowdChartComponent", () => {
   const renderComponent = async (providers: any[] = []) => {
     return await render(CrowdChartComponent, {
-      declarations: [CrowdChartComponent],
+      declarations: [...dashboardComponents],
       imports: [...chartImportedModules],
       providers: [
         // chartProviders,
