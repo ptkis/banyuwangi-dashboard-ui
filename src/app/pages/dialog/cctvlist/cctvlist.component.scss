@@ -10,6 +10,7 @@
 .mat-column-action {
   text-align: center;
 }
+
 .content-container {
   min-height: 300px;
 }
@@ -35,6 +36,7 @@ th.gradient-bg-1 {
   &:nth-child(odd) {
     background-color: #020c1a;
   }
+
   &:nth-child(even) {
     background-color: #0d2643;
   }
