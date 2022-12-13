@@ -1,0 +1,53 @@
+.mat-column-isActive,
+.mat-column-isCrowd,
+.mat-column-isFlood,
+.mat-column-isStreetVendor,
+.mat-column-isTraffic,
+.mat-column-isTrash,
+.mat-column-isLoginSucceeded,
+.mat-column-isLiveView,
+.mat-column-isPing,
+.mat-column-action {
+  text-align: center;
+}
+
+.content-container {
+  min-height: 300px;
+}
+
+.title {
+  button {
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
+}
+
+th.gradient-bg-1 {
+  display: table-cell;
+}
+
+.mat-header-row {
+  height: 36px;
+}
+
+.mat-row {
+  height: 45px;
+
+  &:nth-child(odd) {
+    background-color: #020c1a;
+  }
+
+  &:nth-child(even) {
+    background-color: #0d2643;
+  }
+}
+
+.toolbar-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mat-cell {
+  border: 0;
+}

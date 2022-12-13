@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core"
+import { map } from "rxjs"
 import { HCPService } from "../../services/hcp.service"
 
 declare const JSPlugin: any
@@ -20,14 +21,18 @@ export class WsVideoComponent implements AfterViewInit, OnDestroy {
   @Input() cctv_id!: string
   @Input() playerWidth = 400
   @Input() playerHeight = 267
+  @Input() maxSplit = 1
 
   @Output() playStatus = new EventEmitter<boolean>()
 
   jsDecoder: any
 
   errorMessage = ""
+  id = ""
 
-  constructor(private _HCPService: HCPService) {}
+  constructor(private _HCPService: HCPService) {
+    this.id = this.makeid(5)
+  }
 
   ngOnDestroy(): void {
     try {
@@ -35,13 +40,24 @@ export class WsVideoComponent implements AfterViewInit, OnDestroy {
     } catch (error) {}
   }
 
+  makeid(length: number) {
+    let result = ""
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    const charactersLength = characters.length
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+  }
+
   ngAfterViewInit(): void {
     this.jsDecoder = new JSPlugin({
-      szId: "playWind",
+      szId: "playWind" + this.id,
       iType: 2,
       iWidth: this.playerWidth,
       iHeight: this.playerHeight,
-      iMaxSplit: 1,
+      iMaxSplit: this.maxSplit,
       iCurrentSplit: 1,
       szBasePath: "/assets/hcp/",
       oStyle: {
@@ -51,14 +67,25 @@ export class WsVideoComponent implements AfterViewInit, OnDestroy {
       },
     })
 
-    this._HCPService.getStreamingURL(this.cctv_id).subscribe((resp) => {
-      if (resp.data.url) {
-        this.realplay(resp.data.url)
+    this.getStreamingURL(this.cctv_id).subscribe((url) => {
+      if (typeof url === "string") {
+        this.realplay(url, 0)
       }
     })
   }
 
-  realplay(curUrl: string) {
+  getStreamingURL(cctv_id: string) {
+    return this._HCPService.getStreamingURL(cctv_id).pipe(
+      map((resp) => {
+        if (resp.data.url) {
+          return resp.data.url
+        }
+        return resp
+      })
+    )
+  }
+
+  realplay(curUrl: string, windowIdx = 0) {
     // const curUrl = this.url
     let url = "",
       playUrl = ""
@@ -84,7 +111,7 @@ export class WsVideoComponent implements AfterViewInit, OnDestroy {
           auth: "", //认证信息, 设备用户名&密码
           token: "", //token
         },
-        0
+        windowIdx
       )
       .then(
         () => {

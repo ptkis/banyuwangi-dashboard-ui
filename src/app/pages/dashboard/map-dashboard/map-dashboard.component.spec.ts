@@ -145,7 +145,7 @@ describe("MapDashboardComponent", () => {
       },
       [null, scene, camera]
     )
-    expect(component.markers.length).toBe(4)
+    expect(component.markers.length).toBe(2)
   })
 
   it("should test error response", async () => {

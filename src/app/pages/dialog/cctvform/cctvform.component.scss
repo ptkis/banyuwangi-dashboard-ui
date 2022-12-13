@@ -1,0 +1,24 @@
+/* stylelint-disable-next-line selector-type-no-unknown */
+mat-form-field {
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  + mat-form-field {
+    margin-top: 8px;
+  }
+}
+
+.btn {
+  min-width: 141px;
+}
+
+.form-container {
+  border: 1px solid #23639e;
+  margin: 8px;
+  padding: 8px;
+}
+
+.form-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 8px;
+}

@@ -1,0 +1,41 @@
+<app-chart-panel>
+  <ng-container *ngIf="data?.title">
+    <ng-template #customTitle>
+      <div class="title">{{ data?.title }}</div>
+      <button
+        *ngIf="!dialogRef?.disableClose"
+        class="panel_button"
+        (click)="dialogRef?.close()"
+        mat-icon-button
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </ng-template>
+  </ng-container>
+  <ng-template #contentBody>
+    <div class="p-3" *ngIf="data?.message">
+      {{ data?.message }}
+      <div class="modal-footer mt-3">
+        <button
+          mat-raised-button
+          data-testid="btn-modal-cancel"
+          (click)="dialogRef?.close(false)"
+          class="btn"
+        >
+          {{ data?.btnCancel || "Cancel" }}
+        </button>
+        <button
+          mat-raised-button
+          data-testid="btn-modal-confirm"
+          (click)="dialogRef?.close(true)"
+          class="btn btn-primary"
+        >
+          {{ data?.btnConfirm || "OK" }}
+        </button>
+      </div>
+    </div>
+    <div class="loader-component" *ngIf="data?.loader">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</app-chart-panel>

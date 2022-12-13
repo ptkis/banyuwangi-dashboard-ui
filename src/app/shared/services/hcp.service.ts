@@ -1,16 +1,36 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { map, Observable, of } from "rxjs"
+import {
+  forkJoin,
+  from,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  toArray,
+} from "rxjs"
 
 import { environment } from "src/environments/environment"
 import {
   CCTVData,
   HikCameraList,
+  HikResponse,
   HIKService,
   HikStreamingURL,
 } from "./hik.service"
 
-interface HikCameraData {
+export interface HCPEncodeDeviceData {
+  encodeDevIndexCode: string
+  encodeDevName: string
+  encodeDevIp: string
+  encodeDevPort: string
+  encodeDevCode: string
+  treatyType: string
+  status: number
+}
+
+export interface HCPHikCameraData {
   cameraIndexCode: string
   cameraName: string
   capabilitySet: string
@@ -21,6 +41,7 @@ interface HikCameraData {
   regionIndexCode: string
   siteIndexCode: string
   status: number
+  encodeDeviceData?: HikResponse<HCPEncodeDeviceData>
 }
 
 const statusMap = ["Unknown", "Online", "Offline"]
@@ -36,14 +57,49 @@ export class HCPService extends HIKService {
     super(http, appKey, appSecret, baseUrl)
   }
 
-  getCameraList() {
-    return this.postData<HikCameraList<HikCameraData>>(
+  getCameraList(pageNo = 1, pageSize = 40) {
+    return this.postData<HikCameraList<HCPHikCameraData>>(
       "/artemis/api/resource/v1/cameras",
       {
-        pageNo: 1,
-        pageSize: 40,
+        pageNo,
+        pageSize,
         siteIndexCode: "0",
         deviceType: "encodeDevice",
+      }
+    ).pipe(
+      switchMap((resp) =>
+        forkJoin([
+          ...resp.data.list.map((cctv) =>
+            this.getEncodeDeiviceInfo(cctv.encodeDevIndexCode)
+          ),
+        ]).pipe(
+          map((encodeResp) => ({
+            ...resp,
+            data: {
+              ...resp.data,
+              list: [
+                ...resp.data.list.map((cctv) => {
+                  return {
+                    ...cctv,
+                    encodeDeviceData: encodeResp.find(
+                      (d) =>
+                        d.data.encodeDevIndexCode === cctv.encodeDevIndexCode
+                    ),
+                  }
+                }),
+              ],
+            },
+          }))
+        )
+      )
+    )
+  }
+
+  getEncodeDeiviceInfo(encodeDevIndexCode: string) {
+    return this.postData<any>(
+      "/artemis/api/resource/v1/encodeDevice/indexCode/encodeDeviceInfo",
+      {
+        encodeDevIndexCode,
       }
     )
   }

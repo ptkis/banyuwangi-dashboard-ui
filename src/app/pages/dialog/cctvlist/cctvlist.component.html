@@ -1,0 +1,295 @@
+<ng-template #content>
+  <app-chart-panel>
+    <ng-template #customTitle>
+      <div class="title">
+        <button
+          data-testid="btn-close"
+          (click)="dialogRef.close()"
+          mat-icon-button
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        Pengaturan
+      </div>
+      <!-- <button
+        class="panel_button"
+        (click)="dialogRef.close()"
+        mat-icon-button><mat-icon>close</mat-icon></button> -->
+      <div class="toolbar-container panel_button">
+        <a
+          data-testid="btn-add"
+          [disabled]="isLoading"
+          mat-button
+          (click)="addData()"
+        >
+          <mat-icon>add</mat-icon>
+          Add</a
+        >
+        <a
+          data-testid="btn-import"
+          [disabled]="isLoading"
+          mat-button
+          (click)="importHCP()"
+        >
+          <mat-icon>add</mat-icon>
+          Import From HCP</a
+        >
+      </div>
+    </ng-template>
+
+    <ng-template #contentBody>
+      <div class="content-container p-3">
+        <div class="table-container">
+          <table
+            mat-table
+            matSort
+            [dataSource]="dataSource"
+            class="mat-elevation-z8 w-100"
+          >
+            <ng-container matColumnDef="position">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                No.
+              </th>
+              <td mat-cell *matCellDef="let index = index">
+                {{
+                  this.paginator.index === 0
+                    ? index + 1
+                    : 1 + index + this.paginator.index * this.paginator.size
+                }}
+              </td>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="vmsCameraIndexCode"
+              sticky
+              mat-sort-header
+            >
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                vmsCameraIndexCode
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["vmsCameraIndexCode"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Name
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["name"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="location" mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Location
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["location"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="latitude">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Latitude
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["latitude"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="longitude">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Longitude
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["longitude"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="host" mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Host
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["host"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="httpPort" mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                HTTP Port
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["httpPort"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rtspPort" mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                RTSP Port
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["rtspPort"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="userName">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Username
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["userName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="password">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Password
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["password"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isActive" mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Active
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isActive']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isLiveView">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Live View
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isLiveView']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isCrowd">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Crowd
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isCrowd']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isFlood">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Flood
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isFlood']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isStreetVendor">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Street Vendor
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isStreetVendor']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isTraffic">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Traffic
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isTraffic']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isTrash">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Trash
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <mat-checkbox
+                  (click)="$event.preventDefault()"
+                  [checked]="row['isTrash']"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                Action
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <button
+                  data-testid="btn-view"
+                  [disabled]="isLoading"
+                  mat-icon-button
+                  (click)="viewData(row)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  data-testid="btn-edit"
+                  [disabled]="isLoading"
+                  mat-icon-button
+                  (click)="editData(row)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  data-testid="btn-delete"
+                  [disabled]="isLoading"
+                  mat-icon-button
+                  (click)="deleteData(row)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="rowClick(row)"
+            ></tr>
+          </table>
+          <mat-paginator
+            class="demo-paginator"
+            (page)="handlePageEvent($event)"
+            [length]="paginator.length"
+            [pageSize]="paginator.size"
+            [showFirstLastButtons]="true"
+            [pageIndex]="paginator.index"
+            [disabled]="isLoading"
+            [pageSizeOptions]="[5, 10]"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </ng-template>
+  </app-chart-panel>
+</ng-template>

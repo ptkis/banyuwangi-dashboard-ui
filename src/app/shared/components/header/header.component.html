@@ -3,5 +3,26 @@
     {{ time$ | async | date: "dd / MM / yy &nbsp;&nbsp; HH:mm" }} WIB
   </div>
   <div class="center-content">DASHBOARD BANYUWANGI</div>
-  <div class="right-content">18&deg; C Cerah</div>
+  <div class="right-content d-flex justify-content-end align-items-center">
+    <div>18&deg; C Cerah</div>
+    <a mat-icon-button [matMenuTriggerFor]="settingsMenu"
+      ><mat-icon>settings</mat-icon></a
+    >
+    <mat-menu #settingsMenu="matMenu">
+      <a
+        mat-menu-item
+        [routerLink]="[
+          '',
+          {
+            outlets: {
+              dialog: ['cctv-list']
+            }
+          }
+        ]"
+      >
+        <mat-icon>videocam</mat-icon>
+        <span>CCTV List</span>
+      </a>
+    </mat-menu>
+  </div>
 </header>

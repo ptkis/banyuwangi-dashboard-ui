@@ -1,0 +1,25 @@
+<ng-template #content>
+  <app-chart-panel>
+    <ng-template #customTitle>
+      <div class="title">Kepadatan Lalu Lintas</div>
+      <button class="panel_button" (click)="dialogRef.close()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </ng-template>
+
+    <ng-template #contentBody>
+      <div class="p-3 camera-container">
+        <app-ws-video
+          [cctv_id]="'717'"
+          [playerWidth]="300"
+          [maxSplit]="3"
+        ></app-ws-video>
+        <!-- <app-ws-video [cctv_id]="'926'"></app-ws-video>
+        <app-ws-video [cctv_id]="'879'"></app-ws-video>
+        <app-ws-video [cctv_id]="'923'"></app-ws-video>
+        <app-ws-video [cctv_id]="'925'"></app-ws-video>
+        <app-ws-video [cctv_id]="'926'"></app-ws-video> -->
+      </div>
+    </ng-template>
+  </app-chart-panel>
+</ng-template>
