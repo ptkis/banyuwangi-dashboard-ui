@@ -19,6 +19,7 @@ export interface CCTVData {
   update_timestamp?: string
   update_user?: string
   ishcp: boolean
+  live_view_url?: string
 }
 
 export interface HikResponse<T> {

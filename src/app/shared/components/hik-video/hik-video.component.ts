@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input, OnInit } from "@angular/core"
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from "@angular/core"
 import { finalize } from "rxjs"
 import { HCMService } from "../../services/hcm.service"
 
@@ -8,18 +14,28 @@ import { HCMService } from "../../services/hcm.service"
   styleUrls: ["./hik-video.component.scss"],
 })
 export class HikVideoComponent implements AfterViewInit {
-  @Input() cctv_id!: string
+  @Input() cctv_id?: string
+  @Input() url?: string
 
-  isLoading = true
-  url: string = ""
+  isLoading = false
 
-  constructor(private _service: HCMService) {}
+  constructor(private _service: HCMService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    this.isLoading = true
-    this._service
-      .getStreamingURL(this.cctv_id)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((resp) => (this.url = resp.data.url))
+    if (this.cctv_id && !this.url) {
+      this.isLoading = true
+      this._service
+        .getStreamingURL(this.cctv_id)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+            this.cdr.detectChanges()
+          })
+        )
+        .subscribe((resp) => {
+          this.url = resp.data.url
+          this.cdr.detectChanges()
+        })
+    }
   }
 }
