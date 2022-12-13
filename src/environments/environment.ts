@@ -7,6 +7,7 @@ import { environment as prodEnvironment } from "./environment.prod"
 export const environment = {
   ...prodEnvironment,
   production: false,
+  serverBaseUrl: "https://api.banyuwangi.dasbor.id",
 }
 
 /*

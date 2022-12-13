@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { dashboardComponents } from "../.."
 import { chartImportedModules, chartProviders } from "../chart-components"
 
 import { StreetVendorChartComponent } from "./street-vendor-chart.component"
@@ -9,7 +10,7 @@ describe("StreetVendorChartComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StreetVendorChartComponent],
+      declarations: [...dashboardComponents],
       imports: [...chartImportedModules],
       providers: [chartProviders],
     }).compileComponents()

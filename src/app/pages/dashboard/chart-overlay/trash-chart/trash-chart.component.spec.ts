@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { dashboardComponents } from "../.."
 import { chartImportedModules, chartProviders } from "../chart-components"
 
 import { TrashChartComponent } from "./trash-chart.component"
@@ -9,7 +10,7 @@ describe("TrashChartComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TrashChartComponent],
+      declarations: [...dashboardComponents],
       imports: [...chartImportedModules],
       providers: [chartProviders],
     }).compileComponents()

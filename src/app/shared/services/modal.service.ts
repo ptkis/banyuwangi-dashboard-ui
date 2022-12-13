@@ -20,13 +20,18 @@ export class ModalService {
     })
   }
 
-  showConfirm(message: string, title?: string) {
+  showConfirm(
+    message: string,
+    title?: string,
+    btnConfirm = "OK",
+    btnCancel = "Cancel"
+  ) {
     return this.dialog.open<boolean>(ModalComponent, {
       data: {
         title,
         message,
-        btnConfirm: "Delete",
-        btnCancel: "Cancel",
+        btnConfirm,
+        btnCancel,
       },
       disableClose: true,
       width: "300px",

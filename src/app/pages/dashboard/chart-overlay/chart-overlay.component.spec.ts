@@ -2,14 +2,8 @@ import { TestBed } from "@angular/core/testing"
 
 import { ChartOverlayComponent } from "./chart-overlay.component"
 
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
 import { RouterTestingModule } from "@angular/router/testing"
-import {
-  chartComponents,
-  chartImportedModules,
-  chartProviders,
-} from "./chart-components"
+import { chartImportedModules, chartProviders } from "./chart-components"
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed"
 import { MatButtonHarness } from "@angular/material/button/testing"
 import { MatCheckboxHarness } from "@angular/material/checkbox/testing"
@@ -17,18 +11,19 @@ import { MatInputHarness } from "@angular/material/input/testing"
 import { MatMenuItemHarness } from "@angular/material/menu/testing"
 import { DashboardService } from "../dashboard.service"
 
-import { render, screen, fireEvent, waitFor } from "@testing-library/angular"
+import { render, screen } from "@testing-library/angular"
+import { dashboardComponents } from ".."
+import { dashboardMaterialModules } from "../dashboard.module"
 
 jest.setTimeout(15000)
 
 describe("ChartOverlayComponent", () => {
   const renderComponent = async () => {
     return await render(ChartOverlayComponent, {
-      declarations: [ChartOverlayComponent, chartComponents],
+      declarations: [dashboardComponents],
       imports: [
         RouterTestingModule,
-        MatButtonModule,
-        MatIconModule,
+        ...dashboardMaterialModules,
         ...chartImportedModules,
       ],
       providers: [chartProviders],

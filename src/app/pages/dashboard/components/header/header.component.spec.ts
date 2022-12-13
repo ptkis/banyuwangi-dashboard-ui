@@ -8,8 +8,8 @@ import {
 
 import { HeaderComponent } from "./header.component"
 import { take } from "rxjs"
-import { materialModules } from "../../shared.module"
 import { RouterTestingModule } from "@angular/router/testing"
+import { dashboardMaterialModules } from "../../dashboard.module"
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent
@@ -18,7 +18,7 @@ describe("HeaderComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [...materialModules, RouterTestingModule],
+      imports: [...dashboardMaterialModules, RouterTestingModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(HeaderComponent)

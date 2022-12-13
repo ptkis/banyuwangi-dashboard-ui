@@ -4,12 +4,8 @@ import { FormsModule } from "@angular/forms"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 import { NgxEchartsModule } from "ngx-echarts"
 import { SharedModule } from "src/app/shared/shared.module"
-import { CrowdChartComponent } from "./crowd-chart/crowd-chart.component"
-import { FloodChartComponent } from "./flood-chart/flood-chart.component"
+import { dashboardMaterialModules } from "../dashboard.module"
 import { chartHttpMockProviders } from "./mocks/chartMockData"
-import { StreetVendorChartComponent } from "./street-vendor-chart/street-vendor-chart.component"
-import { TrafficChartComponent } from "./traffic-chart/traffic-chart.component"
-import { TrashChartComponent } from "./trash-chart/trash-chart.component"
 
 // For testing
 export const chartImportedModules = [
@@ -21,14 +17,7 @@ export const chartImportedModules = [
     echarts: () => import("echarts"),
   }),
   FormsModule,
+  dashboardMaterialModules,
 ]
 
 export const chartProviders = [DatePipe, chartHttpMockProviders]
-
-export const chartComponents = [
-  FloodChartComponent,
-  StreetVendorChartComponent,
-  TrafficChartComponent,
-  TrashChartComponent,
-  CrowdChartComponent,
-]

@@ -2,14 +2,14 @@ import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 import { NgxEchartsModule } from "ngx-echarts"
-import { materialModules } from "../../shared.module"
-import { ChartPanelComponent } from "../chart-panel/chart-panel.component"
 
 import { ChartComponentComponent } from "./chart-component.component"
-import { DashboardService } from "src/app/pages/dashboard/dashboard.service"
 import { chartProviders } from "src/app/pages/dashboard/chart-overlay/chart-components"
-import { ListFilterComponent } from "../list-filter/list-filter.component"
 import { FormsModule } from "@angular/forms"
+import { ChartPanelComponent } from "src/app/shared/components/chart-panel/chart-panel.component"
+import { ListFilterComponent } from "../list-filter/list-filter.component"
+import { materialModules } from "src/app/shared/shared.module"
+import { dashboardMaterialModules } from "../../dashboard.module"
 
 describe("ChartComponentComponent", () => {
   let component: ChartComponentComponent
@@ -24,6 +24,7 @@ describe("ChartComponentComponent", () => {
       ],
       imports: [
         materialModules,
+        dashboardMaterialModules,
         HttpClientTestingModule,
         NoopAnimationsModule,
         FormsModule,

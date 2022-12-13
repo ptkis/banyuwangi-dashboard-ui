@@ -15,6 +15,7 @@ import { cctvHttpMockProviders } from "../mocks/cctvlistDataMock"
 import { DialogModule as CDKDialogModule } from "@angular/cdk/dialog"
 
 import { CCTVFormComponent } from "./cctvform.component"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 describe("CCTVFormComponent", () => {
   const renderComponent = async () => {
@@ -35,6 +36,7 @@ describe("CCTVFormComponent", () => {
         MatSelectModule,
         FormsModule,
         ReactiveFormsModule,
+        getTranslocoModule(),
       ],
       providers: [cctvHttpMockProviders],
     })

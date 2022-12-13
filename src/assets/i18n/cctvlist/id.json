@@ -1,0 +1,33 @@
+{
+  "title": "Pengaturan",
+  "Add": "Add",
+  "Import From HCP": "Import From HCP",
+  "No": "No.",
+  "vmsCameraIndexCode": "vmsCameraIndexCode",
+  "Name": "Name",
+  "Location": "Location",
+  "Latitude": "Latitude",
+  "Longitude": "Longitude",
+  "Host": "Host",
+  "HTTP Port": "HTTP Port",
+  "RTSP Port": "RTSP Port",
+  "Username": "Username",
+  "Password": "Password",
+  "Active": "Active",
+  "Live View": "Live View",
+  "Crowd": "Crowd",
+  "Flood": "Flood",
+  "Street Vendor": "Street Vendor",
+  "Traffic": "Traffic",
+  "Trash": "Trash",
+  "Action": "Action",
+  "View Data": "Lihat Data",
+  "Edit Data": "Edit Data",
+  "Delete Data": "Hapus Data",
+  "delete": {
+    "title": "Hapus '{{name}}'",
+    "message": "Apakah anda yakin untuk hapus data ini?",
+    "btnCancel": "Batal",
+    "btnConfirm": "Hapus"
+  }
+}

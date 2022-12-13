@@ -1,6 +1,6 @@
-<app-chart-panel>
+<app-chart-panel *transloco="let t; read: 'cctvform'">
   <ng-template #customTitle>
-    <div class="title">{{ title }}</div>
+    <div class="title">{{ t("title." + formType) }}</div>
     <button class="panel_button" (click)="dialogRef.close()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
@@ -16,15 +16,22 @@
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>vmsCameraIndexCode</mat-label>
-                <input matInput formControlName="vmsCameraIndexCode" />
+                <mat-label>{{ t("vmsCameraIndexCode") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="vmsCameraIndexCode"
+                  formControlName="vmsCameraIndexCode"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>vmsType</mat-label>
-                <mat-select placeholder="VMS Type" formControlName="vmsType">
+                <mat-label>{{ t("vmsType") }}</mat-label>
+                <mat-select
+                  placeholder="{{ t('vmsType') }}"
+                  formControlName="vmsType"
+                >
                   <mat-option *ngFor="let item of VMSType" [value]="item">
                     {{ item }}
                   </mat-option>
@@ -34,50 +41,70 @@
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>name</mat-label>
-                <input matInput formControlName="name" />
+                <mat-label>{{ t("name") }}</mat-label>
+                <input matInput data-testid="name" formControlName="name" />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>location</mat-label>
-                <input matInput formControlName="location" />
+                <mat-label>{{ t("location") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="location"
+                  formControlName="location"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>latitude</mat-label>
-                <input matInput formControlName="latitude" />
+                <mat-label>{{ t("latitude") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="latitude"
+                  formControlName="latitude"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>longitude</mat-label>
-                <input matInput formControlName="longitude" />
+                <mat-label>{{ t("longitude") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="longitude"
+                  formControlName="longitude"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>host</mat-label>
-                <input matInput formControlName="host" />
+                <mat-label>{{ t("host") }}</mat-label>
+                <input matInput data-testid="host" formControlName="host" />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>httpPort</mat-label>
-                <input matInput formControlName="httpPort" />
+                <mat-label>{{ t("httpPort") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="httpPort"
+                  formControlName="httpPort"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>rtspPort</mat-label>
-                <input matInput formControlName="rtspPort" />
+                <mat-label>{{ t("rtspPort") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="rtspPort"
+                  formControlName="rtspPort"
+                />
               </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -85,59 +112,84 @@
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>channel</mat-label>
-                <input matInput formControlName="channel" />
+                <mat-label>{{ t("channel") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="channel"
+                  formControlName="channel"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>captureQualityChannel</mat-label>
-                <input matInput formControlName="captureQualityChannel" />
+                <mat-label>{{ t("captureQualityChannel") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="captureQualityChannel"
+                  formControlName="captureQualityChannel"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>userName</mat-label>
-                <input matInput formControlName="userName" />
+                <mat-label>{{ t("userName") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="userName"
+                  formControlName="userName"
+                />
               </mat-form-field>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>password</mat-label>
-                <input matInput formControlName="password" />
+                <mat-label>{{ t("password") }}</mat-label>
+                <input
+                  matInput
+                  data-testid="password"
+                  formControlName="password"
+                  type="password"
+                />
               </mat-form-field>
               <div class="row my-2">
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isActive">Active</mat-checkbox>
+                  <mat-checkbox formControlName="isActive">{{
+                    t("Active")
+                  }}</mat-checkbox>
                 </div>
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isCrowd">Crowd</mat-checkbox>
+                  <mat-checkbox formControlName="isCrowd">{{
+                    t("Crowd")
+                  }}</mat-checkbox>
                 </div>
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isFlood">Flood</mat-checkbox>
+                  <mat-checkbox formControlName="isFlood">{{
+                    t("Flood")
+                  }}</mat-checkbox>
                 </div>
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isStreetvendor"
-                    >StreetVendor</mat-checkbox
-                  >
+                  <mat-checkbox formControlName="isStreetvendor">{{
+                    t("StreetVendor")
+                  }}</mat-checkbox>
                 </div>
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isTraffic"
-                    >Traffic</mat-checkbox
-                  >
+                  <mat-checkbox formControlName="isTraffic">{{
+                    t("Traffic")
+                  }}</mat-checkbox>
                 </div>
                 <div class="col-sm-4">
-                  <mat-checkbox formControlName="isTrash">Trash</mat-checkbox>
+                  <mat-checkbox formControlName="isTrash">{{
+                    t("Trash")
+                  }}</mat-checkbox>
                 </div>
               </div>
               <mat-form-field
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>type</mat-label>
+                <mat-label>{{ t("type") }}</mat-label>
                 <mat-select placeholder="Type" formControlName="type">
                   <mat-option *ngFor="let item of CameraType" [value]="item">
                     {{ item }}
@@ -148,8 +200,8 @@
                 class="custom-form-field2 w-100"
                 appearance="fill"
               >
-                <mat-label>label</mat-label>
-                <input matInput formControlName="label" />
+                <mat-label>{{ t("label") }}</mat-label>
+                <input matInput data-testid="label" formControlName="label" />
               </mat-form-field>
             </div>
           </div>
@@ -161,7 +213,7 @@
             (click)="dialogRef.close()"
             class="btn"
           >
-            Cancel
+            {{ t("Cancel." + formType) }}
           </button>
           <button
             *ngIf="data?.readonly !== true"
@@ -170,7 +222,7 @@
             (click)="submitForm()"
             class="btn btn-primary"
           >
-            Save
+            {{ t("Save." + formType) }}
           </button>
         </div>
       </form>
