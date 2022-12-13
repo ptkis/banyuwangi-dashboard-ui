@@ -17,6 +17,7 @@ import { CameraViewComponent } from "./camera-view/camera-view.component"
 import { CCTVFormComponent } from "./cctvform/cctvform.component"
 import { CCTVListComponent } from "./cctvlist/cctvlist.component"
 import { MatSelectModule } from "@angular/material/select"
+import { TranslocoModule } from "@ngneat/transloco"
 
 export const dialogRoutes: Routes = [
   {
@@ -48,6 +49,7 @@ export const dialogRoutes: Routes = [
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslocoModule,
   ],
 })
 export class DialogModule {}

@@ -1,0 +1,37 @@
+{
+  "title": {
+    "new": "Tambah Data",
+    "edit": "Edit Data",
+    "view": "Lihat Data"
+  },
+  "vmsCameraIndexCode": "vmsCameraIndexCode",
+  "vmsType": "vmsType",
+  "name": "name",
+  "location": "location",
+  "latitude": "latitude",
+  "longitude": "longitude",
+  "host": "host",
+  "httpPort": "httpPort",
+  "rtspPort": "rtspPort",
+  "channel": "channel",
+  "captureQualityChannel": "captureQualityChannel",
+  "userName": "userName",
+  "password": "password",
+  "Active": "Active",
+  "Crowd": "Crowd",
+  "Flood": "Flood",
+  "StreetVendor": "StreetVendor",
+  "Traffic": "Traffic",
+  "Trash": "Trash",
+  "type": "type",
+  "label": "label",
+  "Cancel": {
+    "new": "Cancel",
+    "edit": "Cancel",
+    "view": "Cancel"
+  },
+  "Save": {
+    "new": "Simpan",
+    "edit": "Update"
+  }
+}

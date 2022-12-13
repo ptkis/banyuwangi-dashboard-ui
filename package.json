@@ -18,7 +18,8 @@
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
-    "jest-preview": "jest-preview"
+    "jest-preview": "jest-preview",
+    "i18n:extract": "transloco-keys-manager extract --unflat --default-value \"{{keyWithoutScope}}\""
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@ngneat/transloco": "^4.2.1",
     "@videogular/ngx-videogular": "^6.0.0",
     "bootstrap": "^5.2.2",
     "crypto-js": "^4.1.1",
@@ -62,6 +64,7 @@
     "@compodoc/compodoc": "^1.1.19",
     "@cypress/schematic": "^2.2.0",
     "@happy-dom/jest-environment": "^7.7.0",
+    "@ngneat/transloco-keys-manager": "^3.4.2",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",
     "@storybook/addon-interactions": "^6.5.13",

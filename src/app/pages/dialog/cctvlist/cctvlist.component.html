@@ -1,5 +1,5 @@
 <ng-template #content>
-  <app-chart-panel>
+  <app-chart-panel *transloco="let t; read: 'cctvlist'">
     <ng-template #customTitle>
       <div class="title">
         <button
@@ -9,7 +9,7 @@
         >
           <mat-icon>keyboard_backspace</mat-icon>
         </button>
-        Pengaturan
+        {{ t("title") }}
       </div>
       <!-- <button
         class="panel_button"
@@ -23,7 +23,7 @@
           (click)="addData()"
         >
           <mat-icon>add</mat-icon>
-          Add</a
+          {{ t("Add") }}</a
         >
         <a
           data-testid="btn-import"
@@ -32,7 +32,7 @@
           (click)="importHCP()"
         >
           <mat-icon>add</mat-icon>
-          Import From HCP</a
+          {{ t("Import From HCP") }}</a
         >
       </div>
     </ng-template>
@@ -48,7 +48,7 @@
           >
             <ng-container matColumnDef="position">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                No.
+                {{ t("No") }}
               </th>
               <td mat-cell *matCellDef="let index = index">
                 {{
@@ -65,7 +65,7 @@
               mat-sort-header
             >
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                vmsCameraIndexCode
+                {{ t("vmsCameraIndexCode") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["vmsCameraIndexCode"] }}
@@ -74,7 +74,7 @@
 
             <ng-container matColumnDef="name" sticky mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Name
+                {{ t("Name") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["name"] }}
@@ -83,7 +83,7 @@
 
             <ng-container matColumnDef="location" mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Location
+                {{ t("Location") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["location"] }}
@@ -92,7 +92,7 @@
 
             <ng-container matColumnDef="latitude">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Latitude
+                {{ t("Latitude") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["latitude"] }}
@@ -101,7 +101,7 @@
 
             <ng-container matColumnDef="longitude">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Longitude
+                {{ t("Longitude") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["longitude"] }}
@@ -110,7 +110,7 @@
 
             <ng-container matColumnDef="host" mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Host
+                {{ t("Host") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["host"] }}
@@ -119,7 +119,7 @@
 
             <ng-container matColumnDef="httpPort" mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                HTTP Port
+                {{ t("HTTP Port") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["httpPort"] }}
@@ -128,7 +128,7 @@
 
             <ng-container matColumnDef="rtspPort" mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                RTSP Port
+                {{ t("RTSP Port") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["rtspPort"] }}
@@ -137,7 +137,7 @@
 
             <ng-container matColumnDef="userName">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Username
+                {{ t("Username") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["userName"] }}
@@ -146,7 +146,7 @@
 
             <ng-container matColumnDef="password">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Password
+                {{ t("Password") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 {{ row["password"] }}
@@ -155,7 +155,7 @@
 
             <ng-container matColumnDef="isActive" mat-sort-header>
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Active
+                {{ t("Active") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -167,7 +167,7 @@
 
             <ng-container matColumnDef="isLiveView">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Live View
+                {{ t("Live View") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -179,7 +179,7 @@
 
             <ng-container matColumnDef="isCrowd">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Crowd
+                {{ t("Crowd") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -191,7 +191,7 @@
 
             <ng-container matColumnDef="isFlood">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Flood
+                {{ t("Flood") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -203,7 +203,7 @@
 
             <ng-container matColumnDef="isStreetVendor">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Street Vendor
+                {{ t("Street Vendor") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -215,7 +215,7 @@
 
             <ng-container matColumnDef="isTraffic">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Traffic
+                {{ t("Traffic") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -227,7 +227,7 @@
 
             <ng-container matColumnDef="isTrash">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Trash
+                {{ t("Trash") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <mat-checkbox
@@ -239,13 +239,14 @@
 
             <ng-container matColumnDef="action">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
-                Action
+                {{ t("Action") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
                 <button
                   data-testid="btn-view"
                   [disabled]="isLoading"
                   mat-icon-button
+                  title="{{ t('View Data') }}"
                   (click)="viewData(row)"
                 >
                   <mat-icon>visibility</mat-icon>
@@ -254,6 +255,7 @@
                   data-testid="btn-edit"
                   [disabled]="isLoading"
                   mat-icon-button
+                  title="{{ t('Edit Data') }}"
                   (click)="editData(row)"
                 >
                   <mat-icon>edit</mat-icon>
@@ -262,6 +264,7 @@
                   data-testid="btn-delete"
                   [disabled]="isLoading"
                   mat-icon-button
+                  title="{{ t('Delete Data') }}"
                   (click)="deleteData(row)"
                 >
                   <mat-icon>delete</mat-icon>
@@ -270,11 +273,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr
-              mat-row
-              *matRowDef="let row; columns: displayedColumns"
-              (click)="rowClick(row)"
-            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <mat-paginator
             class="demo-paginator"

@@ -13,6 +13,7 @@ import { HttpClientModule } from "@angular/common/http"
 
 import { ToastrModule } from "ngx-toastr"
 import { DialogModule } from "@angular/cdk/dialog"
+import { TranslocoRootModule } from "./transloco-root.module"
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -55,6 +56,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       timeOut: 10000,
       preventDuplicates: true,
     }),
+
+    TranslocoRootModule,
   ],
   providers: [
     {

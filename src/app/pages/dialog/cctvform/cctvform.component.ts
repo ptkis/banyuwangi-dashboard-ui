@@ -7,12 +7,14 @@ import {
   Output,
 } from "@angular/core"
 import { FormBuilder, FormControl, Validators } from "@angular/forms"
+import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { CCTVData } from "../cctvlist/cctvlist.service"
 
 @Component({
   selector: "app-cctvform",
   templateUrl: "./cctvform.component.html",
   styleUrls: ["./cctvform.component.scss"],
+  providers: [{ provide: TRANSLOCO_SCOPE, useValue: "cctvform" }],
 })
 export class CCTVFormComponent {
   @Output() formSubmit = new EventEmitter<CCTVData>()

@@ -18,6 +18,8 @@ import { DialogModule as CDKDialogModule } from "@angular/cdk/dialog"
 import { cctvHttpMockProviders } from "../mocks/cctvlistDataMock"
 import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { debug } from "jest-preview"
+import { TranslocoRootModule } from "src/app/transloco-root.module"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 jest.setTimeout(15000)
 
@@ -40,6 +42,7 @@ describe("CCTVListComponent", () => {
         MatSelectModule,
         FormsModule,
         ReactiveFormsModule,
+        getTranslocoModule(),
       ],
       providers: [cctvHttpMockProviders],
     })
@@ -61,7 +64,7 @@ describe("CCTVListComponent", () => {
 
   it("should test add dialog", async () => {
     const user = userEvent.setup()
-    const { fixture, container } = await renderComponent()
+    const { fixture } = await renderComponent()
     await fixture.whenStable()
     const btnAdd = screen.getByTestId("btn-add")
     await user.click(btnAdd)
@@ -76,9 +79,9 @@ describe("CCTVListComponent", () => {
     )
     const btnSubmit = screen.getByTestId("btn-form-submit")
     await user.click(btnSubmit)
-    const vmsCameraIndexcode = screen.getByLabelText(/vmsCameraIndexcode/i)
+    const vmsCameraIndexcode = screen.getByTestId(/vmsCameraIndexcode/i)
     await user.type(vmsCameraIndexcode, "123")
-    const name = screen.getByLabelText(/^name/i)
+    const name = screen.getByTestId(/^name$/i)
     await user.type(name, "test")
     await user.click(btnSubmit)
     await fixture.whenStable()
@@ -112,7 +115,7 @@ describe("CCTVListComponent", () => {
 
   it("should test edit dialog", async () => {
     const user = userEvent.setup()
-    const { fixture, container } = await renderComponent()
+    const { fixture } = await renderComponent()
     await fixture.whenStable()
     const btnEdit = screen.getAllByTestId("btn-edit")[0]
     await user.click(btnEdit)
@@ -127,11 +130,12 @@ describe("CCTVListComponent", () => {
     )
     const btnSubmit = screen.getByTestId("btn-form-submit")
     await user.click(btnSubmit)
+    fixture.componentRef.instance.modalService.showConfirm("test")
   })
 
   it("should test delete button", async () => {
     const user = userEvent.setup()
-    const { fixture, container } = await renderComponent()
+    const { fixture } = await renderComponent()
     await fixture.whenStable()
     const btnDelete = screen.getAllByTestId("btn-delete")[0]
     await user.click(btnDelete)

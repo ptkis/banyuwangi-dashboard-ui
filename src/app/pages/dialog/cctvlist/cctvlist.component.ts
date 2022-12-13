@@ -3,11 +3,10 @@ import {
   AfterViewInit,
   Component,
   NgZone,
-  OnInit,
   TemplateRef,
   ViewChild,
 } from "@angular/core"
-import { finalize } from "rxjs"
+import { finalize, forkJoin, take } from "rxjs"
 import { HCPService } from "src/app/shared/services/hcp.service"
 import { CCTVData, CCTVListService } from "./cctvlist.service"
 import { v4 as uuidv4 } from "uuid"
@@ -16,13 +15,17 @@ import { Dialog, DialogRef } from "@angular/cdk/dialog"
 import { CCTVFormComponent } from "../cctvform/cctvform.component"
 import { ModalService } from "src/app/shared/services/modal.service"
 import { Router } from "@angular/router"
+import { TranslocoService, TRANSLOCO_SCOPE } from "@ngneat/transloco"
+
+const TRANSLATE_SCOPE = "cctvlist"
 
 @Component({
   selector: "app-cctvlist",
   templateUrl: "./cctvlist.component.html",
   styleUrls: ["./cctvlist.component.scss"],
+  providers: [{ provide: TRANSLOCO_SCOPE, useValue: TRANSLATE_SCOPE }],
 })
-export class CCTVListComponent implements OnInit, AfterViewInit {
+export class CCTVListComponent implements AfterViewInit {
   @ViewChild("content") contentRef!: TemplateRef<HTMLDivElement>
 
   isLoading = false
@@ -62,14 +65,11 @@ export class CCTVListComponent implements OnInit, AfterViewInit {
     private _HCPService: HCPService,
     private _cctvService: CCTVListService,
     public dialog: Dialog,
-    private modalService: ModalService,
+    public modalService: ModalService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private translocoService: TranslocoService
   ) {}
-
-  ngOnInit(): void {
-    this.getCCTVList()
-  }
 
   ngAfterViewInit(): void {
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
@@ -80,19 +80,29 @@ export class CCTVListComponent implements OnInit, AfterViewInit {
         this.router.navigate(["", { outlets: { dialog: null } }])
       })
     })
+
+    this.getCCTVList()
   }
 
-  rowClick(row: CCTVData) {}
-
   getCCTVList(pageNo: number = 1, pageSize: number = 10) {
-    this._cctvService.getCCTVData(pageNo, pageSize).subscribe((resp) => {
-      this.paginator = {
-        index: resp.data.number,
-        length: resp.data.totalElements,
-        size: resp.data.numberOfElements,
-      }
-      this.dataSource = resp.data.content
-    })
+    const loaderRef = this.modalService.showLoader("Loading CCTV data...")
+    this.isLoading = true
+    this._cctvService
+      .getCCTVData(pageNo, pageSize)
+      .pipe(
+        finalize(() => {
+          loaderRef.close()
+          this.isLoading = false
+        })
+      )
+      .subscribe((resp) => {
+        this.paginator = {
+          index: resp.data.number,
+          length: resp.data.totalElements,
+          size: resp.data.numberOfElements,
+        }
+        this.dataSource = resp.data.content
+      })
   }
 
   loadCCTVListPaginator() {
@@ -230,26 +240,55 @@ export class CCTVListComponent implements OnInit, AfterViewInit {
   }
 
   deleteData(data: CCTVData) {
-    const dialogRef = this.modalService.showConfirm(
-      "Do you want to delete this data?",
-      `Delete ${data.name}?`
-    )
-    dialogRef.closed.subscribe((res) => {
-      if (res) {
-        const loaderRef = this.modalService.showLoader("Saving data...")
-        this.isLoading = true
-        this._cctvService
-          .deleteCCTVData(data.id!)
-          .pipe(
-            finalize(() => {
-              loaderRef.close()
-              this.isLoading = false
+    forkJoin({
+      title: this.translocoService
+        .selectTranslate(
+          "delete.title",
+          {
+            ...data,
+          },
+          TRANSLATE_SCOPE
+        )
+        .pipe(take(1)),
+      message: this.translocoService
+        .selectTranslate(
+          "delete.message",
+          {
+            ...data,
+          },
+          TRANSLATE_SCOPE
+        )
+        .pipe(take(1)),
+      btnConfirm: this.translocoService
+        .selectTranslate("delete.btnConfirm", {}, TRANSLATE_SCOPE)
+        .pipe(take(1)),
+      btnCancel: this.translocoService
+        .selectTranslate("delete.btnCancel", {}, TRANSLATE_SCOPE)
+        .pipe(take(1)),
+    }).subscribe(({ title, message, btnConfirm, btnCancel }) => {
+      const dialogRef = this.modalService.showConfirm(
+        message,
+        title,
+        btnConfirm,
+        btnCancel
+      )
+      dialogRef.closed.subscribe((res) => {
+        if (res) {
+          const loaderRef = this.modalService.showLoader("Deleting data...")
+          this.isLoading = true
+          this._cctvService
+            .deleteCCTVData(data.id!)
+            .pipe(
+              finalize(() => {
+                loaderRef.close()
+                this.isLoading = false
+              })
+            )
+            .subscribe(() => {
+              this.loadCCTVListPaginator()
             })
-          )
-          .subscribe(() => {
-            this.loadCCTVListPaginator()
-          })
-      }
+        }
+      })
     })
   }
 
