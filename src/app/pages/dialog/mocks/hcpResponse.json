@@ -7,7 +7,7 @@
     "pageSize": 40,
     "list": [
       {
-        "cameraIndexCode": "937",
+        "cameraIndexCode": "xxx",
         "cameraName": "Camera1",
         "capabilitySet": "ptz",
         "devResourceType": "encodeDevice",

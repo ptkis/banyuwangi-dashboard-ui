@@ -16,6 +16,7 @@ import { CCTVFormComponent } from "../cctvform/cctvform.component"
 import { ModalService } from "src/app/shared/services/modal.service"
 import { Router } from "@angular/router"
 import { TranslocoService, TRANSLOCO_SCOPE } from "@ngneat/transloco"
+import { ToastrService } from "ngx-toastr"
 
 const TRANSLATE_SCOPE = "cctvlist"
 
@@ -68,7 +69,8 @@ export class CCTVListComponent implements AfterViewInit {
     public modalService: ModalService,
     private router: Router,
     private zone: NgZone,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private toastr: ToastrService
   ) {}
 
   ngAfterViewInit(): void {
@@ -84,24 +86,41 @@ export class CCTVListComponent implements AfterViewInit {
     this.getCCTVList()
   }
 
+  setLoading(loading: boolean, message?: string) {
+    if (loading) {
+      const loaderRef = this.modalService.showLoader(message)
+      this.isLoading = true
+      loaderRef.closed.subscribe(() => (this.isLoading = false))
+      return loaderRef
+    }
+    this.isLoading = false
+    return false
+  }
+
+  showError(message: string, title?: string) {
+    return this.toastr.error(message, title || "Error", {
+      disableTimeOut: true,
+    })
+  }
+
   getCCTVList(pageNo: number = 1, pageSize: number = 10) {
-    const loaderRef = this.modalService.showLoader("Loading CCTV data...")
-    this.isLoading = true
+    const loaderRef = this.setLoading(true, "Loading CCTV data...")
     this._cctvService
       .getCCTVData(pageNo, pageSize)
-      .pipe(
-        finalize(() => {
-          loaderRef.close()
-          this.isLoading = false
-        })
-      )
-      .subscribe((resp) => {
-        this.paginator = {
-          index: resp.data.number,
-          length: resp.data.totalElements,
-          size: resp.data.numberOfElements,
-        }
-        this.dataSource = resp.data.content
+      .pipe(finalize(() => loaderRef && loaderRef.close()))
+      .subscribe({
+        next: (resp) => {
+          this.paginator = {
+            index: resp.data.number,
+            length: resp.data.totalElements,
+            size: resp.data.numberOfElements,
+          }
+          this.dataSource = resp.data.content
+        },
+        error: (err: HttpErrorResponse) => {
+          const message = err.error?.message || "Failed to load data"
+          this.showError(message, "Network Error")
+        },
       })
   }
 
@@ -114,16 +133,10 @@ export class CCTVListComponent implements AfterViewInit {
   }
 
   importHCP(pageNo = 1, pageSize = 140) {
-    this.isLoading = true
-    const loaderRef = this.modalService.showLoader("Importing data...")
+    const loaderRef = this.setLoading(true, "Importing data...")
     this._HCPService
       .getCameraList(pageNo, pageSize)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false
-          loaderRef.close()
-        })
-      )
+      .pipe(finalize(() => loaderRef && loaderRef.close()))
       .subscribe({
         next: (resp) => {
           this._cctvService.getCCTVData(1, 10000).subscribe((cctvResp) => {
@@ -168,14 +181,21 @@ export class CCTVListComponent implements AfterViewInit {
               allBody.push(body)
             }
             if (allBody.length) {
-              this._cctvService.postCCTVDataBulk(allBody).subscribe(() => {
-                this.getCCTVList()
+              this._cctvService.postCCTVDataBulk(allBody).subscribe({
+                next: () => {
+                  this.getCCTVList()
+                },
+                error: (error: HttpErrorResponse) => {
+                  const message = error.error?.message || "Server Error"
+                  this.showError(message, "Failed to import data")
+                },
               })
             }
           })
         },
         error: (error: HttpErrorResponse) => {
-          console.log({ error })
+          const message = error.error?.message || "Server Error"
+          this.showError(message, "Failed to import data")
         },
       })
   }
@@ -186,8 +206,7 @@ export class CCTVListComponent implements AfterViewInit {
     })
     const component = dialogRef.componentInstance as CCTVFormComponent
     component.formSubmit.subscribe((formData) => {
-      const loaderRef = this.modalService.showLoader("Saving data...")
-      this.isLoading = true
+      const loaderRef = this.setLoading(true, "Saving data...")
       this._cctvService
         .postCCTVDataBulk([
           {
@@ -196,15 +215,16 @@ export class CCTVListComponent implements AfterViewInit {
             version: undefined,
           },
         ])
-        .pipe(
-          finalize(() => {
-            loaderRef.close()
-            this.isLoading = false
-          })
-        )
-        .subscribe(() => {
-          this.loadCCTVListPaginator()
-          dialogRef.close()
+        .pipe(finalize(() => loaderRef && loaderRef.close()))
+        .subscribe({
+          next: () => {
+            this.loadCCTVListPaginator()
+            dialogRef.close()
+          },
+          error: (error: HttpErrorResponse) => {
+            const message = error.error?.message || "Server Error"
+            this.showError(message, "Failed to add data")
+          },
         })
     })
   }
@@ -218,23 +238,23 @@ export class CCTVListComponent implements AfterViewInit {
     })
     const component = dialogRef.componentInstance as CCTVFormComponent
     component.formSubmit.subscribe((formData) => {
-      const loaderRef = this.modalService.showLoader("Saving data...")
-      this.isLoading = true
+      const loaderRef = this.setLoading(true, "Saving data...")
       const newData = {
         ...formData,
         version: (formData.version || 0) + 1,
       }
       this._cctvService
         .postCCTVData(newData)
-        .pipe(
-          finalize(() => {
-            loaderRef.close()
-            this.isLoading = false
-          })
-        )
-        .subscribe(() => {
-          this.loadCCTVListPaginator()
-          dialogRef.close()
+        .pipe(finalize(() => loaderRef && loaderRef.close()))
+        .subscribe({
+          next: () => {
+            this.loadCCTVListPaginator()
+            dialogRef.close()
+          },
+          error: (error: HttpErrorResponse) => {
+            const message = error.error?.message || "Server Error"
+            this.showError(message, "Failed to edit data")
+          },
         })
     })
   }
@@ -274,18 +294,18 @@ export class CCTVListComponent implements AfterViewInit {
       )
       dialogRef.closed.subscribe((res) => {
         if (res) {
-          const loaderRef = this.modalService.showLoader("Deleting data...")
-          this.isLoading = true
+          const loaderRef = this.setLoading(true, "Deleting data...")
           this._cctvService
             .deleteCCTVData(data.id!)
-            .pipe(
-              finalize(() => {
-                loaderRef.close()
-                this.isLoading = false
-              })
-            )
-            .subscribe(() => {
-              this.loadCCTVListPaginator()
+            .pipe(finalize(() => loaderRef && loaderRef.close()))
+            .subscribe({
+              next: () => {
+                this.loadCCTVListPaginator()
+              },
+              error: (error: HttpErrorResponse) => {
+                const message = error.error?.message || "Server Error"
+                this.showError(message, "Failed to delete data")
+              },
             })
         }
       })

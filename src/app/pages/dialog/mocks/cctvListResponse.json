@@ -4,38 +4,6 @@
   "data": {
     "content": [
       {
-        "vmsCameraIndexCode": "926",
-        "vmsType": "HCP",
-        "name": "Camera1",
-        "location": "",
-        "latitude": 0.0,
-        "longitude": 0.0,
-        "host": "",
-        "httpPort": 0,
-        "rtspPort": 0,
-        "channel": 0,
-        "captureQualityChannel": "",
-        "userName": "",
-        "password": "",
-        "isActive": true,
-        "isStreetvendor": true,
-        "isTraffic": false,
-        "isCrowd": false,
-        "isTrash": false,
-        "isFlood": false,
-        "type": "HIKVISION",
-        "isLoginSucceeded": false,
-        "isLiveView": false,
-        "label": "",
-        "lastCaptureMethod": "RTSP",
-        "isPing": true,
-        "pingResponseTimeSec": 0.0,
-        "pingRawData": "",
-        "pingLast": null,
-        "id": "2ea260aa-e959-4949-a750-725a748a22c3",
-        "version": 0
-      },
-      {
         "vmsCameraIndexCode": "934",
         "vmsType": "HCP",
         "name": "Camera1",
@@ -65,7 +33,7 @@
         "pingRawData": null,
         "pingLast": null,
         "id": "dd5af8ab-1e37-45c5-8d7f-83f89d103c37",
-        "version": 3
+        "version": null
       },
       {
         "vmsCameraIndexCode": "935",
