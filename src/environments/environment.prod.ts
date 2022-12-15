@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  keycloakUrl: "https://auth.bagifoto.com/",
+  keycloakUrl: "https://auth.smartbanyuwangi.dasbor.id/",
   keycloakRealm: "banyuwangi",
   keycloakClientId: "angular-banyuwangi",
   hikOpenapi: {
