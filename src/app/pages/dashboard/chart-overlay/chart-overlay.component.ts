@@ -66,7 +66,7 @@ export class ChartOverlayComponent implements AfterViewInit {
   @ViewChild(TrafficChartComponent) TrafficChart!: TrafficChartComponent
   @ViewChild(TrashChartComponent) TrashChart!: TrashChartComponent
 
-  constructor(private _dashboardService: DashboardService) {}
+  constructor(public _dashboardService: DashboardService) {}
 
   ngAfterViewInit(): void {
     undefined

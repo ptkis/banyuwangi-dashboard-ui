@@ -1,0 +1,198 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "date": "2020-06-06",
+        "instant": "2020-06-06T02:28:48Z",
+        "location": "Kampung Melayu",
+        "cameraName": "Camera 1",
+        "type": "TRASH",
+        "value": 3,
+        "imageSrc": "https://loremflickr.com/300/200",
+        "annotations": [
+          {
+            "boundingBox": {
+              "x": 0.162,
+              "y": 0.357,
+              "width": 0.25,
+              "height": 0.545,
+              "id": "e5f356c3-a365-4a63-916b-dbc3bcda6bb7"
+            },
+            "confidence": 0.96922
+          },
+          {
+            "boundingBox": {
+              "x": 0.152,
+              "y": 0.249,
+              "width": 0.558,
+              "height": 0.57,
+              "id": "7a79b187-92c1-452e-8eb4-589f9b4919a5"
+            },
+            "confidence": 0.66656
+          },
+          {
+            "boundingBox": {
+              "x": 0.61,
+              "y": 0.131,
+              "width": 0.167,
+              "height": 0.284,
+              "id": "90f39b2b-c9cf-45a1-a3a1-4d292c9cb3e3"
+            },
+            "confidence": 0.62682
+          }
+        ]
+      },
+      {
+        "date": "2011-02-19",
+        "instant": "2011-02-19T07:20:54Z",
+        "location": "Sobo",
+        "cameraName": "Camera 2",
+        "type": "TRASH",
+        "value": 3,
+        "imageSrc": "https://loremflickr.com/300/300",
+        "annotations": [
+          {
+            "boundingBox": {
+              "x": 0.162,
+              "y": 0.357,
+              "width": 0.25,
+              "height": 0.545,
+              "id": "b5f6ebba-df3a-42bd-9fd0-2f273760b4c0"
+            },
+            "confidence": 0.96922
+          },
+          {
+            "boundingBox": {
+              "x": 0.152,
+              "y": 0.249,
+              "width": 0.558,
+              "height": 0.57,
+              "id": "8155206b-6c57-4d48-9493-a6ab10bf1791"
+            },
+            "confidence": 0.66656
+          },
+          {
+            "boundingBox": {
+              "x": 0.61,
+              "y": 0.131,
+              "width": 0.167,
+              "height": 0.284,
+              "id": "fb58849b-d73e-4a13-9dae-bbd9b79c9abd"
+            },
+            "confidence": 0.62682
+          }
+        ]
+      },
+      {
+        "date": "2006-01-19",
+        "instant": "2006-01-19T12:28:38Z",
+        "location": "Karangrejo",
+        "cameraName": "Camera 3",
+        "type": "TRASH",
+        "value": 3,
+        "imageSrc": "https://loremflickr.com/415/233",
+        "annotations": [
+          {
+            "boundingBox": {
+              "x": 0.162,
+              "y": 0.357,
+              "width": 0.25,
+              "height": 0.545,
+              "id": "e1498210-2799-48e1-8a36-8be0bf8ae51a"
+            },
+            "confidence": 0.96922
+          }
+        ]
+      },
+      {
+        "date": "2007-01-10",
+        "instant": "2007-01-09T21:58:16Z",
+        "location": "Sumber Rejo",
+        "cameraName": "Camera 4",
+        "type": "TRASH",
+        "value": 3,
+        "imageSrc": "https://loremflickr.com/415/100",
+        "annotations": [
+          {
+            "boundingBox": {
+              "x": 0.61,
+              "y": 0.131,
+              "width": 0.167,
+              "height": 0.284,
+              "id": "91804572-baa8-44c5-bdb5-99c802b0a23b"
+            },
+            "confidence": 0.62682
+          }
+        ]
+      },
+      {
+        "date": "1977-08-02",
+        "instant": "1977-08-01T21:47:57Z",
+        "location": "Sobo",
+        "cameraName": "Camera 5",
+        "type": "TRASH",
+        "value": 3,
+        "imageSrc": "https://loremflickr.com/415/233",
+        "annotations": [
+          {
+            "boundingBox": {
+              "x": 0.162,
+              "y": 0.357,
+              "width": 0.25,
+              "height": 0.545,
+              "id": "1a6bc1b3-b771-4002-afd6-e92e4dfb439e"
+            },
+            "confidence": 0.96922
+          },
+          {
+            "boundingBox": {
+              "x": 0.152,
+              "y": 0.249,
+              "width": 0.558,
+              "height": 0.57,
+              "id": "eee2214c-59f7-48b4-aa04-ea4df22abe6e"
+            },
+            "confidence": 0.66656
+          },
+          {
+            "boundingBox": {
+              "x": 0.61,
+              "y": 0.131,
+              "width": 0.167,
+              "height": 0.284,
+              "id": "f0245b63-5957-4243-94cc-f7244de1805d"
+            },
+            "confidence": 0.62682
+          }
+        ]
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 5,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalPages": 5,
+    "totalElements": 25,
+    "last": false,
+    "size": 5,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "numberOfElements": 5,
+    "first": true,
+    "empty": false
+  }
+}

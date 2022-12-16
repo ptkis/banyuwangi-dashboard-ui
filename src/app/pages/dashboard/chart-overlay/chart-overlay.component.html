@@ -1,4 +1,4 @@
-<div class="chart-container">
+<div class="chart-container" *transloco="let t; read: 'dashboard'">
   <div class="main">
     <div class="custom-radio-group map-select">
       <label
@@ -23,15 +23,31 @@
   </div>
   <div class="left-area">
     <div>
-      <app-flood-chart></app-flood-chart>
+      <app-line-chart
+        [chartTitle]="t('flood')"
+        chartType="flood"
+        [getData]="_dashboardService.getFloodChartData"
+        tooltipPosition="right"
+      ></app-line-chart>
     </div>
     <div>
-      <app-trash-chart></app-trash-chart>
+      <app-line-chart
+        [chartTitle]="t('trash')"
+        chartType="trash"
+        [getData]="_dashboardService.getTrashChartData"
+        tooltipPosition="right"
+      ></app-line-chart>
     </div>
   </div>
   <div class="right-area">
     <div>
       <app-street-vendor-chart tooltipPosition="left"></app-street-vendor-chart>
+      <app-line-chart
+        [chartTitle]="t('streetvendor')"
+        chartType="streetvendor"
+        [getData]="_dashboardService.getStreetVendorChartData"
+        tooltipPosition="left"
+      ></app-line-chart>
     </div>
   </div>
   <div class="footer-area">
@@ -57,7 +73,17 @@
         </div>
       </ng-template>
     </app-chart-panel>
-    <app-traffic-chart tooltipPosition="top"></app-traffic-chart>
-    <app-crowd-chart tooltipPosition="top"></app-crowd-chart>
+    <app-line-chart
+      [chartTitle]="t('traffic')"
+      chartType="traffic"
+      [getData]="_dashboardService.getTrafficChartData"
+      tooltipPosition="top"
+    ></app-line-chart>
+    <app-line-chart
+      [chartTitle]="t('crowd')"
+      chartType="crowd"
+      [getData]="_dashboardService.getCrowdChartData"
+      tooltipPosition="top"
+    ></app-line-chart>
   </div>
 </div>

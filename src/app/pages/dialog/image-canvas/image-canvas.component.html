@@ -1,0 +1,43 @@
+<div class="image-canvas-container">
+  <canvas #bgCanvas [width]="canvasWidth" [height]="canvasHeight"></canvas>
+  <canvas
+    id="rectCanvas"
+    #canvas
+    [width]="canvasWidth"
+    [height]="canvasHeight"
+  ></canvas>
+  <ng-container *ngIf="chartImageContent; else noContent">
+    <div class="icon-top-left label-text">
+      <div class="item">
+        <span class="item-icon material-icons-outlined">location_on</span>
+        {{ chartImageContent.location }}
+      </div>
+    </div>
+    <div class="icon-top-right label-text">
+      <div class="item">
+        <span class="item-icon material-icons-outlined">photo_camera</span>
+        {{ chartImageContent.cameraName }}
+      </div>
+    </div>
+    <div class="icon-bottom-left label-text">
+      <div class="item">
+        <span class="item-icon material-icons-outlined">person</span>
+        {{ chartImageContent.annotations.length || 0 }}
+      </div>
+    </div>
+    <div class="icon-bottom-right label-text">
+      <div class="item">
+        <span class="item-icon material-icons-outlined">calendar_today</span>
+        {{ chartImageContent.instant | date: "dd MMM yyyy" }}
+      </div>
+      <div class="item">
+        <span class="item-icon material-icons-outlined">schedule</span>
+        {{ chartImageContent.instant | date: "HH:mm" }} WIB
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noContent>
+    <div class="empty-content">No Content</div>
+  </ng-template>
+</div>

@@ -1,6 +1,7 @@
 import { ChartOverlayComponent } from "./chart-overlay/chart-overlay.component"
 import { CrowdChartComponent } from "./chart-overlay/crowd-chart/crowd-chart.component"
 import { FloodChartComponent } from "./chart-overlay/flood-chart/flood-chart.component"
+import { LineChartComponent } from "./chart-overlay/line-chart/line-chart.component"
 import { StreetVendorChartComponent } from "./chart-overlay/street-vendor-chart/street-vendor-chart.component"
 import { TrafficChartComponent } from "./chart-overlay/traffic-chart/traffic-chart.component"
 import { TrashChartComponent } from "./chart-overlay/trash-chart/trash-chart.component"
@@ -20,6 +21,7 @@ export const dashboardComponents = [
   Map3dDashboardComponent,
 
   ChartComponentComponent,
+  LineChartComponent,
   FloodChartComponent,
   StreetVendorChartComponent,
   TrafficChartComponent,

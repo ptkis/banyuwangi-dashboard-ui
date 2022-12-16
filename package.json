@@ -33,6 +33,8 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@ng-web-apis/common": "^2.1.0",
+    "@ng-web-apis/intersection-observer": "^3.0.0",
     "@ngneat/transloco": "^4.2.1",
     "@videogular/ngx-videogular": "^6.0.0",
     "bootstrap": "^5.2.2",

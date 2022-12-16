@@ -18,12 +18,23 @@ import { CCTVFormComponent } from "./cctvform/cctvform.component"
 import { CCTVListComponent } from "./cctvlist/cctvlist.component"
 import { MatSelectModule } from "@angular/material/select"
 import { TranslocoModule } from "@ngneat/transloco"
+import { ImageCanvasComponent } from "./image-canvas/image-canvas.component"
+import { ChartImageComponent } from "./chart-image/chart-image.component"
+import { IntersectionObserverModule } from "@ng-web-apis/intersection-observer"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
+import { MatSidenavModule } from "@angular/material/sidenav"
+import { DashboardModule } from "../dashboard/dashboard.module"
 
 export const dialogRoutes: Routes = [
   {
     path: "cctv-list",
     component: CCTVListComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: "chart-image",
+    component: ChartImageComponent,
+    // canActivate: [AuthGuard],
   },
   {
     path: "camera-view",
@@ -33,7 +44,13 @@ export const dialogRoutes: Routes = [
 ]
 
 @NgModule({
-  declarations: [CameraViewComponent, CCTVListComponent, CCTVFormComponent],
+  declarations: [
+    CameraViewComponent,
+    CCTVListComponent,
+    CCTVFormComponent,
+    ImageCanvasComponent,
+    ChartImageComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(dialogRoutes),
@@ -50,6 +67,11 @@ export const dialogRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     TranslocoModule,
+    IntersectionObserverModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+
+    DashboardModule,
   ],
 })
 export class DialogModule {}
