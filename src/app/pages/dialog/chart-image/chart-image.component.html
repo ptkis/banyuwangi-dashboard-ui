@@ -30,27 +30,43 @@
 
     <ng-template #contentBody>
       <mat-drawer-container [hasBackdrop]="false">
-        <mat-drawer #filter position="end" mode="side" opened>
+        <mat-drawer #filter position="end" mode="side">
           <div class="filter-container p-3">
             <div class="list-filter">
               <h3>By Camera</h3>
               <app-list-filter
-                #listFilter
+                #listFilterCamera
                 [items]="allCameras"
-                [selected]="selectedCameras.selected"
+                [selected]="selectedCameras"
                 (click)="$event.stopPropagation()"
-                (selectionChanged)="locationFilterChanged($event)"
               ></app-list-filter>
             </div>
             <div class="list-filter">
               <h3>By Location</h3>
               <app-list-filter
-                #listFilter
+                #listFilterLocation
                 [items]="allLocations"
-                [selected]="selectedLocations.selected"
+                [selected]="selectedLocations"
                 (click)="$event.stopPropagation()"
-                (selectionChanged)="locationFilterChanged($event)"
               ></app-list-filter>
+            </div>
+            <div class="d-flex justify-content-between mt-2 filter-footer">
+              <button
+                mat-raised-button
+                data-testid="btn-form-cancel"
+                (click)="filterDrawer.close()"
+                class="btn"
+              >
+                Cancel
+              </button>
+              <button
+                mat-raised-button
+                data-testid="btn-form-submit"
+                (click)="applyFilter()"
+                class="btn btn-primary"
+              >
+                Save
+              </button>
             </div>
           </div>
         </mat-drawer>

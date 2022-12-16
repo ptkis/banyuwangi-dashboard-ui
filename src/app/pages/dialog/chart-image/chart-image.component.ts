@@ -12,6 +12,7 @@ import { MatDrawer } from "@angular/material/sidenav"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { finalize } from "rxjs"
+import { ListFilterComponent } from "../../dashboard/components/list-filter/list-filter.component"
 import {
   ChartImageContent,
   DashboardService,
@@ -26,6 +27,8 @@ import {
 export class ChartImageComponent implements AfterViewInit, OnInit {
   @ViewChild("content") contentRef!: TemplateRef<HTMLDivElement>
   @ViewChild("filter") filterDrawer!: MatDrawer
+  @ViewChild("listFilterCamera") listFilterCamera!: ListFilterComponent
+  @ViewChild("listFilterLocation") listFilterLocation!: ListFilterComponent
 
   isLoading = false
   dialogRef!: DialogRef<string>
@@ -39,10 +42,10 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   type = "trash"
 
   allLocations: string[] = []
-  selectedLocations = new SelectionModel<string>(true, [])
+  selectedLocations: string[] = []
 
   allCameras: string[] = []
-  selectedCameras = new SelectionModel<string>(true, [])
+  selectedCameras: string[] = []
 
   constructor(
     public dialog: Dialog,
@@ -53,14 +56,14 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadData()
-  }
-
-  ngAfterViewInit(): void {
     const type = this.route.snapshot.queryParamMap.get("type")
     if (type) {
       this.type = type
     }
+    this.loadData()
+  }
+
+  ngAfterViewInit(): void {
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
       width: "1335px",
     })
@@ -79,7 +82,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
     }
     this.dashboardService
       .getDetectionChartData(pageNo, this.paginator.size, {
-        type: this.type,
+        type: this.type?.toUpperCase(),
       })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((resp) => {
@@ -96,7 +99,9 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
 
   initializeFilter(data: typeof this.imageData) {
     this.allLocations = [...new Set(data?.map((d) => d.location) || [])]
+    this.selectedLocations = this.allLocations
     this.allCameras = [...new Set(data?.map((d) => d.cameraName) || [])]
+    this.selectedCameras = this.allCameras
   }
 
   onIntersection(e: IntersectionObserverEntry[]) {
@@ -106,5 +111,13 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
     }
   }
 
-  locationFilterChanged(items: string[]) {}
+  applyFilter() {
+    const filterCamera = this.listFilterCamera.selectedItems.selected
+    const filterLocation = this.listFilterLocation.selectedItems.selected
+    console.log({
+      filterCamera,
+      filterLocation,
+    })
+    this.filterDrawer.close()
+  }
 }

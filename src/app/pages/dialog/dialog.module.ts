@@ -34,7 +34,7 @@ export const dialogRoutes: Routes = [
   {
     path: "chart-image",
     component: ChartImageComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: "camera-view",

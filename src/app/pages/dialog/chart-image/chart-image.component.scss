@@ -28,8 +28,21 @@
   border: 1px solid #23639e;
   margin: 18px;
   width: min(80vw, 415px);
+
+  .list-filter {
+    + .list-filter {
+      margin-top: 8px;
+    }
+  }
+
   h3 {
     margin: 0;
     font-weight: bold;
+  }
+
+  .filter-footer {
+    button {
+      width: 141px;
+    }
   }
 }

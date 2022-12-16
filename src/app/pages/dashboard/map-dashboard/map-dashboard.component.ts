@@ -75,6 +75,9 @@ export class MapDashboardComponent implements AfterViewInit {
   }
 
   initMap() {
+    if (this.map) {
+      this.map.remove()
+    }
     this.map = new Map("map-container", {
       center: [114.36461695575213, -8.206547262582632],
       // center: [0, 0],
