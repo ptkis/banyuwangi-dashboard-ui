@@ -1,10 +1,32 @@
 import { SelectionModel } from "@angular/cdk/collections"
+import { CdkListboxModule } from "@angular/cdk/listbox"
+import { CommonModule } from "@angular/common"
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core"
+import { FormsModule } from "@angular/forms"
+import { MatButtonModule } from "@angular/material/button"
+import { MatCheckboxModule } from "@angular/material/checkbox"
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatIconModule } from "@angular/material/icon"
+import { MatInputModule } from "@angular/material/input"
+import { MatMenuModule } from "@angular/material/menu"
 
 @Component({
   selector: "app-list-filter",
   templateUrl: "./list-filter.component.html",
   styleUrls: ["./list-filter.component.scss"],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    CdkListboxModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+  ],
 })
 export class ListFilterComponent {
   @Input()

@@ -32,6 +32,7 @@
     </div>
     <div>
       <app-line-chart
+        #trashChart
         [chartTitle]="t('trash')"
         chartType="trash"
         [getData]="_dashboardService.getTrashChartData"
@@ -41,7 +42,6 @@
   </div>
   <div class="right-area">
     <div>
-      <app-street-vendor-chart tooltipPosition="left"></app-street-vendor-chart>
       <app-line-chart
         [chartTitle]="t('streetvendor')"
         chartType="streetvendor"
@@ -49,9 +49,17 @@
         tooltipPosition="left"
       ></app-line-chart>
     </div>
+    <div>
+      <app-line-chart
+        [chartTitle]="t('traffic')"
+        chartType="traffic"
+        [getData]="_dashboardService.getTrafficChartData"
+        tooltipPosition="top"
+      ></app-line-chart>
+    </div>
   </div>
   <div class="footer-area">
-    <app-chart-panel>
+    <!-- <app-chart-panel>
       <ng-template #customTitle>
         <div class="title">Sampah Sungai</div>
       </ng-template>
@@ -72,13 +80,7 @@
           <div echarts [options]="chartOption" style="height: 133px"></div>
         </div>
       </ng-template>
-    </app-chart-panel>
-    <app-line-chart
-      [chartTitle]="t('traffic')"
-      chartType="traffic"
-      [getData]="_dashboardService.getTrafficChartData"
-      tooltipPosition="top"
-    ></app-line-chart>
+    </app-chart-panel> -->
     <app-line-chart
       [chartTitle]="t('crowd')"
       chartType="crowd"

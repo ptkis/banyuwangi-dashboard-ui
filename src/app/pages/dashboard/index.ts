@@ -7,7 +7,6 @@ import { TrafficChartComponent } from "./chart-overlay/traffic-chart/traffic-cha
 import { TrashChartComponent } from "./chart-overlay/trash-chart/trash-chart.component"
 import { ChartComponentComponent } from "./components/chart-component/chart-component.component"
 import { HeaderComponent } from "./components/header/header.component"
-import { ListFilterComponent } from "./components/list-filter/list-filter.component"
 import { DashboardComponent } from "./dashboard.component"
 import { MapDashboardComponent } from "./map-dashboard/map-dashboard.component"
 import { Map3dDashboardComponent } from "./map3d-dashboard/map3d-dashboard.component"
@@ -16,7 +15,6 @@ export const dashboardComponents = [
   DashboardComponent,
   HeaderComponent,
   ChartOverlayComponent,
-  ListFilterComponent,
   MapDashboardComponent,
   Map3dDashboardComponent,
 

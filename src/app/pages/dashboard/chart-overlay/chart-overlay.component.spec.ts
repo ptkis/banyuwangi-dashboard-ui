@@ -30,11 +30,6 @@ describe("ChartOverlayComponent", () => {
     })
   }
 
-  it("should create", async () => {
-    await renderComponent()
-    expect(screen.getByText(/Genangan/)).toBeInTheDocument()
-  })
-
   it("should test filter", async () => {
     const res = await renderComponent()
     const fixture = res.fixture
@@ -89,6 +84,18 @@ describe("ChartOverlayComponent", () => {
     fixture.detectChanges()
 
     expect(filterButton).toBeDefined()
+  })
+
+  it("should test mock echart", async () => {
+    const res = await renderComponent()
+    const fixture = res.fixture
+    await fixture.whenStable()
+    const mock = {
+      on: (e: string, cb: any) => {
+        cb()
+      },
+    }
+    fixture.componentInstance.trashChart.echartLoaded(mock as any)
   })
 
   it("should test failed requests", async () => {

@@ -12,7 +12,7 @@ import { MatDrawer } from "@angular/material/sidenav"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { finalize } from "rxjs"
-import { ListFilterComponent } from "../../dashboard/components/list-filter/list-filter.component"
+import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 import {
   ChartImageContent,
   DashboardService,

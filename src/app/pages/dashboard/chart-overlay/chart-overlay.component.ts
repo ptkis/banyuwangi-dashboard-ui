@@ -4,6 +4,7 @@ import { defaultChartConfig } from "src/app/shared/constants/charts"
 import { DashboardService } from "../dashboard.service"
 import { CrowdChartComponent } from "./crowd-chart/crowd-chart.component"
 import { FloodChartComponent } from "./flood-chart/flood-chart.component"
+import { LineChartComponent } from "./line-chart/line-chart.component"
 import { StreetVendorChartComponent } from "./street-vendor-chart/street-vendor-chart.component"
 import { TrafficChartComponent } from "./traffic-chart/traffic-chart.component"
 import { TrashChartComponent } from "./trash-chart/trash-chart.component"
@@ -64,7 +65,7 @@ export class ChartOverlayComponent implements AfterViewInit {
   @ViewChild(StreetVendorChartComponent)
   StreetVendorChart!: StreetVendorChartComponent
   @ViewChild(TrafficChartComponent) TrafficChart!: TrafficChartComponent
-  @ViewChild(TrashChartComponent) TrashChart!: TrashChartComponent
+  @ViewChild("trashChart") trashChart!: LineChartComponent
 
   constructor(public _dashboardService: DashboardService) {}
 

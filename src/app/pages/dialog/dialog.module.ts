@@ -23,7 +23,7 @@ import { ChartImageComponent } from "./chart-image/chart-image.component"
 import { IntersectionObserverModule } from "@ng-web-apis/intersection-observer"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSidenavModule } from "@angular/material/sidenav"
-import { DashboardModule } from "../dashboard/dashboard.module"
+import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -71,7 +71,7 @@ export const dialogRoutes: Routes = [
     MatProgressSpinnerModule,
     MatSidenavModule,
 
-    DashboardModule,
+    ListFilterComponent,
   ],
 })
 export class DialogModule {}
