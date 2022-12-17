@@ -35,10 +35,7 @@ export class CCTVFormComponent {
 
   cameraForm = this.fb.group({
     id: [this.data?.row?.id],
-    vmsCameraIndexCode: [
-      this.data?.row?.vmsCameraIndexCode,
-      Validators.required,
-    ],
+    vmsCameraIndexCode: [this.data?.row?.vmsCameraIndexCode],
     name: [this.data?.row?.name, Validators.required],
     vmsType: [this.data?.row?.vmsType || "HCP"],
     location: [this.data?.row?.location || ""],
