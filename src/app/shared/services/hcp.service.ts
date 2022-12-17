@@ -217,8 +217,8 @@ export class HCPService extends HIKService {
           const result = {
             cctv_id: dt.vmsCameraIndexCode,
             cctv_title: dt.name,
-            cctv_latitude: defLonLat[1] + "",
-            cctv_longitude: defLonLat[0] + "",
+            cctv_latitude: (dt.latitude || defLonLat[1]) + "",
+            cctv_longitude: (dt.longitude || defLonLat[0]) + "",
             cctv_status: statusMap[dt.liveViewUrl ? 1 : 2],
             ishcp: false,
             live_view_url: dt.liveViewUrl,

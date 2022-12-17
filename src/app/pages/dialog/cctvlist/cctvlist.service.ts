@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { Subject } from "rxjs"
 import { environment } from "src/environments/environment"
 
 export interface CCTVData {
@@ -74,6 +75,8 @@ export interface ListResponse<T> {
   providedIn: "root",
 })
 export class CCTVListService {
+  dirtyData = new Subject()
+
   constructor(private http: HttpClient) {}
 
   getCCTVData(pageNo: number, pageSize: number) {

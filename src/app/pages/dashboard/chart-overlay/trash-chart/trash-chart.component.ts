@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core"
+import { Router } from "@angular/router"
+import { EChartsType } from "echarts"
 import { Observable } from "rxjs"
 import { ChartResponse, DashboardService } from "../../dashboard.service"
 

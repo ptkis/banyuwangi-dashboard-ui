@@ -2,6 +2,7 @@ import { DomPortalOutlet, TemplatePortal } from "@angular/cdk/portal"
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -38,6 +39,7 @@ export class MapDashboardComponent implements AfterViewInit {
   markers: Marker[] = []
 
   @ViewChild("infoWindowContent") infoWindowContent!: TemplateRef<any>
+  @ViewChild("mapContainer") mapContainer!: ElementRef<HTMLDivElement>
 
   threeLayer: ThreeLayer | undefined
   peta3d: THREE.Group | undefined
@@ -68,10 +70,6 @@ export class MapDashboardComponent implements AfterViewInit {
       this.initMap()
       this.initMarkers()
     }
-
-    // this._HCMService.getChartData().subscribe(dt => {
-    //   console.log(dt)
-    // })
   }
 
   initMap() {
@@ -390,7 +388,7 @@ export class MapDashboardComponent implements AfterViewInit {
     }).addTo(marker)
 
     marker.setInfoWindow({
-      title: marker_data.cctv_title,
+      title: marker_data.cctv_title + `${marker.getCoordinates().x}`,
       content: "",
     })
 

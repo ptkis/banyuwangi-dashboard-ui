@@ -22,6 +22,8 @@ import { CdkListboxModule } from "@angular/cdk/listbox"
 import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
+import { TranslocoModule, TRANSLOCO_SCOPE } from "@ngneat/transloco"
+import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 
 export const dashboardRoutes: Routes = [
   {
@@ -67,6 +69,15 @@ export const dashboardMaterialModules = [
 
     FormsModule,
     ReactiveFormsModule,
+    TranslocoModule,
+
+    ListFilterComponent,
+  ],
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      useValue: "dashboard",
+    },
   ],
 })
 export class DashboardModule {}

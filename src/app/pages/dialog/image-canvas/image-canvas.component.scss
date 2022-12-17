@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.image-canvas-container {
+  display: inline-block;
+  position: relative;
+
+  #rectCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .label-text {
+    position: absolute;
+    z-index: 5;
+
+    &.icon-top-left {
+      top: 0;
+      left: 0;
+    }
+
+    &.icon-top-right {
+      top: 0;
+      right: 0;
+    }
+
+    &.icon-bottom-left {
+      bottom: 0;
+      left: 0;
+    }
+
+    &.icon-bottom-right {
+      bottom: 0;
+      right: 0;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+
+      + .item {
+        padding-top: 0;
+      }
+
+      .item-icon {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .empty-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

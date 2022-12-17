@@ -1,0 +1,95 @@
+<ng-template #content>
+  <app-chart-panel *transloco="let t; read: 'dashboard'">
+    <ng-template #customTitle>
+      <div class="title">
+        <button
+          data-testid="btn-close"
+          (click)="dialogRef.close()"
+          mat-icon-button
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        {{ t(type) }}
+      </div>
+      <!-- <button
+        class="panel_button"
+        (click)="dialogRef.close()"
+        mat-icon-button><mat-icon>close</mat-icon></button> -->
+      <div class="toolbar-container panel_button">
+        <a
+          data-testid="btn-filter"
+          [disabled]="isLoading"
+          mat-button
+          (click)="filterDrawer.toggle()"
+        >
+          <mat-icon class="material-icons-outlined">filter_alt</mat-icon>
+          {{ t("Filter") }}</a
+        >
+      </div>
+    </ng-template>
+
+    <ng-template #contentBody>
+      <mat-drawer-container [hasBackdrop]="false">
+        <mat-drawer #filter position="end" mode="side">
+          <div class="filter-container p-3">
+            <div class="list-filter">
+              <h3>By Camera</h3>
+              <app-list-filter
+                #listFilterCamera
+                [items]="allCameras"
+                [selected]="selectedCameras"
+                (click)="$event.stopPropagation()"
+              ></app-list-filter>
+            </div>
+            <div class="list-filter">
+              <h3>By Location</h3>
+              <app-list-filter
+                #listFilterLocation
+                [items]="allLocations"
+                [selected]="selectedLocations"
+                (click)="$event.stopPropagation()"
+              ></app-list-filter>
+            </div>
+            <div class="d-flex justify-content-between mt-2 filter-footer">
+              <button
+                mat-raised-button
+                data-testid="btn-form-cancel"
+                (click)="filterDrawer.close()"
+                class="btn"
+              >
+                Cancel
+              </button>
+              <button
+                mat-raised-button
+                data-testid="btn-form-submit"
+                (click)="applyFilter()"
+                class="btn btn-primary"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </mat-drawer>
+        <mat-drawer-content>
+          <div
+            class="content-container p-3"
+            waIntersectionObserver
+            waIntersectionThreshold="0.5"
+          >
+            <app-image-canvas
+              *ngFor="let item of imageData"
+              [chartImageContent]="item"
+            ></app-image-canvas>
+            <div
+              *ngIf="!paginator.last"
+              class="load-more"
+              (waIntersectionObservee)="onIntersection($event)"
+            >
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </ng-template>
+  </app-chart-panel>
+</ng-template>

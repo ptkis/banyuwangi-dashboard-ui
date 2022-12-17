@@ -30,6 +30,7 @@ import { DashboardService } from "../dashboard.service"
 import { HCPService } from "src/app/shared/services/hcp.service"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { dashboardMaterialModules } from "../dashboard.module"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -123,6 +124,7 @@ describe("MapDashboardComponent", () => {
         ToastrModule.forRoot(),
 
         FormsModule,
+        getTranslocoModule(),
       ],
       providers: [
         {

@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
-import { FormsModule } from "@angular/forms"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
-import { dashboardMaterialModules } from "../../dashboard.module"
 
 import { ListFilterComponent } from "./list-filter.component"
 
@@ -11,8 +9,7 @@ describe("ListFilterComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListFilterComponent],
-      imports: [dashboardMaterialModules, FormsModule, NoopAnimationsModule],
+      imports: [ListFilterComponent, NoopAnimationsModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(ListFilterComponent)

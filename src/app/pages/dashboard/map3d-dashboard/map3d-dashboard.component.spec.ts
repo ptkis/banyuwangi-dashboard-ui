@@ -18,6 +18,7 @@ import { VgStreamingModule } from "@videogular/ngx-videogular/streaming"
 import { ToastrModule } from "ngx-toastr"
 import { FormsModule } from "@angular/forms"
 import { dashboardMaterialModules } from "../dashboard.module"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 describe("Map3dDashboardComponent", () => {
   let component: Map3dDashboardComponent
@@ -47,6 +48,7 @@ describe("Map3dDashboardComponent", () => {
         ToastrModule.forRoot(),
 
         FormsModule,
+        getTranslocoModule(),
       ],
     }).compileComponents()
 
