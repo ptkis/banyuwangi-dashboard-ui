@@ -7,6 +7,7 @@
     "footer             footer             footer" min-content
     / minmax(auto, 250px) minmax(250px, 1fr) minmax(auto, 250px);
   gap: 1rem;
+  pointer-events: none;
 
   .left-area,
   .right-area {
@@ -48,5 +49,10 @@
       transform: translateX(-50%);
       z-index: 2;
     }
+  }
+
+  app-line-chart,
+  .custom-radio-group {
+    pointer-events: auto;
   }
 }

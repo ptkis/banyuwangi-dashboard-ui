@@ -61,6 +61,7 @@ interface NonHCPCCTVData {
   isCrowd: boolean
   isTrash: boolean
   isFlood: boolean
+  isOnline: boolean
   label: string
   liveViewUrl: string
 }
@@ -219,7 +220,7 @@ export class HCPService extends HIKService {
             cctv_title: dt.name,
             cctv_latitude: (dt.latitude || defLonLat[1]) + "",
             cctv_longitude: (dt.longitude || defLonLat[0]) + "",
-            cctv_status: statusMap[dt.liveViewUrl ? 1 : 2],
+            cctv_status: statusMap[dt.isOnline ? 1 : 2],
             ishcp: false,
             live_view_url: dt.liveViewUrl,
           }

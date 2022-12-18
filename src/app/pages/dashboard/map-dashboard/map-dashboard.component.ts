@@ -388,26 +388,29 @@ export class MapDashboardComponent implements AfterViewInit {
     }).addTo(marker)
 
     marker.setInfoWindow({
-      title: marker_data.cctv_title + `${marker.getCoordinates().x}`,
+      title: marker_data.cctv_title,
       content: "",
     })
 
     const iw: ui.InfoWindow = marker.getInfoWindow()
     iw.on("showend", (e) => {
       const { target } = e
-      this.attachVideo(target.__uiDOM, marker_data)
+      this.attachVideo(target.__uiDOM, marker_data, iw)
 
       this.flyToMarker(marker)
     })
   }
 
-  attachVideo(domElement: Element, marker_data: CCTVData) {
+  attachVideo(domElement: Element, marker_data: CCTVData, iw: ui.InfoWindow) {
     const po = new DomPortalOutlet(domElement)
     const templatePortal = new TemplatePortal(
       this.infoWindowContent,
       this._viewContainerRef
     )
     templatePortal.attach(po, marker_data)
+    iw.on("hide", () => {
+      templatePortal.detach()
+    })
   }
 
   flyToMarker(marker: Marker) {
