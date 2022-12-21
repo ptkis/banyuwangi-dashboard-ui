@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatPaginatorModule } from "@angular/material/paginator"
-import { CameraViewComponent } from "./camera-view/camera-view.component"
 import { CCTVFormComponent } from "./cctvform/cctvform.component"
 import { CCTVListComponent } from "./cctvlist/cctvlist.component"
 import { MatSelectModule } from "@angular/material/select"
@@ -36,16 +35,10 @@ export const dialogRoutes: Routes = [
     component: ChartImageComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: "camera-view",
-    component: CameraViewComponent,
-    // canActivate: [AuthGuard],
-  },
 ]
 
 @NgModule({
   declarations: [
-    CameraViewComponent,
     CCTVListComponent,
     CCTVFormComponent,
     ImageCanvasComponent,

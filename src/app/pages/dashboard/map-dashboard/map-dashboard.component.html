@@ -10,9 +10,7 @@
   <ng-container *ngIf="!liveViewURL; else videoPlayer">
     Status: {{ status }}
     <app-hik-video [cctv_id]="id" *ngIf="!ishcp; else wsVideo"></app-hik-video>
-    <ng-template #wsVideo>
-      <app-ws-video [cctv_id]="id"></app-ws-video>
-    </ng-template>
+    <ng-template #wsVideo> Unsupported </ng-template>
   </ng-container>
 
   <ng-template #videoPlayer>
