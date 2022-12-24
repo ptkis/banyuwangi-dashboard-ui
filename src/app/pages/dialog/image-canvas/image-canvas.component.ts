@@ -15,12 +15,12 @@ import { ChartImageContent } from "../../dashboard/dashboard.service"
 })
 export class ImageCanvasComponent implements AfterViewInit {
   @Input() chartImageContent: ChartImageContent | undefined
+  @Input() canvasWidth = 415
+  @Input() canvasHeight = 233
 
   @ViewChild("bgCanvas") bgCanvas!: ElementRef<HTMLCanvasElement>
   @ViewChild("canvas") canvas!: ElementRef<HTMLCanvasElement>
 
-  canvasWidth = 415
-  canvasHeight = 233
   bgContext!: CanvasRenderingContext2D | null
   context!: CanvasRenderingContext2D | null
 

@@ -1,0 +1,60 @@
+<ng-template #content>
+  <app-chart-panel *transloco="let t; read: 'dashboard'">
+    <ng-template #customTitle>
+      <div class="title">
+        <button
+          data-testid="btn-close"
+          (click)="dialogRef.close()"
+          mat-icon-button
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        {{ t(type) }}
+      </div>
+    </ng-template>
+
+    <ng-template #contentBody>
+      <div class="content-container p-3">
+        <img [src]="imageData.imageSrc" alt="image" />
+        <div class="icon-top-left label-text">
+          <div class="item">
+            <span class="item-icon material-icons-outlined">location_on</span>
+            {{ imageData.location }}
+          </div>
+          <div class="item">
+            <a [href]="imageData.imageSrc" download target="_blank">
+              <span class="item-icon material-icons-outlined"
+                >file_download</span
+              >
+              Unduh Hasil Capture
+            </a>
+          </div>
+        </div>
+        <div class="icon-top-right label-text">
+          <div class="item">
+            <span class="item-icon material-icons-outlined">photo_camera</span>
+            {{ imageData.cameraName }}
+          </div>
+        </div>
+        <div class="icon-bottom-left label-text">
+          <div class="item">
+            <span class="item-icon material-icons-outlined">person</span>
+            {{ imageData.annotations.length || 0 }}
+          </div>
+        </div>
+        <div class="icon-bottom-right label-text">
+          <div class="item">
+            <span class="item-icon material-icons-outlined"
+              >calendar_today</span
+            >
+            {{ imageData.instant | date: "dd MMM yyyy" }}
+          </div>
+          <div class="item">
+            <span class="item-icon material-icons-outlined">schedule</span>
+            {{ imageData.instant | date: "HH:mm" }} WIB
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </app-chart-panel>
+</ng-template>

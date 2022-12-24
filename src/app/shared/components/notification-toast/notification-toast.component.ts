@@ -38,12 +38,12 @@ export class NotificationToastComponent extends Toast {
 
   data: INotificationToastData | undefined
 
-  constructor(
-    protected override toastrService: ToastrService,
-    public override toastPackage: ToastPackage
-  ) {
-    super(toastrService, toastPackage)
-  }
+  // constructor(
+  //   protected override toastrService: ToastrService,
+  //   public override toastPackage: ToastPackage
+  // ) {
+  //   super(toastrService, toastPackage)
+  // }
 
   action(event: Event) {
     this.toastPackage.triggerAction(this.data)

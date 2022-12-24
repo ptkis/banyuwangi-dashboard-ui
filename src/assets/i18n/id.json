@@ -1,3 +1,9 @@
 {
-  "title": "Dashboard Banyuwangi"
+  "title": "Dashboard Banyuwangi",
+  "notification_confirm": {
+    "title": "Show Notification",
+    "message": "Do you want to show notification?",
+    "btnCancel": "Later",
+    "btnConfirm": "Allow"
+  }
 }
