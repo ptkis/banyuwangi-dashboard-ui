@@ -15,6 +15,9 @@ import { ToastrModule } from "ngx-toastr"
 import { DialogModule } from "@angular/cdk/dialog"
 import { TranslocoRootModule } from "./transloco-root.module"
 
+import { AngularFireModule } from "@angular/fire/compat"
+import { AngularFireMessagingModule } from "@angular/fire/compat/messaging"
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -58,6 +61,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     }),
 
     TranslocoRootModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
   ],
   providers: [
     {

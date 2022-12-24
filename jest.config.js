@@ -23,7 +23,7 @@ var config = {
   collectCoverage: false,
   collectCoverageFrom: ["./src/app/**"],
   coveragePathIgnorePatterns: [
-    "(.stories.ts|.html|module.ts|.json|guards|mock|app.component)",
+    "(.stories.ts|.html|module.ts|.json|guards|mock|app.component|app.service)",
   ],
   coverageThreshold: {
     global: {
