@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core"
+import { AngularFireMessaging } from "@angular/fire/compat/messaging"
 import { Title } from "@angular/platform-browser"
 import { TranslocoService } from "@ngneat/transloco"
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy"
 import { KeycloakEventType, KeycloakService } from "keycloak-angular"
-import { take } from "rxjs"
+import { mergeMap, take } from "rxjs"
+import { AppService } from "./app.service"
 
 @UntilDestroy()
 @Component({
@@ -15,7 +17,9 @@ export class AppComponent implements OnInit {
   constructor(
     private translocoService: TranslocoService,
     private title: Title,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private afMessaging: AngularFireMessaging,
+    private service: AppService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +35,29 @@ export class AppComponent implements OnInit {
           this.keycloakService.updateToken(20)
         }
       },
+    })
+
+    this.requestPermission()
+    this.listenMessages()
+  }
+
+  requestPermission() {
+    this.afMessaging.requestToken.subscribe({
+      next: (token) => {
+        console.log("Permission granted! Save to the server!", token)
+        if (token) {
+          this.service.storeDeviceToken(token).subscribe()
+        }
+      },
+      error: (error) => {
+        console.error(error)
+      },
+    })
+  }
+
+  listenMessages() {
+    this.afMessaging.messages.subscribe((message) => {
+      console.log(message)
     })
   }
 }

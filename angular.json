@@ -25,7 +25,9 @@
                 "glob": "**/hls.min.js",
                 "input": "node_modules/hls.js/dist/",
                 "output": "./assets/js/hls"
-              }
+              },
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json"
             ],
             "styles": [
               "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
