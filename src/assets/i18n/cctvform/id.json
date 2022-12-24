@@ -33,5 +33,10 @@
   "Save": {
     "new": "Simpan",
     "edit": "Update"
-  }
+  },
+  "maxFlood": "Max Genangan Air",
+  "maxTrash": "Max Sampah",
+  "maxStreetvendor": "Max PKL",
+  "maxCrowd": "Max Orang",
+  "maxTraffic": "Max Lalu Lintas"
 }

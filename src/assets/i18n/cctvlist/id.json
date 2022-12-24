@@ -29,5 +29,10 @@
     "message": "Apakah anda yakin untuk hapus data ini?",
     "btnCancel": "Batal",
     "btnConfirm": "Hapus"
-  }
+  },
+  "maxFlood": "Max Genangan Air",
+  "maxTrash": "Max Sampah",
+  "maxStreetvendor": "Max PKL",
+  "maxCrowd": "Max Orang",
+  "maxTraffic": "Max Lalu Lintas"
 }
