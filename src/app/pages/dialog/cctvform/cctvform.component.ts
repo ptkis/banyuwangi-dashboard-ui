@@ -57,6 +57,11 @@ export class CCTVFormComponent {
     isTraffic: [this.data?.row?.isTraffic || false],
     isTrash: [this.data?.row?.isTrash || false],
     version: [this.data?.row?.version || null],
+    maxFlood: [this.data?.row?.alarmSetting?.maxFlood],
+    maxTrash: [this.data?.row?.alarmSetting?.maxTrash],
+    maxStreetvendor: [this.data?.row?.alarmSetting?.maxStreetvendor],
+    maxCrowd: [this.data?.row?.alarmSetting?.maxCrowd],
+    maxTraffic: [this.data?.row?.alarmSetting?.maxTraffic],
   })
 
   constructor(
@@ -82,7 +87,23 @@ export class CCTVFormComponent {
   submitForm() {
     this.cameraForm.markAllAsTouched()
     if (this.cameraForm.valid) {
-      const data = <CCTVData>this.cameraForm.value
+      let data = <CCTVData>this.cameraForm.value
+      delete (data as any)["maxFlood"]
+      delete (data as any)["maxTrash"]
+      delete (data as any)["maxStreetvendor"]
+      delete (data as any)["maxCrowd"]
+      delete (data as any)["maxTraffic"]
+      data = {
+        ...data,
+        alarmSetting: {
+          maxFlood: this.cameraForm.get("maxFlood")?.value || null,
+          maxTrash: this.cameraForm.get("maxTrash")?.value || null,
+          maxStreetvendor:
+            this.cameraForm.get("maxStreetvendor")?.value || null,
+          maxCrowd: this.cameraForm.get("maxCrowd")?.value || null,
+          maxTraffic: this.cameraForm.get("maxTraffic")?.value || null,
+        },
+      }
       this.formSubmit.emit(data)
     }
   }

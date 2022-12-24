@@ -59,6 +59,11 @@ export class CCTVListComponent implements AfterViewInit {
     // 'isStreetVendor',
     // 'isTraffic',
     // 'isTrash',
+    "maxFlood",
+    "maxTrash",
+    "maxStreetvendor",
+    "maxCrowd",
+    "maxTraffic",
     "action",
   ]
 
@@ -75,7 +80,7 @@ export class CCTVListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
-      width: "1201px",
+      width: "1290px",
     })
     this.dialogRef.closed.subscribe(() => {
       this.zone.run(() => {

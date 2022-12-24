@@ -22,3 +22,16 @@ mat-form-field {
   justify-content: space-between;
   margin-top: 8px;
 }
+
+.two-columns {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  padding-top: 8px;
+  margin-bottom: 8px;
+
+  > * {
+    flex: 1;
+    margin: 0;
+  }
+}

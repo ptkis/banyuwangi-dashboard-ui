@@ -10,6 +10,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { ChartImageContent } from "../../dashboard/dashboard.service"
+import { CCTVData } from "../cctvlist/cctvlist.service"
 
 export interface NotificationData {
   maxValue: number
@@ -30,44 +31,10 @@ export interface SnapshotCount {
 
 export interface Snapshot {
   imageId: string
-  camera: Camera
+  camera: CCTVData
   length: number
   isAnnotation: boolean
   id: string
-}
-
-export interface Camera {
-  vmsCameraIndexCode: string
-  vmsType: string
-  name: string
-  location: string
-  latitude: number
-  longitude: number
-  host: string
-  httpPort: number
-  rtspPort: number
-  channel: number
-  captureQualityChannel: string
-  userName: string
-  password: string
-  isActive: boolean
-  isStreetvendor: boolean
-  isTraffic: boolean
-  isCrowd: boolean
-  isTrash: boolean
-  isFlood: boolean
-  type: string
-  label: string
-  alarmSetting: AlarmSetting
-  id: string
-}
-
-export interface AlarmSetting {
-  maxFlood: null
-  maxTrash: null
-  maxStreetvendor: null
-  maxCrowd: number
-  maxTraffic: number
 }
 
 @Component({

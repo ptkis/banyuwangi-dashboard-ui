@@ -237,6 +237,51 @@
               </td>
             </ng-container>
 
+            <ng-container matColumnDef="maxFlood">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("maxFlood") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["alarmSetting"]?.["maxFlood"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxTrash">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("maxTrash") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["alarmSetting"]?.["maxTrash"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxStreetvendor">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("maxStreetvendor") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["alarmSetting"]?.["maxStreetvendor"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxCrowd">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("maxCrowd") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["alarmSetting"]?.["maxCrowd"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maxTraffic">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("maxTraffic") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["alarmSetting"]?.["maxTraffic"] }}
+              </td>
+            </ng-container>
+
             <ng-container matColumnDef="action">
               <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
                 {{ t("Action") }}

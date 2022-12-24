@@ -34,6 +34,15 @@ export interface CCTVData {
   pingLast?: any
   id?: string
   version: number | null | undefined
+  alarmSetting?: AlarmSetting
+}
+
+export interface AlarmSetting {
+  maxFlood: number | null
+  maxTrash: number | null
+  maxStreetvendor: number | null
+  maxCrowd: number | null
+  maxTraffic: number | null
 }
 
 export interface Sort {
