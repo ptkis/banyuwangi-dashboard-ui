@@ -1,0 +1,13 @@
+<div class="custom-toast-container" (click)="action($event)">
+  <div class="top-container">
+    <img *ngIf="data?.image_logo" [src]="data?.image_logo" alt="Logo" />
+    <div class="text-container">
+      <div class="text-title">{{ title }}</div>
+      <div class="text-description">{{ message }}</div>
+    </div>
+  </div>
+
+  <div class="image-container" *ngIf="data?.image_main">
+    <img [src]="data?.image_main" alt="image" />
+  </div>
+</div>
