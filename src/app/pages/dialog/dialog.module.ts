@@ -23,6 +23,7 @@ import { IntersectionObserverModule } from "@ng-web-apis/intersection-observer"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSidenavModule } from "@angular/material/sidenav"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
+import { ChartImageSingleComponent } from "./chart-image-single/chart-image-single.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -35,6 +36,11 @@ export const dialogRoutes: Routes = [
     component: ChartImageComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: "toast-chart-image",
+    component: ChartImageSingleComponent,
+    // canActivate: [AuthGuard],
+  },
 ]
 
 @NgModule({
@@ -43,6 +49,7 @@ export const dialogRoutes: Routes = [
     CCTVFormComponent,
     ImageCanvasComponent,
     ChartImageComponent,
+    ChartImageSingleComponent,
   ],
   imports: [
     CommonModule,

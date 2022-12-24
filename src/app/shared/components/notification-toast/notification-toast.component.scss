@@ -1,0 +1,54 @@
+:host(.custom-toast-notification) {
+  margin: 0 0 9px 0;
+  padding: 0;
+  width: min(261px, 90vw);
+  cursor: auto;
+  box-shadow: none;
+  height: auto;
+  background-color: transparent;
+  overflow: hidden;
+  position: relative;
+  pointer-events: all;
+
+  &:hover {
+    box-shadow: none;
+    cursor: auto;
+  }
+}
+
+.custom-toast-container {
+  background-color: #f3f3f3;
+  position: relative;
+  overflow: auto;
+  color: #333 !important;
+  border-radius: 16px;
+
+  .top-container {
+    padding: 12px;
+    display: flex;
+    img {
+      margin-right: 8px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+    }
+
+    .text-container {
+      .text-title {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .text-description {
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .image-container {
+    img {
+      max-width: 100%;
+    }
+  }
+}

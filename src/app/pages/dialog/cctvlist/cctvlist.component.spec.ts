@@ -202,6 +202,15 @@ describe("CCTVListComponent", () => {
     const { btnSubmit } = await openEditModal(user, fixture)
     await user.click(btnSubmit)
     fixture.componentRef.instance.modalService.showConfirm("test")
+    fixture.componentRef.instance.modalService.showNotificationToast(
+      {
+        data: {},
+        message: "test",
+      },
+      {}
+    )
+    const toast = screen.getByTestId("toast-container")
+    await user.click(toast)
   })
 
   it("should test delete button", async () => {
