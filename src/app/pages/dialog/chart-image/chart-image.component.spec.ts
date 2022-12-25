@@ -1,6 +1,8 @@
 import { DialogModule } from "@angular/cdk/dialog"
 import { HttpClientTestingModule } from "@angular/common/http/testing"
+import { FormsModule } from "@angular/forms"
 import { MatButtonModule } from "@angular/material/button"
+import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatIconModule } from "@angular/material/icon"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSidenavModule } from "@angular/material/sidenav"
@@ -35,6 +37,8 @@ describe("ChartImageComponent", () => {
         MatProgressSpinnerModule,
         MatSidenavModule,
         MatIconModule,
+        MatCheckboxModule,
+        FormsModule,
         getTranslocoModule(),
       ],
       providers: [
@@ -79,5 +83,19 @@ describe("ChartImageComponent", () => {
     fixture.componentInstance.onIntersection([dt])
     const btnSubmit = screen.getByTestId("btn-form-submit")
     await user.click(btnSubmit)
+  })
+
+  it("should download images", async () => {
+    const { fixture } = await renderComponent()
+    const user = userEvent.setup()
+    const cbs = screen.getAllByTestId("image-checkbox")
+    for await (const cb of cbs) {
+      user.click(cb.querySelector("input")!)
+    }
+    await fixture.whenStable()
+
+    const dlBtn = screen.getByTestId("btn-download")
+    await user.click(dlBtn)
+    await fixture.whenStable()
   })
 })

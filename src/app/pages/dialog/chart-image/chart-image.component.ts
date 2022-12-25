@@ -5,8 +5,10 @@ import {
   Component,
   NgZone,
   OnInit,
+  QueryList,
   TemplateRef,
   ViewChild,
+  ViewChildren,
 } from "@angular/core"
 import { MatDrawer } from "@angular/material/sidenav"
 import { ActivatedRoute, Router } from "@angular/router"
@@ -17,6 +19,7 @@ import {
   ChartImageContent,
   DashboardService,
 } from "../../dashboard/dashboard.service"
+import { ImageCanvasComponent } from "../image-canvas/image-canvas.component"
 
 @Component({
   selector: "app-chart-image",
@@ -29,6 +32,9 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   @ViewChild("filter") filterDrawer!: MatDrawer
   @ViewChild("listFilterCamera") listFilterCamera!: ListFilterComponent
   @ViewChild("listFilterLocation") listFilterLocation!: ListFilterComponent
+
+  @ViewChildren(ImageCanvasComponent)
+  imageCanvas!: QueryList<ImageCanvasComponent>
 
   isLoading = false
   dialogRef!: DialogRef<string>
@@ -119,5 +125,15 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
       filterLocation,
     })
     this.filterDrawer.close()
+  }
+
+  downloadImages() {
+    // const selected: ImageCanvasComponent[] = []
+    for (const image of this.imageCanvas) {
+      if (image.selected) {
+        // selected.push(image)
+        image.exportImage()
+      }
+    }
   }
 }
