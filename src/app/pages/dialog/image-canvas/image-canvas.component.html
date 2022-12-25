@@ -9,6 +9,10 @@
   <ng-container *ngIf="chartImageContent; else noContent">
     <div class="icon-top-left label-text">
       <div class="item">
+        <mat-checkbox
+          [(ngModel)]="selected"
+          data-testid="image-checkbox"
+        ></mat-checkbox>
         <span class="item-icon material-icons-outlined">location_on</span>
         {{ chartImageContent.location }}
       </div>

@@ -17,6 +17,15 @@
         mat-icon-button><mat-icon>close</mat-icon></button> -->
       <div class="toolbar-container panel_button">
         <a
+          data-testid="btn-download"
+          [disabled]="isLoading"
+          mat-button
+          (click)="downloadImages()"
+        >
+          <mat-icon>download_file</mat-icon>
+          {{ t("download") }}</a
+        >
+        <a
           data-testid="btn-filter"
           [disabled]="isLoading"
           mat-button

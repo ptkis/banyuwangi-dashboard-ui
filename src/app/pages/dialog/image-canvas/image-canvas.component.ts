@@ -24,6 +24,8 @@ export class ImageCanvasComponent implements AfterViewInit {
   bgContext!: CanvasRenderingContext2D | null
   context!: CanvasRenderingContext2D | null
 
+  selected = false
+
   constructor() {}
 
   ngAfterViewInit(): void {
@@ -52,6 +54,7 @@ export class ImageCanvasComponent implements AfterViewInit {
   drawBGImage(imageUrl: string) {
     const base_image = new Image()
     base_image.src = imageUrl
+    base_image.setAttribute("crossorigin", "anonymous")
     base_image.onload = () => {
       this.bgContext!.drawImage(
         base_image,
@@ -75,5 +78,49 @@ export class ImageCanvasComponent implements AfterViewInit {
       )
       this.context.stroke()
     }
+  }
+
+  exportImage() {
+    const tmpCanvas = document.createElement("canvas")
+    // tmpCanvas.width = this.bgCanvas.nativeElement.width * 2
+    // tmpCanvas.height = this.bgCanvas.nativeElement.height * 2
+    tmpCanvas.width = 704
+    tmpCanvas.height = 576
+
+    const ctx = tmpCanvas.getContext("2d")
+    const canvas = this.bgCanvas.nativeElement
+    ctx!.drawImage(
+      canvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      tmpCanvas.width,
+      tmpCanvas.height
+    )
+    ctx!.drawImage(
+      this.canvas.nativeElement,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      tmpCanvas.width,
+      tmpCanvas.height
+    )
+    // this.downloadURI(this.bgCanvas.nativeElement.toDataURL({ pixelRatio: 3 }), 'image.png')
+    tmpCanvas.toBlob((blob) => {
+      const anchor = document.createElement("a")
+      anchor.download = `${this.chartImageContent?.instant}-${this.chartImageContent?.location}-${this.chartImageContent?.cameraName}.png`
+      anchor.href = URL.createObjectURL(blob!)
+      anchor.target = "_blank"
+
+      anchor.click() // ✨ magic!
+
+      URL.revokeObjectURL(anchor.href) // remove it from memory and save on memory! 😎
+    }, "image/png")
   }
 }
