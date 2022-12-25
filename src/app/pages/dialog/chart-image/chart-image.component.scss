@@ -13,7 +13,7 @@
     counter-increment: css-counter 1;
     position: relative;
 
-    &:after {
+    &::after {
       content: counter(css-counter);
       border-radius: 50%;
       width: 40px;
