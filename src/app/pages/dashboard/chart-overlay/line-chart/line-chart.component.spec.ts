@@ -27,6 +27,11 @@ describe("LineChartComponent", () => {
             component: DummyComponent,
             outlet: "dialog",
           },
+          {
+            path: "chart-data",
+            component: DummyComponent,
+            outlet: "dialog",
+          },
         ]),
       ],
       providers: [chartProviders],

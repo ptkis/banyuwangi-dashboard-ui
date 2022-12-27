@@ -20,6 +20,7 @@ import { ToastrModule } from "ngx-toastr"
 import { of } from "rxjs"
 import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
+import { chartHttpMockProviders } from "../../dashboard/chart-overlay/mocks/chartMockData"
 import { cctvHttpMockProviders } from "../mocks/cctvlistDataMock"
 
 import { ChartDataComponent } from "./chart-data.component"
@@ -48,7 +49,7 @@ describe("ChartDataComponent", () => {
         MatDatepickerModule,
         MatNativeDateModule,
       ],
-      providers: [cctvHttpMockProviders, ...providers],
+      providers: [chartHttpMockProviders, ...providers],
     })
   }
 

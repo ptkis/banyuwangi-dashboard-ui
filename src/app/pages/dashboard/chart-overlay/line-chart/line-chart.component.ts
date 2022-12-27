@@ -51,21 +51,23 @@ export class LineChartComponent {
         )
       })
     } else if (type === "data") {
-      this.router.navigate(
-        [
-          "",
-          {
-            outlets: {
-              dialog: ["chart-data"],
+      this.zone.run(() => {
+        this.router.navigate(
+          [
+            "",
+            {
+              outlets: {
+                dialog: ["chart-data"],
+              },
             },
-          },
-        ],
-        {
-          queryParams: {
-            type: this.chartType,
-          },
-        }
-      )
+          ],
+          {
+            queryParams: {
+              type: this.chartType,
+            },
+          }
+        )
+      })
     } else if (type === "download") {
     }
   }
