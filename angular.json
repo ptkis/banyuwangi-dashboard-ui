@@ -44,7 +44,8 @@
               "zousan",
               "earcut",
               "crypto-js/enc-base64",
-              "crypto-js/hmac-sha256"
+              "crypto-js/hmac-sha256",
+              "flat"
             ]
           },
           "configurations": {

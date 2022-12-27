@@ -9,11 +9,18 @@ import { SelectionModel } from "@angular/cdk/collections"
 import { DatePipe } from "@angular/common"
 import { finalize, Observable } from "rxjs"
 import { defaultChartConfig } from "src/app/shared/constants/charts"
+import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 
 @Component({
   selector: "app-chart-component",
   templateUrl: "./chart-component.component.html",
   styleUrls: ["./chart-component.component.scss"],
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      useValue: "dashboard",
+    },
+  ],
 })
 export class ChartComponentComponent {
   @Input() panelTitle = "Chart"

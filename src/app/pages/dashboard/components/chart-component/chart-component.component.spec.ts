@@ -10,6 +10,7 @@ import { ChartPanelComponent } from "src/app/shared/components/chart-panel/chart
 import { materialModules } from "src/app/shared/shared.module"
 import { dashboardMaterialModules } from "../../dashboard.module"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 describe("ChartComponentComponent", () => {
   let component: ChartComponentComponent
@@ -30,6 +31,7 @@ describe("ChartComponentComponent", () => {
           // echarts
           echarts: () => import("echarts"),
         }),
+        getTranslocoModule(),
       ],
       providers: [chartProviders],
     }).compileComponents()

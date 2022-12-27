@@ -1,4 +1,4 @@
-<app-chart-panel>
+<app-chart-panel *transloco="let t; read: 'dashboard'">
   <ng-template #customTitle>
     <div class="title">{{ panelTitle }}</div>
 
@@ -18,15 +18,15 @@
         </button>
         <button mat-menu-item (click)="menuClick('image')">
           <mat-icon>image</mat-icon>
-          <span>Lihat Gambar</span>
+          <span>{{ t("menu_deteksi") }}</span>
         </button>
         <button mat-menu-item (click)="menuClick('data')">
           <mat-icon>table_view</mat-icon>
-          <span>Lihat Data</span>
+          <span>{{ t("menu_data") }}</span>
         </button>
         <button mat-menu-item (click)="menuClick('download')">
           <mat-icon>download</mat-icon>
-          <span>Download</span>
+          <span>{{ t("menu_download") }}</span>
         </button>
       </mat-menu>
 

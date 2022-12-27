@@ -111,6 +111,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.dialog.closeAll()
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
       width: "1290px",
     })
