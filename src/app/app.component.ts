@@ -113,24 +113,33 @@ export class AppComponent implements OnInit {
 
         toastRef.onAction.subscribe((e) => {
           const data = e?.["data"]?.["alarm"]
-          if (data) {
-            this.router.navigate(
-              [
-                "",
-                {
-                  outlets: {
-                    dialog: ["toast-chart-image"],
+          try {
+            const snapshotData = JSON.parse(data)
+            if (snapshotData) {
+              this.router.navigate(
+                [
+                  "",
+                  {
+                    outlets: {
+                      dialog: ["toast-chart-image"],
+                    },
                   },
-                },
-              ],
-              {
-                queryParams: {
-                  data,
-                  imageSrc: image,
-                },
-              }
-            )
-          }
+                ],
+                {
+                  queryParams: {
+                    // Old implementation
+                    // data,
+                    // imageSrc: image,
+
+                    snapshotid:
+                      snapshotData["snapshotCount"]?.["snapshotImageId"],
+                    value: snapshotData["snapshotCount"]?.["value"],
+                    type: snapshotData["snapshotCount"]?.["type"],
+                  },
+                }
+              )
+            }
+          } catch (error) {}
         })
       }
     })
