@@ -1,0 +1,131 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "snapshot": {
+          "imageId": "039b44f9-b758-4497-8b9b-e530b64d6f56",
+          "camera": {
+            "vmsCameraIndexCode": "948",
+            "vmsType": "HCP",
+            "name": "INDOMARET SOBO 2",
+            "location": "INDOMARET SOBO 2",
+            "latitude": -8.24108,
+            "longitude": 114.356,
+            "host": "10.100.106.13",
+            "httpPort": 80,
+            "rtspPort": 554,
+            "channel": 3,
+            "captureQualityChannel": "01",
+            "userName": "admin",
+            "password": "Admin12345",
+            "isActive": true,
+            "isStreetvendor": true,
+            "isTraffic": true,
+            "isCrowd": true,
+            "isTrash": true,
+            "isFlood": true,
+            "type": "HIKVISION",
+            "label": "",
+            "alarmSetting": {
+              "maxFlood": null,
+              "maxTrash": null,
+              "maxStreetvendor": null,
+              "maxCrowd": 5,
+              "maxTraffic": 5
+            },
+            "id": "b6aec22d-4a3e-4af3-86ae-c38c71e0a88c"
+          },
+          "length": 44584,
+          "isAnnotation": false,
+          "id": "e08167f8-5f39-4bf8-b3c3-ba616c3c97e7"
+        },
+        "snapshotCreated": "2022-12-26T16:29:25.701671Z",
+        "snapshotImageId": "039b44f9-b758-4497-8b9b-e530b64d6f56",
+        "snapshotCameraName": "INDOMARET SOBO 2",
+        "snapshotCameraLocation": "INDOMARET SOBO 2",
+        "snapshotCameraLongitude": 114.356,
+        "snapshotCameraLatitude": -8.24108,
+        "type": "TRASH",
+        "value": 5,
+        "maxValue": null,
+        "id": "ea6e536a-b373-4809-95eb-27458ff10b33"
+      },
+      {
+        "snapshot": {
+          "imageId": "bb58078f-b7e2-4128-a751-271236586419",
+          "camera": {
+            "vmsCameraIndexCode": "423",
+            "vmsType": "HCP",
+            "name": "CC ROOM 112 ",
+            "location": "",
+            "latitude": -8.22361,
+            "longitude": 114.366,
+            "host": "10.100.106.81",
+            "httpPort": 80,
+            "rtspPort": 554,
+            "channel": 1,
+            "captureQualityChannel": "01",
+            "userName": "admin",
+            "password": "Admin12345",
+            "isActive": true,
+            "isStreetvendor": true,
+            "isTraffic": false,
+            "isCrowd": true,
+            "isTrash": false,
+            "isFlood": false,
+            "type": "HIKVISION",
+            "label": "",
+            "alarmSetting": {
+              "maxFlood": null,
+              "maxTrash": null,
+              "maxStreetvendor": null,
+              "maxCrowd": 5,
+              "maxTraffic": null
+            },
+            "id": "ba187b2c-f5e1-4f31-a7aa-fc235ffdaeec"
+          },
+          "length": 104775,
+          "isAnnotation": false,
+          "id": "f2784b95-d721-4957-aaae-c441e0198158"
+        },
+        "snapshotCreated": "2022-12-26T16:29:25.392492Z",
+        "snapshotImageId": "bb58078f-b7e2-4128-a751-271236586419",
+        "snapshotCameraName": "CC ROOM 112 ",
+        "snapshotCameraLocation": "",
+        "snapshotCameraLongitude": 114.366,
+        "snapshotCameraLatitude": -8.22361,
+        "type": "TRASH",
+        "value": 1,
+        "maxValue": null,
+        "id": "624c4543-32a0-4b87-ad81-a7053e77c812"
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "pageNumber": 0,
+      "pageSize": 2,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalElements": 65448,
+    "totalPages": 32724,
+    "last": false,
+    "size": 2,
+    "first": true,
+    "number": 0,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "numberOfElements": 2,
+    "empty": false
+  }
+}

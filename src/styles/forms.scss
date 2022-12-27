@@ -73,6 +73,21 @@
     color: #fff;
   }
 
+  &.mat-form-field-type-mat-date-range-input {
+    .mat-form-field-infix {
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+
+    .mat-datepicker-toggle {
+      .mat-icon-button {
+        height: 31px;
+        top: -10px;
+      }
+    }
+  }
+
   .mat-form-field-required-marker {
     color: red;
   }

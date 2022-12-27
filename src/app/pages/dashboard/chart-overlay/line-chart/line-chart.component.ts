@@ -51,29 +51,46 @@ export class LineChartComponent {
         )
       })
     } else if (type === "data") {
+      this.router.navigate(
+        [
+          "",
+          {
+            outlets: {
+              dialog: ["chart-data"],
+            },
+          },
+        ],
+        {
+          queryParams: {
+            type: this.chartType,
+          },
+        }
+      )
     } else if (type === "download") {
     }
   }
 
   pointClick(data: Record<string, unknown>) {
     this.zone.run(() => {
-      this.router.navigate(
-        [
-          "",
-          {
-            outlets: {
-              dialog: ["toast-chart-image"],
+      if (data["data"]) {
+        this.router.navigate(
+          [
+            "",
+            {
+              outlets: {
+                dialog: ["toast-chart-image"],
+              },
             },
-          },
-        ],
-        {
-          queryParams: {
-            snapshotid: data["snapshotId"],
-            value: data["data"],
-            type: this.chartType,
-          },
-        }
-      )
+          ],
+          {
+            queryParams: {
+              snapshotid: data["snapshotId"],
+              value: data["data"],
+              type: this.chartType,
+            },
+          }
+        )
+      }
     })
   }
 }

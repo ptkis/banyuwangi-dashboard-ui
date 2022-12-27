@@ -103,7 +103,7 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
     this.imageData = {
       cameraName: data.snapshotCount.snapshotCameraName,
       date: data.snapshotCount.snapshotCreated,
-      annotations: [],
+      annotations: [...Array(10)],
       location: data.snapshotCount.snapshotCameraLocation,
       imageSrc,
       type: data.snapshotCount.type,

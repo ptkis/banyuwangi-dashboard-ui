@@ -1,0 +1,16 @@
+{
+  "title": "Data {{type}}",
+  "daterange": "Rentang Tanggal",
+  "search": "cari",
+  "type": "Jenis Deteksi",
+  "camera": "Camera",
+  "download": "Export Excel",
+  "No": "No.",
+  "timestamp": "Timestamp",
+  "Name": "Camera Name",
+  "Location": "Location",
+  "Latitude": "Latitude",
+  "Longitude": "Longitude",
+  "maxValue": "Max {{type}}",
+  "value": "Nilai {{type}}"
+}
