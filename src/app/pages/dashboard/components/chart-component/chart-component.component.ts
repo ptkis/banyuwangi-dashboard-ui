@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core"
+import { Component, EventEmitter, Input, Output } from "@angular/core"
 import { graphic, EChartsOption, EChartsType } from "echarts"
 import {
   ChartData,
@@ -9,11 +9,18 @@ import { SelectionModel } from "@angular/cdk/collections"
 import { DatePipe } from "@angular/common"
 import { finalize, Observable } from "rxjs"
 import { defaultChartConfig } from "src/app/shared/constants/charts"
+import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 
 @Component({
   selector: "app-chart-component",
   templateUrl: "./chart-component.component.html",
   styleUrls: ["./chart-component.component.scss"],
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      useValue: "dashboard",
+    },
+  ],
 })
 export class ChartComponentComponent {
   @Input() panelTitle = "Chart"
@@ -22,6 +29,13 @@ export class ChartComponentComponent {
   @Input() getChartData!: (...args: any[]) => Observable<ChartResponse>
 
   @Output() chartInitialized = new EventEmitter<EChartsType>()
+  @Output() menuClicked = new EventEmitter<string>()
+  @Output() pointClicked = new EventEmitter<{
+    dataIndex: number
+    seriesName: string
+    data: number
+    snapshotId: string
+  }>()
 
   chartOption: EChartsOption = {
     ...defaultChartConfig,
@@ -36,6 +50,7 @@ export class ChartComponentComponent {
 
   labels: string[] = []
   data!: ChartData
+  rawData!: ChartResponse
   allLocations: string[] = []
   selectedLocations = new SelectionModel<string>(true, [])
 
@@ -62,6 +77,19 @@ export class ChartComponentComponent {
   onChartInit(ec: EChartsType) {
     this.echartsInstance = ec
     this.loadChartData()
+    this.echartsInstance.on("click", (params) => {
+      const { dataIndex, seriesName, data } = params
+      let snapshotId = ""
+      if (seriesName && typeof dataIndex !== "undefined") {
+        snapshotId = this.rawData?.snapshotIds?.[seriesName]?.[dataIndex]
+      }
+      this.pointClicked.emit({
+        dataIndex,
+        seriesName: <string>seriesName,
+        data: <number>data,
+        snapshotId,
+      })
+    })
   }
 
   generateSeries(data: typeof this.data) {
@@ -130,6 +158,7 @@ export class ChartComponentComponent {
               )
             })
             this.data = resp.data
+            this.rawData = resp
             this.allLocations = Object.keys(this.data)
             this.selectedLocations.select(...this.allLocations)
             this.initCharts()
@@ -188,5 +217,9 @@ export class ChartComponentComponent {
     setTimeout(() => {
       this.chartInitialized.emit(this.echartsInstance)
     }, 500)
+  }
+
+  menuClick(type: string) {
+    this.menuClicked.emit(type)
   }
 }

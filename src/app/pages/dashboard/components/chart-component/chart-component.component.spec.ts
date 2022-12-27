@@ -10,6 +10,7 @@ import { ChartPanelComponent } from "src/app/shared/components/chart-panel/chart
 import { materialModules } from "src/app/shared/shared.module"
 import { dashboardMaterialModules } from "../../dashboard.module"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
+import { getTranslocoModule } from "src/app/transloco-testing.module"
 
 describe("ChartComponentComponent", () => {
   let component: ChartComponentComponent
@@ -30,6 +31,7 @@ describe("ChartComponentComponent", () => {
           // echarts
           echarts: () => import("echarts"),
         }),
+        getTranslocoModule(),
       ],
       providers: [chartProviders],
     }).compileComponents()
@@ -41,5 +43,32 @@ describe("ChartComponentComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should test chart click", async () => {
+    // Mock Image onload
+
+    const echartInstanceMock = {
+      on: (type: string, fn: (param?: any) => any) => {
+        fn({
+          dataIndex: 10,
+          seriesName: "x",
+          data: 3,
+        })
+      },
+    } as any
+
+    component.onChartInit(echartInstanceMock)
+    component.menuClick("x")
+
+    await fixture.whenStable()
+
+    component.rawData = {
+      snapshotIds: {
+        x: ["1", "1", "1", "1", "1"],
+      },
+    } as any
+    component.onChartInit(echartInstanceMock)
+    await fixture.whenStable()
   })
 })

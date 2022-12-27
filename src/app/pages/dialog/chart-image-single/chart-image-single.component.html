@@ -15,46 +15,76 @@
 
     <ng-template #contentBody>
       <div class="content-container p-3">
-        <img [src]="imageData.imageSrc" alt="image" />
-        <div class="icon-top-left label-text">
-          <div class="item">
-            <span class="item-icon material-icons-outlined">location_on</span>
-            {{ imageData.location }}
-          </div>
-          <div class="item">
-            <a [href]="imageData.imageSrc" download target="_blank">
-              <span class="item-icon material-icons-outlined"
-                >file_download</span
-              >
-              Unduh Hasil Capture
-            </a>
-          </div>
-        </div>
-        <div class="icon-top-right label-text">
-          <div class="item">
-            <span class="item-icon material-icons-outlined">photo_camera</span>
-            {{ imageData.cameraName }}
-          </div>
-        </div>
-        <div class="icon-bottom-left label-text">
-          <div class="item">
-            <span class="item-icon material-icons-outlined">person</span>
-            {{ imageData.annotations.length || 0 }}
-          </div>
-        </div>
-        <div class="icon-bottom-right label-text">
-          <div class="item">
-            <span class="item-icon material-icons-outlined"
-              >calendar_today</span
-            >
-            {{ imageData.instant | date: "dd MMM yyyy" }}
-          </div>
-          <div class="item">
-            <span class="item-icon material-icons-outlined">schedule</span>
-            {{ imageData.instant | date: "HH:mm" }} WIB
-          </div>
-        </div>
+        <ng-container *ngIf="isLoading; else notLoading">
+          Loading...
+        </ng-container>
       </div>
     </ng-template>
   </app-chart-panel>
+</ng-template>
+
+<ng-template #noData> No Data available </ng-template>
+
+<ng-template #notLoading>
+  <ng-container *ngIf="imageData || imageDataCanvas; else noData">
+    <ng-container *ngIf="!useImageCanvas; else imageCanvasTmp">
+      <img [src]="imageData.imageSrc" alt="image" />
+      <div class="icon-top-left label-text">
+        <div class="item">
+          <span class="item-icon material-icons-outlined">location_on</span>
+          {{ imageData.location }}
+        </div>
+        <div class="item">
+          <a
+            [href]="imageData.imageSrc"
+            [download]="
+              imageData.instant +
+              '-' +
+              imageData.location +
+              '-' +
+              imageData.cameraName +
+              '.jpg'
+            "
+            target="_blank"
+          >
+            <span class="item-icon material-icons-outlined">file_download</span>
+            Unduh Hasil Capture
+          </a>
+        </div>
+      </div>
+      <div class="icon-top-right label-text">
+        <div class="item">
+          <span class="item-icon material-icons-outlined">photo_camera</span>
+          {{ imageData.cameraName }}
+        </div>
+      </div>
+      <div class="icon-bottom-left label-text">
+        <div class="item">
+          <span class="item-icon material-icons-outlined">person</span>
+          {{ imageData.annotations.length || 0 }}
+        </div>
+      </div>
+      <div class="icon-bottom-right label-text">
+        <div class="item">
+          <span class="item-icon material-icons-outlined">calendar_today</span>
+          {{ imageData.instant | date: "dd MMM yyyy" }}
+        </div>
+        <div class="item">
+          <span class="item-icon material-icons-outlined">schedule</span>
+          {{ imageData.instant | date: "HH:mm" }} WIB
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #imageCanvasTmp>
+  <div class="canvas-container">
+    <app-image-canvas
+      [chartImageContent]="imageDataCanvas"
+      [canvasWidth]="1085"
+      [canvasHeight]="609"
+      [multiple]="false"
+    ></app-image-canvas>
+  </div>
 </ng-template>

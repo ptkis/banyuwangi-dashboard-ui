@@ -13,7 +13,7 @@ var config = {
     "maptalks.three": "<rootDir>/node_modules/maptalks.three/dist/index.js",
   },
   transformIgnorePatterns: [
-    "node_modules/(?!.*\\.mjs$|uuid|maptalks|three|css|scss)",
+    "node_modules/(?!.*\\.mjs$|uuid|maptalks|three|css|scss|@firebase|@angular/fire|date-fns)",
   ],
   globals: {
     "ts-jest": {

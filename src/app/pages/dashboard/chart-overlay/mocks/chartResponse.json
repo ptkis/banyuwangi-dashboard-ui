@@ -43,5 +43,97 @@
     "Taman Baru": [27, 2157, 8604],
     "Temenggungan": [3905, 4846, 5617],
     "Tukang Kayu": [7547, 8287, 8705]
+  },
+  "snapshotIds": {
+    "Kampung Mandar": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Kampung Melayu": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Karangrejo": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Kebalenan": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Kepatihan": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Kertosari": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Lateng": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Pakis": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Panderejo": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Penganjuran": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Pengantigan": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Singonegaran": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Singotrunan": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Sobo": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Sumber Rejo": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Taman Baru": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Temenggungan": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ],
+    "Tukang Kayu": [
+      "feb1935a-2ca6-489c-a850-e3f1aea51308",
+      "54f75350-23f3-41a2-b149-5ae64fcfac99",
+      "b5915870-c53d-4782-90d6-2a3eb603dbeb"
+    ]
   }
 }

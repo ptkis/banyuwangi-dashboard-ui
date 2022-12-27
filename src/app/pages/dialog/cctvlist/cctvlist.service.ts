@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { Subject } from "rxjs"
 import { environment } from "src/environments/environment"
+import { SnapshotCount } from "../chart-image-single/chart-image-single.component"
 
 export interface CCTVData {
   vmsCameraIndexCode: string
@@ -80,6 +81,12 @@ export interface ListResponse<T> {
   data: ResponseData<T>
 }
 
+export interface SingleResponse<T> {
+  success: boolean
+  message: string
+  data: T
+}
+
 @Injectable({
   providedIn: "root",
 })
@@ -115,6 +122,31 @@ export class CCTVListService {
     return this.http.post<any>(
       `${environment.serverBaseUrl}/v1/camera/bulk/delete`,
       [id]
+    )
+  }
+
+  getChartData(
+    pageNo: number,
+    pageSize: number,
+    params: Record<string, string | null>
+  ) {
+    const filteredParams: Record<string, string | null> = {}
+
+    for (const key of Object.keys(params)) {
+      if (params[key] !== null) {
+        filteredParams[key] = params[key]
+      }
+    }
+
+    return this.http.get<ListResponse<SnapshotCount>>(
+      `${environment.serverBaseUrl}/v1/detection/counts`,
+      {
+        params: {
+          page: pageNo - 1,
+          size: pageSize,
+          ...filteredParams,
+        },
+      }
     )
   }
 }

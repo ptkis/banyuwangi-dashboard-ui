@@ -24,6 +24,14 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSidenavModule } from "@angular/material/sidenav"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 import { ChartImageSingleComponent } from "./chart-image-single/chart-image-single.component"
+import { ChartDataComponent } from "./chart-data/chart-data.component"
+import { MatDatepickerModule } from "@angular/material/datepicker"
+import {
+  MatDateFnsModule,
+  MAT_DATE_FNS_FORMATS,
+} from "@angular/material-date-fns-adapter"
+import { id } from "date-fns/locale"
+import { MAT_DATE_LOCALE } from "@angular/material/core"
 
 export const dialogRoutes: Routes = [
   {
@@ -39,9 +47,26 @@ export const dialogRoutes: Routes = [
   {
     path: "toast-chart-image",
     component: ChartImageSingleComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "chart-data",
+    component: ChartDataComponent,
+    canActivate: [AuthGuard],
   },
 ]
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: "PPP",
+  },
+  display: {
+    dateInput: "PPP",
+    monthYearLabel: "LLL yyyy",
+    dateA11yLabel: "PP",
+    monthYearA11yLabel: "LLL yyyy",
+  },
+}
 
 @NgModule({
   declarations: [
@@ -50,6 +75,7 @@ export const dialogRoutes: Routes = [
     ImageCanvasComponent,
     ChartImageComponent,
     ChartImageSingleComponent,
+    ChartDataComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +98,18 @@ export const dialogRoutes: Routes = [
     MatSidenavModule,
 
     ListFilterComponent,
+    MatDatepickerModule,
+    MatDateFnsModule,
+  ],
+  providers: [
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: id,
+    },
+    {
+      provide: MAT_DATE_FNS_FORMATS,
+      useValue: MY_FORMATS,
+    },
   ],
 })
 export class DialogModule {}

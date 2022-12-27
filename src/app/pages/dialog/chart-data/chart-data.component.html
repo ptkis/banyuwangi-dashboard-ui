@@ -1,0 +1,219 @@
+<ng-template #content>
+  <ng-container *transloco="let t; read: 'chartdata'">
+    <button data-testid="btn-close" (click)="dialogRef.close()" mat-icon-button>
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <form
+      [formGroup]="searchForm"
+      class="toolbar-outside d-flex w-100"
+      (ngSubmit)="search()"
+    >
+      <div class="flex-grow-1">
+        <mat-form-field class="custom-form-field2 daterange" appearance="fill">
+          <mat-label>{{ t("daterange") }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="flex-shrink-1 text-right d-flex align-items-center">
+        <mat-form-field class="custom-form-field2" appearance="fill">
+          <mat-label>{{ t("type") }}</mat-label>
+          <mat-select formControlName="type">
+            <mat-option [value]="null">All</mat-option>
+            <mat-option *ngFor="let val of allDetection" [value]="val">
+              {{ "dashboard." + val | transloco }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
+          <mat-label>{{ t("camera") }}</mat-label>
+          <mat-select formControlName="camera">
+            <mat-option [value]="null">All</mat-option>
+            <mat-option *ngFor="let val of allCameras" [value]="val">
+              {{ val }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          data-testid="btn-search-submit"
+          class="btn btn-primary"
+        >
+          {{ t("search") }}
+        </button>
+      </div>
+    </form>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">
+          {{ t("title", { type: "dashboard." + (type || "all") | transloco }) }}
+        </div>
+        <!-- <button
+          class="panel_button"
+          (click)="dialogRef.close()"
+          mat-icon-button><mat-icon>close</mat-icon></button> -->
+        <div class="toolbar-container panel_button">
+          <a
+            data-testid="btn-import"
+            [disabled]="isLoading"
+            mat-button
+            (click)="exportData($event)"
+          >
+            <mat-icon>download</mat-icon>
+            {{ t("download") }}</a
+          >
+        </div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="content-container p-3">
+          <div class="table-container">
+            <table
+              mat-table
+              matSort
+              [dataSource]="dataSource"
+              class="mat-elevation-z8 w-100"
+            >
+              <ng-container matColumnDef="position">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("No") }}
+                </th>
+                <td mat-cell *matCellDef="let index = index">
+                  {{
+                    this.paginator.index === 0
+                      ? index + 1
+                      : 1 + index + this.paginator.index * this.paginator.size
+                  }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="timestamp" sticky mat-sort-header>
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("timestamp") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["snapshotCreated"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cameraName" sticky mat-sort-header>
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("Name") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["snapshotCameraName"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="location" mat-sort-header>
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("Location") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["snapshotCameraLocation"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="latitude">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("Latitude") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["snapshotCameraLatitude"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="longitude">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("Longitude") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["snapshotCameraLongitude"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  {{ t("type") }}
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                  {{ row["type"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="maxValue" mat-sort-header>
+                <th
+                  class="gradient-bg-1 text-right"
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  {{
+                    t("maxValue", {
+                      type: "dashboard." + (type || "all") | transloco
+                    })
+                  }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let row; let i = index"
+                  class="text-right"
+                >
+                  {{ row["maxValue"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="value" mat-sort-header>
+                <th
+                  class="gradient-bg-1 text-right"
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  {{
+                    t("value", {
+                      type: "dashboard." + (type || "all") | transloco
+                    })
+                  }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let row; let i = index"
+                  class="text-right"
+                >
+                  {{ row["value"] }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator
+              class="demo-paginator"
+              (page)="handlePageEvent($event)"
+              [length]="paginator.length"
+              [pageSize]="paginator.size"
+              [showFirstLastButtons]="true"
+              [pageIndex]="paginator.index"
+              [disabled]="isLoading"
+              [pageSizeOptions]="[5, 10]"
+              aria-label="Select page"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+  </ng-container>
+</ng-template>

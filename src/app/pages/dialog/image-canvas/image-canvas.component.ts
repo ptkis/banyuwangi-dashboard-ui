@@ -6,7 +6,11 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core"
-import { ChartImageContent } from "../../dashboard/dashboard.service"
+import {
+  Annotation,
+  AnnotationDataBySnapshotId,
+  ChartImageContent,
+} from "../../dashboard/dashboard.service"
 
 @Component({
   selector: "app-image-canvas",
@@ -14,9 +18,12 @@ import { ChartImageContent } from "../../dashboard/dashboard.service"
   styleUrls: ["./image-canvas.component.scss"],
 })
 export class ImageCanvasComponent implements AfterViewInit {
-  @Input() chartImageContent: ChartImageContent | undefined
+  @Input() chartImageContent:
+    | ChartImageContent<Annotation | AnnotationDataBySnapshotId>
+    | undefined
   @Input() canvasWidth = 415
   @Input() canvasHeight = 233
+  @Input() multiple = true
 
   @ViewChild("bgCanvas") bgCanvas!: ElementRef<HTMLCanvasElement>
   @ViewChild("canvas") canvas!: ElementRef<HTMLCanvasElement>
@@ -25,6 +32,9 @@ export class ImageCanvasComponent implements AfterViewInit {
   context!: CanvasRenderingContext2D | null
 
   selected = false
+
+  imgOriginalWidth = this.canvasWidth
+  imgOriginalHeight = this.canvasHeight
 
   constructor() {}
 
@@ -55,7 +65,10 @@ export class ImageCanvasComponent implements AfterViewInit {
     const base_image = new Image()
     base_image.src = imageUrl
     base_image.setAttribute("crossorigin", "anonymous")
+
     base_image.onload = () => {
+      this.imgOriginalWidth = base_image.width
+      this.imgOriginalHeight = base_image.height
       this.bgContext!.drawImage(
         base_image,
         0,
@@ -84,8 +97,8 @@ export class ImageCanvasComponent implements AfterViewInit {
     const tmpCanvas = document.createElement("canvas")
     // tmpCanvas.width = this.bgCanvas.nativeElement.width * 2
     // tmpCanvas.height = this.bgCanvas.nativeElement.height * 2
-    tmpCanvas.width = 704
-    tmpCanvas.height = 576
+    tmpCanvas.width = this.imgOriginalWidth
+    tmpCanvas.height = this.imgOriginalHeight
 
     const ctx = tmpCanvas.getContext("2d")
     const canvas = this.bgCanvas.nativeElement

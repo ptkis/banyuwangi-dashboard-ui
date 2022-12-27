@@ -1,0 +1,111 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "date": "2022-12-27",
+    "instant": "2022-12-27T03:06:13.667253Z",
+    "location": "STADION DIPONEGORO 1",
+    "cameraName": "STADION DIP0NEGORO 1",
+    "type": "FLOOD",
+    "value": 1,
+    "imageSrc": "/assets/images/google_logo.png",
+    "annotations": [
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "person",
+        "type": "CROWD",
+        "boundingBox": {
+          "x": 0.288983,
+          "y": 0.383219,
+          "width": 0.0343888,
+          "height": 0.0753896,
+          "id": "7d4b2d60-64ef-4e9a-b1b4-e40436455c50"
+        },
+        "confidence": 0.5060014724731445,
+        "id": "165ce538-dee8-4ce4-a219-e43e09a0f606"
+      },
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "car",
+        "type": "TRAFFIC",
+        "boundingBox": {
+          "x": 0.571113,
+          "y": 0.342278,
+          "width": 0.145175,
+          "height": 0.159657,
+          "id": "bb9ccaa2-6009-4ae8-af21-b711d064255a"
+        },
+        "confidence": 0.8473847508430481,
+        "id": "4f7e595d-7eaa-46a6-a4ff-ae3cf82d6582"
+      },
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "garbage-paper",
+        "type": "TRASH",
+        "boundingBox": {
+          "x": 0.730254,
+          "y": 0.326197,
+          "width": 0.175358,
+          "height": 0.177428,
+          "id": "08919e7d-394b-41e0-947d-542d23be4ebf"
+        },
+        "confidence": 0.21168845891952515,
+        "id": "c5e28b61-2c0b-468c-aa75-699f2b666925"
+      },
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "motorcycle",
+        "type": "TRAFFIC",
+        "boundingBox": {
+          "x": 0.398444,
+          "y": 0.300451,
+          "width": 0.0338601,
+          "height": 0.0714214,
+          "id": "28478e1f-2a47-4a97-8ceb-f6152ccd4d39"
+        },
+        "confidence": 0.6587936878204346,
+        "id": "d8537dc7-fac5-4f20-8362-d7fab204377f"
+      },
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "flood-puddle",
+        "type": "FLOOD",
+        "boundingBox": {
+          "x": 0.0,
+          "y": 0.376416,
+          "width": 0.101743,
+          "height": 0.589747,
+          "id": "a646b0ed-911b-47d7-a621-bb98c81b3053"
+        },
+        "confidence": 0.5918477773666382,
+        "id": "e81d34f4-a8f2-4655-b43f-a1ae14b437ac"
+      },
+      {
+        "snapshotCreated": "2022-12-27T03:06:13.667253Z",
+        "snapshotImageId": "b556f93d-da1f-40bc-9589-a9e77005940e",
+        "snapshotCameraLocation": "STADION DIPONEGORO 1",
+        "name": "garbage-metal",
+        "type": "TRASH",
+        "boundingBox": {
+          "x": 0.563818,
+          "y": 0.342416,
+          "width": 0.166361,
+          "height": 0.157504,
+          "id": "4aa1e05e-e62b-416e-9c83-082d635a81a1"
+        },
+        "confidence": 0.3831292390823364,
+        "id": "f7bafd3f-9a8b-4349-bbf7-1822387359c7"
+      }
+    ]
+  }
+}

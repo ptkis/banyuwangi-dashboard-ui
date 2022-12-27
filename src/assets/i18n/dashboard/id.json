@@ -1,9 +1,13 @@
 {
+  "all": " ",
   "crowd": "Keramaian Orang",
   "flood": "Genangan Air",
   "streetvendor": "Pedagang Kaki Lima",
   "traffic": "Kepadatan Lalu Lintas",
   "trash": "Sampah Jalan Raya",
   "Filter": "Filter",
-  "download": "Unduh Hasil Capture"
+  "download": "Unduh Hasil Capture",
+  "menu_deteksi": "Lihat hasil deteksi",
+  "menu_data": "Lihat data",
+  "menu_download": "Dwonload Excel"
 }
