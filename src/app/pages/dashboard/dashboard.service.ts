@@ -1,7 +1,12 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { map } from "rxjs"
 import { environment } from "src/environments/environment"
-import { ListResponse, ResponseData } from "../dialog/cctvlist/cctvlist.service"
+import {
+  ListResponse,
+  ResponseData,
+  SingleResponse,
+} from "../dialog/cctvlist/cctvlist.service"
 
 export interface ChartData {
   [key: string]: number[]
@@ -10,9 +15,10 @@ export interface ChartResponse {
   seriesNames: string[]
   labels: string[]
   data: ChartData
+  snapshotIds: Record<string, string[]>
 }
 
-export interface ChartImageContent {
+export interface ChartImageContent<T> {
   date: string
   instant: string
   location: string
@@ -20,7 +26,7 @@ export interface ChartImageContent {
   type: string
   value: number
   imageSrc: string
-  annotations: Annotation[]
+  annotations: T[]
 }
 
 export interface Annotation {
@@ -34,6 +40,15 @@ export interface BoundingBox {
   width: number
   height: number
   id: string
+}
+
+export interface AnnotationDataBySnapshotId extends Annotation {
+  snapshotCreated?: string
+  snapshotImageId?: string
+  snapshotCameraLocation?: string
+  name?: string
+  type?: string
+  id?: string
 }
 
 @Injectable({
@@ -149,11 +164,35 @@ export class DashboardService {
       size: pageSize,
       ...searchParams,
     }
-    return this.http.get<ListResponse<ChartImageContent>>(
+    return this.http.get<ListResponse<ChartImageContent<Annotation>>>(
       `${environment.serverBaseUrl}/v1/detection/browse`,
       {
         params,
       }
     )
+  }
+
+  getDataBySnapshotId(snapshotid: string, type: string, value: string) {
+    return this.http
+      .get<SingleResponse<ChartImageContent<AnnotationDataBySnapshotId>>>(
+        `${environment.serverBaseUrl}/v1/detection/id/${snapshotid}`,
+        {
+          params: {
+            type,
+            value,
+          },
+        }
+      )
+      .pipe(
+        map((resp) => {
+          return {
+            ...resp,
+            data: {
+              ...resp.data,
+              annotations: resp.data.annotations.filter((a) => a.type === type),
+            },
+          }
+        })
+      )
   }
 }

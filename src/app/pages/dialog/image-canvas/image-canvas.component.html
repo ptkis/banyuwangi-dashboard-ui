@@ -10,11 +10,23 @@
     <div class="icon-top-left label-text">
       <div class="item">
         <mat-checkbox
+          *ngIf="multiple"
           [(ngModel)]="selected"
           data-testid="image-checkbox"
         ></mat-checkbox>
         <span class="item-icon material-icons-outlined">location_on</span>
         {{ chartImageContent.location }}
+      </div>
+      <div class="item" *ngIf="!multiple">
+        <a
+          data-testid="btn-download"
+          href="#"
+          (click)="$event.preventDefault(); exportImage()"
+          target="_blank"
+        >
+          <span class="item-icon material-icons-outlined">file_download</span>
+          Unduh Hasil Capture
+        </a>
       </div>
     </div>
     <div class="icon-top-right label-text">

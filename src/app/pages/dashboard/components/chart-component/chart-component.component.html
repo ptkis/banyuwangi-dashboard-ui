@@ -2,19 +2,31 @@
   <ng-template #customTitle>
     <div class="title">{{ panelTitle }}</div>
 
-    <ng-container *ngIf="allLocations?.length">
+    <ng-container *ngIf="true">
       <button
         mat-icon-button
         class="panel_button"
         [matMenuTriggerFor]="filterMenu"
       >
-        <mat-icon>filter_list</mat-icon>
+        <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #filterMenu="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="locationMenu">
+        <button mat-menu-item [matMenuTriggerFor]="locationMenu" class="d-none">
           Location ({{ selectedLocations.selected.length }}/{{
             allLocations.length
           }})
+        </button>
+        <button mat-menu-item (click)="menuClick('image')">
+          <mat-icon>image</mat-icon>
+          <span>Lihat Gambar</span>
+        </button>
+        <button mat-menu-item (click)="menuClick('data')">
+          <mat-icon>table_view</mat-icon>
+          <span>Lihat Data</span>
+        </button>
+        <button mat-menu-item (click)="menuClick('download')">
+          <mat-icon>download</mat-icon>
+          <span>Download</span>
         </button>
       </mat-menu>
 

@@ -1,7 +1,16 @@
+import { Component } from "@angular/core"
 import { ComponentFixture, TestBed } from "@angular/core/testing"
+import { RouterTestingModule } from "@angular/router/testing"
 import { dashboardComponents } from "../.."
 import { chartImportedModules, chartProviders } from "../chart-components"
 import { LineChartComponent } from "./line-chart.component"
+
+@Component({
+  selector: "app-dummy-cmp",
+  styles: [""],
+  template: ` Hello `,
+})
+class DummyComponent {}
 
 describe("LineChartComponent", () => {
   let component: LineChartComponent
@@ -9,8 +18,17 @@ describe("LineChartComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [...dashboardComponents],
-      imports: [...chartImportedModules],
+      declarations: [...dashboardComponents, DummyComponent],
+      imports: [
+        ...chartImportedModules,
+        RouterTestingModule.withRoutes([
+          {
+            path: "toast-chart-image",
+            component: DummyComponent,
+            outlet: "dialog",
+          },
+        ]),
+      ],
       providers: [chartProviders],
     }).compileComponents()
 
@@ -21,5 +39,19 @@ describe("LineChartComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should test point click", () => {
+    component.pointClick({
+      dataIndex: 0,
+      seriesName: "x",
+      data: 2,
+    })
+
+    component.menuClick("image")
+    component.menuClick("data")
+    component.menuClick("download")
+
+    component.echartLoaded({} as any)
   })
 })

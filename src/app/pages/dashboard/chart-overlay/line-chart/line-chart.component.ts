@@ -12,6 +12,8 @@ import { ChartResponse, DashboardService } from "../../dashboard.service"
       [getChartData]="getData"
       [tooltipPosition]="tooltipPosition"
       (chartInitialized)="echartLoaded($event)"
+      (menuClicked)="menuClick($event)"
+      (pointClicked)="pointClick($event)"
     ></app-chart-component>
   `,
 })
@@ -27,7 +29,10 @@ export class LineChartComponent {
 
   echartLoaded(ec: EChartsType) {
     this.echartsInstance = ec
-    this.echartsInstance.on("click", (params) => {
+  }
+
+  menuClick(type: string) {
+    if (type === "image") {
       this.zone.run(() => {
         this.router.navigate(
           [
@@ -45,6 +50,30 @@ export class LineChartComponent {
           }
         )
       })
+    } else if (type === "data") {
+    } else if (type === "download") {
+    }
+  }
+
+  pointClick(data: Record<string, unknown>) {
+    this.zone.run(() => {
+      this.router.navigate(
+        [
+          "",
+          {
+            outlets: {
+              dialog: ["toast-chart-image"],
+            },
+          },
+        ],
+        {
+          queryParams: {
+            snapshotid: data["snapshotId"],
+            value: data["data"],
+            type: this.chartType,
+          },
+        }
+      )
     })
   }
 }

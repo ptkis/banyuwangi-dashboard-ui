@@ -80,6 +80,12 @@ export interface ListResponse<T> {
   data: ResponseData<T>
 }
 
+export interface SingleResponse<T> {
+  success: boolean
+  message: string
+  data: T
+}
+
 @Injectable({
   providedIn: "root",
 })

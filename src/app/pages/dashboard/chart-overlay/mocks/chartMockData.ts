@@ -6,6 +6,7 @@ import {
 } from "src/app/shared/services/http-mock-interceptor.service"
 import * as chartResponse from "./chartResponse.json"
 import * as chartDetectionResponse from "./chartDetectionResponse.json"
+import * as imageDataBySnapshot from "./imageDataBySnapshot.json"
 
 export const chartMockUrls: IMockURLStructure[] = [
   {
@@ -16,6 +17,11 @@ export const chartMockUrls: IMockURLStructure[] = [
   {
     urlRegex: /v1\/detection\/browse/i,
     json: chartDetectionResponse,
+    delay: 2000,
+  },
+  {
+    urlRegex: /v1\/detection\/id/i,
+    json: imageDataBySnapshot,
     delay: 2000,
   },
 ]

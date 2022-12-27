@@ -9,7 +9,13 @@ import {
 } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
-import { ChartImageContent } from "../../dashboard/dashboard.service"
+import { finalize } from "rxjs"
+import {
+  Annotation,
+  AnnotationDataBySnapshotId,
+  ChartImageContent,
+  DashboardService,
+} from "../../dashboard/dashboard.service"
 import { CCTVData } from "../cctvlist/cctvlist.service"
 
 export interface NotificationData {
@@ -48,8 +54,10 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
 
   isLoading = false
   dialogRef!: DialogRef<string>
-  imageData!: ChartImageContent
+  imageData!: ChartImageContent<Annotation>
+  imageDataCanvas!: ChartImageContent<AnnotationDataBySnapshotId>
   type = "trash"
+  useImageCanvas = false
 
   canvasWidth = 415
   canvasHeight = 233
@@ -58,15 +66,23 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
     public dialog: Dialog,
     private router: Router,
     private route: ActivatedRoute,
-    private zone: NgZone
+    private zone: NgZone,
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((param) => {
       const data = param.get("data")
       const imageSrc = param.get("imageSrc")
+      const snapshotid = param.get("snapshotid")
+      const type = param.get("type")?.toUpperCase()
+      const value = param.get("value")
       if (data && imageSrc) {
         this.loadData(JSON.parse(data), imageSrc)
+        this.useImageCanvas = false
+      } else if (snapshotid && type && value) {
+        this.loadDataFromSnapshot(snapshotid, type, value)
+        this.useImageCanvas = true
       }
     })
   }
@@ -94,5 +110,15 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
       value: data.snapshotCount.value,
       instant: data.snapshotCount.snapshotCreated,
     }
+  }
+
+  loadDataFromSnapshot(snapshotid: string, type: string, value: string) {
+    this.isLoading = true
+    this.dashboardService
+      .getDataBySnapshotId(snapshotid, type, value)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe((resp) => {
+        this.imageDataCanvas = resp.data
+      })
   }
 }

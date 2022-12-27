@@ -16,6 +16,7 @@ import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { finalize } from "rxjs"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 import {
+  Annotation,
   ChartImageContent,
   DashboardService,
 } from "../../dashboard/dashboard.service"
@@ -38,7 +39,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
 
   isLoading = false
   dialogRef!: DialogRef<string>
-  imageData: ChartImageContent[] = []
+  imageData: ChartImageContent<Annotation>[] = []
   paginator = {
     index: 0,
     length: 10,
