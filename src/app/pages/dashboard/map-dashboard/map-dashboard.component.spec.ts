@@ -7,7 +7,7 @@ import { dashboardComponents } from ".."
 import { dashboardDialogs } from "../dialogs"
 
 import { MapDashboardComponent } from "./map-dashboard.component"
-import { throwError } from "rxjs"
+import { of, throwError } from "rxjs"
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering"
 import { VgControlsModule } from "@videogular/ngx-videogular/controls"
 import { VgCoreModule } from "@videogular/ngx-videogular/core"
@@ -31,6 +31,7 @@ import { HCPService } from "src/app/shared/services/hcp.service"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { dashboardMaterialModules } from "../dashboard.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
+import { ActivatedRoute } from "@angular/router"
 
 export const dashboardMockUrls: IMockURLStructure[] = [
   {
@@ -96,7 +97,7 @@ export const dashboardMockUrls: IMockURLStructure[] = [
   },
 ]
 
-jest.setTimeout(30000)
+jest.setTimeout(3000)
 
 describe("MapDashboardComponent", () => {
   const renderComponent = async (providers: any[] = []) => {
@@ -211,5 +212,40 @@ describe("MapDashboardComponent", () => {
       marker.openInfoWindow()
     }
     sessionStorage.removeItem("dataSourceSettings")
+  })
+
+  it("should test location search", async () => {
+    Object.defineProperty(window, "location", {
+      value: {
+        search: "?dataSourceSettings=1",
+      },
+    })
+    const res = await renderComponent()
+    const fixture = res.fixture
+    fixture.detectChanges()
+    for (const marker of fixture.componentInstance.markers) {
+      marker.openInfoWindow()
+    }
+    sessionStorage.removeItem("dataSourceSettings")
+  })
+
+  it("should test satellite view", async () => {
+    const res = await renderComponent([
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          paramMap: of({
+            get: (key: string) => {
+              const data = {
+                type: "3d",
+              } as any
+              return data[key]
+            },
+          }),
+        },
+      },
+    ])
+
+    expect(res.fixture.componentInstance.map).toBeDefined()
   })
 })

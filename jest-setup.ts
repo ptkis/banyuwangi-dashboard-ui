@@ -34,6 +34,24 @@ jest.mock("three", () => {
   }
 })
 
+jest.mock("maptalks", () => {
+  const maptalks = jest.requireActual("maptalks")
+  return {
+    ...maptalks,
+    SpatialReference: {
+      loadArcgis: (url: string, cb: any) => {
+        console.log("sx")
+        cb(null, {
+          spatialReference: {
+            projection: "",
+            fullExtent: null,
+          },
+        })
+      },
+    },
+  }
+})
+
 jest.mock("three/examples/jsm/loaders/SVGLoader", () => {
   const svgL = jest.requireActual("three/examples/jsm/loaders/SVGLoader")
   const svgLoader = new svgL.SVGLoader()

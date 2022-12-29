@@ -62,7 +62,7 @@ export class ChartComponentComponent {
   ) {}
 
   setLoading(loading: boolean) {
-    if (this.echartsInstance) {
+    if (this.echartsInstance && !this.echartsInstance.isDisposed()) {
       loading
         ? this.echartsInstance.showLoading()
         : this.echartsInstance.hideLoading()
