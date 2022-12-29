@@ -1,5 +1,5 @@
 <app-chart-overlay></app-chart-overlay>
-<div #mapContainer id="map-container"></div>
+<div #mapContainer [id]="containerId" class="map-container"></div>
 <ng-template
   #infoWindowContent
   let-id="cctv_id"

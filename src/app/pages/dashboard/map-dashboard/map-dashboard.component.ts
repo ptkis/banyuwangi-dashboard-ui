@@ -15,6 +15,7 @@ import {
   ui,
   Polygon,
   TileLayer,
+  SpatialReference,
 } from "maptalks"
 import * as THREE from "three"
 import { ThreeLayer } from "maptalks.three"
@@ -27,6 +28,7 @@ import { HCPService } from "src/app/shared/services/hcp.service"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { CCTVData } from "src/app/shared/services/hik.service"
 import { environment } from "src/environments/environment"
+import { ActivatedRoute } from "@angular/router"
 
 @Component({
   selector: "app-map-dashboard",
@@ -45,13 +47,17 @@ export class MapDashboardComponent implements AfterViewInit {
   peta3d: THREE.Group | undefined
 
   useHCPHCMData = true
+  containerId = "map-container"
 
   constructor(
-    private _viewContainerRef: ViewContainerRef,
-    private _HCMService: HCMService,
-    private _HCPService: HCPService,
-    private toastr: ToastrService
-  ) {}
+    protected _viewContainerRef: ViewContainerRef,
+    protected _HCMService: HCMService,
+    protected _HCPService: HCPService,
+    protected toastr: ToastrService,
+    protected route: ActivatedRoute
+  ) {
+    this.containerId = "map-container" + new Date().getTime()
+  }
 
   ngAfterViewInit(): void {
     const urlSearchParams = new URLSearchParams(window.location.search)
@@ -67,13 +73,55 @@ export class MapDashboardComponent implements AfterViewInit {
       } else if (useHCPHCMData === "0") {
         this.useHCPHCMData = false
       }
-      this.initMap()
-      this.initMarkers()
+    }
+
+    this.route.paramMap.subscribe((p) => {
+      const mapType = p.get("type")
+      this.initMap(!!mapType)
+    })
+    // this.initMap(true)
+  }
+
+  initMap(satellite = false) {
+    if (!satellite) {
+      this.initMapSVG()
+    } else {
+      this.initMapSatellite()
     }
   }
 
-  initMap() {
-    this.map = new Map("map-container", {
+  initMapSatellite() {
+    const arcUrl =
+      "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"
+    SpatialReference.loadArcgis(arcUrl + "?f=pjson", (err, conf) => {
+      if (err) {
+        throw new Error(err)
+      }
+      const ref = conf.spatialReference
+      ref.projection = "EPSG:3857"
+      ref.fullExtent = null
+      this.map = new Map(this.containerId, {
+        center: [114.36461695575213, -8.206547262582632],
+        zoom: 9,
+        minZoom: 1,
+        maxZoom: 16,
+        spatialReference: ref,
+        baseLayer: new TileLayer("base", {
+          tileSystem: conf.tileSystem,
+          tileSize: conf.tileSize,
+          urlTemplate: arcUrl + "/tile/{z}/{y}/{x}",
+          attribution:
+            '&copy; <a target="_blank" href="' + arcUrl + '"">ArcGIS</a>',
+        }),
+      })
+
+      this.layer = new VectorLayer("vector").addTo(this.map)
+      this.initMarkers()
+    })
+  }
+
+  initMapSVG() {
+    this.map = new Map(this.containerId, {
       center: [114.36461695575213, -8.206547262582632],
       // center: [0, 0],
       zoom: 9,
@@ -180,6 +228,7 @@ export class MapDashboardComponent implements AfterViewInit {
     // })
 
     this.layer = new VectorLayer("vector").addTo(this.map)
+    this.initMarkers()
   }
 
   renderSVG = (extrusion: number, svgData: SVGResult) => {

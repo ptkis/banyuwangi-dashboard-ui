@@ -36,8 +36,8 @@ export const dashboardRoutes: Routes = [
         component: MapDashboardComponent,
       },
       {
-        path: "3d",
-        component: Map3dDashboardComponent,
+        path: ":type",
+        component: MapDashboardComponent,
       },
     ],
   },
