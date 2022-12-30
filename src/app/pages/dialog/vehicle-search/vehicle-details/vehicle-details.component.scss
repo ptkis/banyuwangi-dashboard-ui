@@ -1,0 +1,45 @@
+.content-container {
+  min-height: 300px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.title {
+  button {
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.text-label {
+  font-weight: bold;
+}
+
+.row {
+  row-gap: 10px;
+}
+
+h3 {
+  font-size: 24px;
+  margin-top: 16px;
+}
+
+.col-image {
+  color: white;
+  position: relative;
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    text-decoration: none;
+    color: inherit;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}

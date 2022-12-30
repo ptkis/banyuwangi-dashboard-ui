@@ -6,6 +6,7 @@ import {
 } from "src/app/shared/services/http-mock-interceptor.service"
 import * as cctvListResponse from "./cctvListResponse.json"
 import * as hcpResponse from "./hcpResponse.json"
+import * as hcmVehicle from "./hcmVehicle.json"
 
 export const cctvMockUrls: IMockURLStructure[] = [
   {
@@ -37,6 +38,10 @@ export const cctvMockUrls: IMockURLStructure[] = [
   {
     urlRegex: /v1\/camera/i,
     json: cctvListResponse,
+  },
+  {
+    urlRegex: /v1\/vehicle\/data\/query/i,
+    json: hcmVehicle,
   },
 ]
 

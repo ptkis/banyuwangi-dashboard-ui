@@ -32,6 +32,8 @@ import {
 } from "@angular/material-date-fns-adapter"
 import { id } from "date-fns/locale"
 import { MAT_DATE_LOCALE } from "@angular/material/core"
+import { VehicleSearchComponent } from "./vehicle-search/vehicle-search.component"
+import { VehicleDetailsComponent } from "./vehicle-search/vehicle-details/vehicle-details.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -53,6 +55,11 @@ export const dialogRoutes: Routes = [
     path: "chart-data",
     component: ChartDataComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: "vehicle",
+    component: VehicleSearchComponent,
+    // canActivate: [AuthGuard],
   },
 ]
 
@@ -76,6 +83,8 @@ export const MY_FORMATS = {
     ChartImageComponent,
     ChartImageSingleComponent,
     ChartDataComponent,
+    VehicleSearchComponent,
+    VehicleDetailsComponent,
   ],
   imports: [
     CommonModule,

@@ -49,6 +49,8 @@ export class MapDashboardComponent implements AfterViewInit {
   useHCPHCMData = true
   containerId = "map-container"
 
+  showButtons = false
+
   constructor(
     protected _viewContainerRef: ViewContainerRef,
     protected _HCMService: HCMService,
@@ -87,6 +89,9 @@ export class MapDashboardComponent implements AfterViewInit {
       this.initMapSVG()
     } else {
       this.initMapSatellite()
+      setTimeout(() => {
+        this.showButtons = true
+      })
     }
   }
 

@@ -1,11 +1,14 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { format } from "date-fns"
 import { map, Observable, of } from "rxjs"
 
 import { environment } from "src/environments/environment"
+import { VehicleData } from "./hcm.model"
 import {
   CCTVData,
   HikCameraList,
+  HikResponse,
   HIKService,
   HikStreamingURL,
 } from "./hik.service"
@@ -96,6 +99,44 @@ export class HCMService extends HIKService {
           return result
         })
       })
+    )
+  }
+
+  getVehicleData(
+    params: Record<string, string | null>,
+    page: number,
+    size: number
+  ) {
+    const theParams: Record<string, string | null> = {
+      ...params,
+      beginTime:
+        format(new Date(params["startDate"] as string), "yyyy-MM-dd") +
+        "T00:00:00.000+07:00",
+      endTime:
+        format(new Date(params["endDate"] as string), "yyyy-MM-dd") +
+        "T00:00:00.000+07:00",
+    }
+
+    delete theParams["startDate"]
+    delete theParams["endDate"]
+
+    for (const key of Object.keys(theParams)) {
+      if (!theParams[key]) {
+        delete theParams[key]
+      }
+    }
+    return this.postData<VehicleData>(
+      "/artemis/api/aiapplication/v1/vehicle/data/query",
+      {
+        data: {
+          ...theParams,
+          queryType: "vehiclealarm",
+        },
+        metadata: {
+          pageNo: page,
+          pageSize: size,
+        },
+      }
     )
   }
 }

@@ -1,0 +1,53 @@
+.content-container {
+  min-height: 300px;
+  max-height: 70vh;
+
+  img {
+    max-width: 100%;
+    max-height: 200px;
+  }
+}
+
+.mat-column-violativeActionName {
+  width: 180px;
+}
+
+.mat-column-plateImagePath,
+.mat-column-imagePath {
+  width: 90px;
+}
+
+th.gradient-bg-1 {
+  display: table-cell;
+}
+
+.mat-header-row {
+  height: 36px;
+}
+
+.mat-row {
+  height: 45px;
+
+  &:nth-child(odd) {
+    background-color: #020c1a;
+  }
+
+  &:nth-child(even) {
+    background-color: #0d2643;
+  }
+}
+
+.title {
+  button {
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
+}
+
+.toolbar-outside {
+  margin-bottom: 16px;
+
+  .daterange {
+    min-width: 257px;
+  }
+}

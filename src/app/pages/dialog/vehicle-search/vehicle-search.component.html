@@ -1,0 +1,216 @@
+<ng-template #content>
+  <ng-container *transloco="let t; read: 'vehiclesearch'">
+    <button data-testid="btn-close" (click)="dialogRef.close()" mat-icon-button>
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <form
+      [formGroup]="searchForm"
+      class="toolbar-outside d-flex w-100"
+      (ngSubmit)="search()"
+    >
+      <div class="flex-grow-1">
+        <mat-form-field class="custom-form-field2 daterange" appearance="fill">
+          <mat-label>{{ t("daterange") }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="flex-shrink-1 text-right d-flex align-items-center">
+        <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
+          <mat-label>{{ t("plateNo") }}</mat-label>
+          <input
+            matInput
+            data-testid="platenoinput"
+            placeholder="label"
+            formControlName="plateNo"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          data-testid="btn-search-submit"
+          class="btn btn-primary"
+        >
+          {{ t("search") }}
+        </button>
+      </div>
+    </form>
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">
+          {{ t("title") }}
+        </div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="content-container p-3">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="mat-elevation-z8 w-100"
+          >
+            <ng-container matColumnDef="position">
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("No") }}
+              </th>
+              <td mat-cell *matCellDef="let index = index">
+                {{
+                  this.paginator.index === 0
+                    ? index + 1
+                    : 1 + index + this.paginator.index * this.paginator.size
+                }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="passTime" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("passTime") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["passTime"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="crossingName" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("crossingName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["crossingName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="directionName" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("directionName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["directionName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="plateColorName" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("plateColorName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["plateColorName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="vehicleTypeName" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("vehicleTypeName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["vehicleTypeName"] }}
+              </td>
+            </ng-container>
+            <ng-container
+              matColumnDef="vehicleColorName"
+              sticky
+              mat-sort-header
+            >
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("vehicleColorName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["vehicleColorName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="violativeActionName"
+              sticky
+              mat-sort-header
+            >
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("violativeActionName") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["violativeActionName"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="plateNo" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("plateNo") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ row["plateNo"] }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="plateImagePath" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("plateImagePath") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <img [src]="row.plateImagePath" alt="" />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="imagePath" sticky mat-sort-header>
+              <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                {{ t("imagePath") }}
+              </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <img [src]="row.imagePath" alt="" />
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th
+                class="gradient-bg-1 text-center"
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                {{ t("Action") }}
+              </th>
+              <td
+                class="text-center"
+                mat-cell
+                *matCellDef="let row; let i = index"
+              >
+                <button
+                  data-testid="btn-view"
+                  [disabled]="isLoading"
+                  mat-icon-button
+                  title="{{ t('View Data') }}"
+                  (click)="viewData(row)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+
+          <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="paginator.length"
+            [pageSize]="paginator.size"
+            [showFirstLastButtons]="true"
+            [pageIndex]="paginator.index"
+            [disabled]="isLoading"
+            [pageSizeOptions]="[5, 10]"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+  </ng-container>
+</ng-template>
