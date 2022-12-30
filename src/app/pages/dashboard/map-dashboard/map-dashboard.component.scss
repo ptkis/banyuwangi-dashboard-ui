@@ -2,3 +2,18 @@
   width: calc(100% - 10px);
   height: 100vh;
 }
+
+.btn-group {
+  gap: 16px;
+
+  .btn-oval {
+    background-color: #020c1c;
+  }
+}
+
+[slot="main"] {
+  position: absolute;
+  top: 25px;
+  pointer-events: all;
+  z-index: 5;
+}

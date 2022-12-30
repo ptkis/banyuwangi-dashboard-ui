@@ -1,0 +1,21 @@
+{
+  "title": "Kendaraan",
+  "daterange": "Rentang Tanggal",
+  "search": "cari",
+  "export": "Export",
+  "No": "No.",
+  "passTime": "Timestamp",
+  "crossingName": "Lokasi",
+  "directionName": "Direction Name",
+  "plateColorName": "Warna Plat",
+  "vehicleModelName": "vehicleModelName",
+  "vehicleTypeName": "J. Kendaraan",
+  "vehicleColorName": "Warna Kendaraan",
+  "violativeActionName": "Pelanggaran",
+  "plateNo": "Plat No",
+  "plateImagePath": "Gambar Plat No",
+  "imagePath": "Gambar Pelanggaran",
+  "Action": "Action",
+  "details": "Details",
+  "download_image": "Unduh gambar"
+}

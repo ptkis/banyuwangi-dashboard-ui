@@ -1,0 +1,126 @@
+<app-chart-panel *transloco="let t; read: 'vehiclesearch'">
+  <ng-template #customTitle>
+    <div class="title">
+      <button
+        data-testid="btn-close"
+        (click)="dialogRef.close()"
+        mat-icon-button
+      >
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      {{ t("details") }} {{ data.plateNo }}
+    </div>
+  </ng-template>
+
+  <ng-template #contentBody>
+    <div class="content-container p-3">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("passTime") }}
+          </div>
+          <div class="text-value">
+            {{ data.passTime }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("crossingName") }}
+          </div>
+          <div class="text-value">
+            {{ data.crossingName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("directionName") }}
+          </div>
+          <div class="text-value">
+            {{ data.directionName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("plateColorName") }}
+          </div>
+          <div class="text-value">
+            {{ data.plateColorName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("vehicleTypeName") }}
+          </div>
+          <div class="text-value">
+            {{ data.vehicleTypeName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("vehicleModelName") }}
+          </div>
+          <div class="text-value">
+            {{ data.vehicleModelName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("vehicleColorName") }}
+          </div>
+          <div class="text-value">
+            {{ data.vehicleColorName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("violativeActionName") }}
+          </div>
+          <div class="text-value">
+            {{ data.violativeActionName }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-label">
+            {{ t("plateNo") }}
+          </div>
+          <div class="text-value">
+            {{ data.plateNo }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">
+          <div class="text-label">
+            {{ t("plateImagePath") }}
+          </div>
+          <div class="text-value">
+            <img [src]="data.plateImagePath" [alt]="t('plateImagePath')" />
+          </div>
+        </div>
+      </div>
+
+      <h3>{{ t("imagePath") }}</h3>
+      <div class="row">
+        <ng-container *ngFor="let item of ['', '2', '3', '4', '5', '6', '7']">
+          <div
+            class="col col-image"
+            *ngIf="$any(data)['imagePath' + item] as src"
+          >
+            <a
+              [href]="src"
+              [download]="data.passTime + '_' + data.plateNo + '.jpg'"
+              target="_blank"
+            >
+              <span class="item-icon material-icons-outlined"
+                >file_download</span
+              >
+              {{ t("download_image") }}
+            </a>
+            <img [src]="src" [alt]="t('imagePath') + item" />
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+</app-chart-panel>
