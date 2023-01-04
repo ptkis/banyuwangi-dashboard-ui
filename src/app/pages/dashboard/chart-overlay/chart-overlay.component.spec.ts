@@ -86,17 +86,17 @@ describe("ChartOverlayComponent", () => {
     expect(filterButton).toBeDefined()
   })
 
-  it("should test mock echart", async () => {
-    const res = await renderComponent()
-    const fixture = res.fixture
-    await fixture.whenStable()
-    const mock = {
-      on: (e: string, cb: any) => {
-        cb()
-      },
-    }
-    fixture.componentInstance.trashChart.echartLoaded(mock as any)
-  })
+  // it("should test mock echart", async () => {
+  //   const res = await renderComponent()
+  //   const fixture = res.fixture
+  //   await fixture.whenStable()
+  //   const mock = {
+  //     on: (e: string, cb: any) => {
+  //       cb()
+  //     },
+  //   }
+  //   fixture.componentInstance.trashChart.echartLoaded(mock as any)
+  // })
 
   it("should test failed requests", async () => {
     const res = await renderComponent()

@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { FormsModule } from "@angular/forms"
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 import { NgxEchartsModule } from "ngx-echarts"
+import { ToastrModule } from "ngx-toastr"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
@@ -22,6 +23,7 @@ export const chartImportedModules = [
   dashboardMaterialModules,
   getTranslocoModule(),
   ListFilterComponent,
+  ToastrModule.forRoot(),
 ]
 
 export const chartProviders = [DatePipe, chartHttpMockProviders]
