@@ -2,7 +2,8 @@ import { Component, Input, NgZone, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
 import { EChartsType } from "echarts"
 import { Observable } from "rxjs"
-import { ChartResponse, DashboardService } from "../../dashboard.service"
+import { CCTVListService } from "src/app/pages/dialog/cctvlist/cctvlist.service"
+import { ChartResponse } from "../../dashboard.service"
 
 @Component({
   selector: "app-line-chart",
@@ -25,7 +26,11 @@ export class LineChartComponent {
 
   echartsInstance!: EChartsType
 
-  constructor(private router: Router, private zone: NgZone) {}
+  constructor(
+    private router: Router,
+    private zone: NgZone,
+    private cctvService: CCTVListService
+  ) {}
 
   echartLoaded(ec: EChartsType) {
     this.echartsInstance = ec
@@ -69,6 +74,9 @@ export class LineChartComponent {
         )
       })
     } else if (type === "download") {
+      this.cctvService.downloadExcel(1, 5000, {
+        type: this.chartType,
+      })
     }
   }
 

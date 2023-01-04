@@ -30,8 +30,11 @@ export interface SnapshotCount {
   snapshotImageId: string
   snapshotCameraName: string
   snapshotCameraLocation: string
+  snapshotCameraLatitude?: string
+  snapshotCameraLongitude?: string
   type: string
   value: number
+  maxValue?: number
   id: string
 }
 

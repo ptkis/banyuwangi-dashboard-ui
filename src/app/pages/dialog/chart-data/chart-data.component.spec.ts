@@ -84,6 +84,42 @@ describe("ChartDataComponent", () => {
 
     await user.click(btnSearch)
 
+    const btnExport = screen.getByTestId("btn-export")
+
+    await user.click(btnExport)
+
+    await fixture.whenStable()
+  })
+
+  it("should read query params with empty type", async () => {
+    const { fixture } = await renderComponent([
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          queryParamMap: of({
+            get: (key: string) => {
+              const data = {
+                startDate: "2022-12-22",
+                endDate: "2022-12-22",
+                camera: "x",
+              } as any
+              return data[key]
+            },
+          }),
+        },
+      },
+    ])
+    await fixture.whenStable()
+
+    const btnSearch = screen.getByTestId("btn-search-submit")
+    const user = userEvent.setup()
+
+    await user.click(btnSearch)
+
+    const btnExport = screen.getByTestId("btn-export")
+
+    await user.click(btnExport)
+
     await fixture.whenStable()
   })
 })

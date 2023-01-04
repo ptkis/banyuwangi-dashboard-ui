@@ -90,3 +90,12 @@ jest.mock("maptalks.three", () => {
     ThreeLayer: mockThreeLayer,
   }
 })
+
+jest.mock("xlsx", () => {
+  const original = jest.requireActual("xlsx")
+
+  return {
+    ...original,
+    writeFile: (data: any, filename: any, opts: any) => {},
+  }
+})

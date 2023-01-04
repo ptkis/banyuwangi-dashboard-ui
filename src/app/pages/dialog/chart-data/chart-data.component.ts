@@ -185,9 +185,11 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
 
   exportData(e: Event) {
     e.preventDefault()
+    const data = this.buildParams()
+    this._cctvService.downloadExcel(1, 5000, data)
   }
 
-  search() {
+  buildParams() {
     const { start, end, camera, type } = this.searchForm.value
     const data: Record<string, string> = {}
     if (start && end) {
@@ -200,6 +202,12 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     if (type) {
       data["type"] = type
     }
+
+    return data
+  }
+
+  search() {
+    const data = this.buildParams()
 
     this.router.navigate([], {
       relativeTo: this.route,
