@@ -10,6 +10,7 @@ import { MatIconModule } from "@angular/material/icon"
 import { MatInputModule } from "@angular/material/input"
 import { MatPaginatorModule } from "@angular/material/paginator"
 import { MatSelectModule } from "@angular/material/select"
+import { MatSortModule } from "@angular/material/sort"
 import { MatTableModule } from "@angular/material/table"
 import { ActivatedRoute } from "@angular/router"
 import { RouterTestingModule } from "@angular/router/testing"
@@ -38,6 +39,7 @@ describe("ChartDataComponent", () => {
         DialogModule,
         MatTableModule,
         MatPaginatorModule,
+        MatSortModule,
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,

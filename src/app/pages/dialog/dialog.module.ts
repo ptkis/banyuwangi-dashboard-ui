@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatPaginatorModule } from "@angular/material/paginator"
+import { MatSortModule } from "@angular/material/sort"
 import { CCTVFormComponent } from "./cctvform/cctvform.component"
 import { CCTVListComponent } from "./cctvlist/cctvlist.component"
 import { MatSelectModule } from "@angular/material/select"
@@ -95,6 +96,7 @@ export const MY_FORMATS = {
     CDKDialogModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,

@@ -26,7 +26,7 @@
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
-      <div class="flex-shrink-1 text-right d-flex align-items-center">
+      <div class="flex-shrink-1 text-end d-flex align-items-center">
         <mat-form-field class="custom-form-field2" appearance="fill">
           <mat-label>{{ t("type") }}</mat-label>
           <mat-select formControlName="type">
@@ -84,6 +84,9 @@
             <table
               mat-table
               matSort
+              [matSortActive]="sort_mat"
+              [matSortDirection]="direction_mat"
+              (matSortChange)="sortChange($event)"
               [dataSource]="dataSource"
               class="mat-elevation-z8 w-100"
             >
@@ -100,8 +103,13 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="timestamp" sticky mat-sort-header>
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+              <ng-container matColumnDef="timestamp">
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("timestamp") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -109,8 +117,13 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="cameraName" sticky mat-sort-header>
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+              <ng-container matColumnDef="cameraName">
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("Name") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -118,8 +131,13 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="location" mat-sort-header>
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+              <ng-container matColumnDef="location">
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("Location") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -128,7 +146,12 @@
               </ng-container>
 
               <ng-container matColumnDef="latitude">
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("Latitude") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -137,7 +160,12 @@
               </ng-container>
 
               <ng-container matColumnDef="longitude">
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("Longitude") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -146,7 +174,12 @@
               </ng-container>
 
               <ng-container matColumnDef="type">
-                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                <th
+                  class="gradient-bg-1"
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                >
                   {{ t("type") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
@@ -154,10 +187,11 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="maxValue" mat-sort-header>
+              <ng-container matColumnDef="maxValue">
                 <th
-                  class="gradient-bg-1 text-right"
+                  class="gradient-bg-1 text-end"
                   mat-header-cell
+                  mat-sort-header
                   *matHeaderCellDef
                 >
                   {{
@@ -169,16 +203,17 @@
                 <td
                   mat-cell
                   *matCellDef="let row; let i = index"
-                  class="text-right"
+                  class="text-end"
                 >
                   {{ row["maxValue"] }}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="value" mat-sort-header>
+              <ng-container matColumnDef="value">
                 <th
-                  class="gradient-bg-1 text-right"
+                  class="gradient-bg-1 text-end"
                   mat-header-cell
+                  mat-sort-header
                   *matHeaderCellDef
                 >
                   {{
@@ -190,7 +225,7 @@
                 <td
                   mat-cell
                   *matCellDef="let row; let i = index"
-                  class="text-right"
+                  class="text-end"
                 >
                   {{ row["value"] }}
                 </td>
