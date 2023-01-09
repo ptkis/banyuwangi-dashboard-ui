@@ -10,6 +10,7 @@ import {
 } from "@angular/core"
 import { FormControl, FormGroup } from "@angular/forms"
 import { PageEvent } from "@angular/material/paginator"
+import { Sort, SortDirection } from "@angular/material/sort"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { format } from "date-fns/esm"
@@ -64,12 +65,25 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     "value",
   ]
 
+  fieldMap: Record<string, string> = {
+    timestamp: "SNAPSHOT_CREATED",
+    cameraName: "SNAPSHOT_CAMERA_NAME",
+    location: "SNAPSHOT_CAMERA_LOCATION",
+    latitude: "SNAPSHOT_CAMERA_LATITUDE",
+    longitude: "SNAPSHOT_CAMERA_LONGITUDE",
+    type: "TYPE",
+    maxValue: "MAXVALUE",
+    value: "VALUE",
+  }
+
   type: string | null = null
   camera: string | null = null
   startDate = format(new Date(), DATE_FORMAT)
   endDate = format(new Date(), DATE_FORMAT)
   direction = "DESC"
   sort = "SNAPSHOT_CREATED"
+  sort_mat: string = "timestamp"
+  direction_mat: SortDirection = "desc"
 
   searchForm = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -171,6 +185,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
           this.allCameras = [
             ...new Set(this.dataSource.map((d) => d.snapshotCameraName)),
           ]
+          this.setMatSortData()
         },
         error: (err: HttpErrorResponse) => {
           const message = err.error?.message || "Failed to load data"
@@ -213,5 +228,19 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
       relativeTo: this.route,
       queryParams: data,
     })
+  }
+
+  sortChange(event: Sort) {
+    this.direction = event.direction.toUpperCase()
+    this.sort = this.fieldMap[event.active]
+    this.getChartDataList(1, this.paginator.length)
+  }
+
+  setMatSortData() {
+    const field = Object.keys(this.fieldMap).find(
+      (key) => this.fieldMap[key] === this.sort
+    )
+    this.sort_mat = field || ""
+    this.direction_mat = this.direction.toLowerCase() === "asc" ? "asc" : "desc"
   }
 }
