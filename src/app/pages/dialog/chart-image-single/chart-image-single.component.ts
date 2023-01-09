@@ -78,8 +78,10 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
       const data = param.get("data")
       const imageSrc = param.get("imageSrc")
       const snapshotid = param.get("snapshotid")
-      const type = param.get("type")?.toUpperCase()
+      const type = param.get("type")
       const value = param.get("value")
+
+      this.type = type || this.type
       if (data && imageSrc) {
         this.loadData(JSON.parse(data), imageSrc)
         this.useImageCanvas = false
@@ -119,7 +121,7 @@ export class ChartImageSingleComponent implements AfterViewInit, OnInit {
   loadDataFromSnapshot(snapshotid: string, type: string, value: string) {
     this.isLoading = true
     this.dashboardService
-      .getDataBySnapshotId(snapshotid, type, value)
+      .getDataBySnapshotId(snapshotid, type?.toUpperCase(), value)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((resp) => {
         this.imageDataCanvas = resp.data
