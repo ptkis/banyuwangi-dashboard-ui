@@ -1,0 +1,17 @@
+<ng-container *ngIf="isLoading; else notLoading"> Loading... </ng-container>
+<ng-template #notLoading>
+  <ng-container *ngIf="isError; else notError"> Error </ng-container>
+
+  <ng-template #notError>
+    <img [src]="picData" alt="image" />
+    <div
+      class="marker"
+      [ngStyle]="{
+        left: (+data?.pointX! || 0) * 100 + '%',
+        top: (+data?.pointY! || 0) * 100 + '%',
+        width: (+data?.width! || 0) * 100 + '%',
+        height: (+data?.height! || 0) * 100 + '%'
+      }"
+    ></div>
+  </ng-template>
+</ng-template>
