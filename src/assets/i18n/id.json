@@ -5,5 +5,6 @@
     "message": "Do you want to show notification?",
     "btnCancel": "Later",
     "btnConfirm": "Allow"
-  }
+  },
+  "error_network": "Gagal mengambil data! ({{message}})"
 }

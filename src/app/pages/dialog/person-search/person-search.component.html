@@ -58,7 +58,14 @@
         </div>
         <ng-template #notLoading>
           <div class="p-2" *ngIf="!personDataList?.length">
-            {{ t("no_data_found") }}
+            <ng-container *ngIf="!errorMessage; else errorTmp">
+              {{ t("no_data_found") }}
+            </ng-container>
+            <ng-template #errorTmp>
+              <span class="text-danger">{{
+                "error_network" | transloco: { message: errorMessage }
+              }}</span>
+            </ng-template>
           </div>
           <div
             class="content-container p-3"

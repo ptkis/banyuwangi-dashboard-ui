@@ -1,4 +1,5 @@
 import { Dialog, DialogRef } from "@angular/cdk/dialog"
+import { HttpErrorResponse } from "@angular/common/http"
 import {
   AfterViewInit,
   Component,
@@ -55,6 +56,7 @@ export class PersonSearchComponent implements AfterViewInit {
   hcpImages!: QueryList<HcpPictureComponent>
 
   isLoading = false
+  errorMessage = ""
   dialogRef!: DialogRef<string>
 
   personDataList: PersonData[] = []
@@ -126,8 +128,13 @@ export class PersonSearchComponent implements AfterViewInit {
     this.hcpService
       .personSearch(params)
       .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((resp) => {
-        this.personDataList = resp.data.list
+      .subscribe({
+        next: (resp) => {
+          this.personDataList = resp.data.list
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.statusText
+        },
       })
   }
 
@@ -149,9 +156,11 @@ export class PersonSearchComponent implements AfterViewInit {
       data["cameraIndexCode"] = cameraIndexCode
     }
 
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: data,
-    })
+    this.router
+      .navigate([], {
+        relativeTo: this.route,
+        queryParams: data,
+      })
+      .then((a) => console.log("a"))
   }
 }
