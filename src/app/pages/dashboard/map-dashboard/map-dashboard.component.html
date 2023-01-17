@@ -5,9 +5,20 @@
     *ngIf="showButtons"
   >
     <div class="d-flex flex-column btn-group">
-      <!-- <button class="btn-oval" (click)="openDialogOrang()">
+      <button
+        class="btn-oval"
+        data-testid="btn-orang"
+        [routerLink]="[
+          '',
+          {
+            outlets: {
+              dialog: ['person']
+            }
+          }
+        ]"
+      >
         Pencarian Orang
-      </button> -->
+      </button>
       <button
         class="btn-oval"
         data-testid="btn-kendaraan"

@@ -71,6 +71,29 @@ export interface NonHCPCCTVResponse<T> {
   data: T
 }
 
+export interface PersonData {
+  cameraID: string
+  captureTime: string
+  picUrl: string
+  similarity: string
+  temperatureStatus: number
+  temperature: string
+  maskStatus: number
+  ageGroup: number
+  genderType: number
+  isGlass: number
+  isSmile: number
+  pointX: string
+  width: string
+  pointY: string
+  height: string
+}
+
+export interface PersonResponse {
+  total: number
+  list: PersonData[]
+}
+
 @Injectable({
   providedIn: "root",
 })
@@ -82,7 +105,7 @@ export class HCPService extends HIKService {
     super(http, appKey, appSecret, baseUrl)
   }
 
-  getCameraList(pageNo = 1, pageSize = 40) {
+  getCameraList(pageNo = 1, pageSize = 40, getencodedDevice = true) {
     return this.postData<HikCameraList<HCPHikCameraData>>(
       "/artemis/api/resource/v1/cameras",
       {
@@ -92,31 +115,34 @@ export class HCPService extends HIKService {
         deviceType: "encodeDevice",
       }
     ).pipe(
-      switchMap((resp) =>
-        forkJoin([
-          ...resp.data.list.map((cctv) =>
-            this.getEncodeDeiviceInfo(cctv.encodeDevIndexCode)
-          ),
-        ]).pipe(
-          map((encodeResp) => ({
-            ...resp,
-            data: {
-              ...resp.data,
-              list: [
-                ...resp.data.list.map((cctv) => {
-                  return {
-                    ...cctv,
-                    encodeDeviceData: encodeResp.find(
-                      (d) =>
-                        d.data.encodeDevIndexCode === cctv.encodeDevIndexCode
-                    ),
-                  }
-                }),
-              ],
-            },
-          }))
-        )
-      )
+      switchMap((resp) => {
+        if (getencodedDevice) {
+          forkJoin([
+            ...resp.data.list.map((cctv) =>
+              this.getEncodeDeiviceInfo(cctv.encodeDevIndexCode)
+            ),
+          ]).pipe(
+            map((encodeResp) => ({
+              ...resp,
+              data: {
+                ...resp.data,
+                list: [
+                  ...resp.data.list.map((cctv) => {
+                    return {
+                      ...cctv,
+                      encodeDeviceData: encodeResp.find(
+                        (d) =>
+                          d.data.encodeDevIndexCode === cctv.encodeDevIndexCode
+                      ),
+                    }
+                  }),
+                ],
+              },
+            }))
+          )
+        }
+        return of(resp)
+      })
     )
   }
 
@@ -227,6 +253,25 @@ export class HCPService extends HIKService {
           return result
         })
       })
+    )
+  }
+
+  personSearch(params: Record<string, any>) {
+    return this.postData<PersonResponse>(
+      "/artemis/api/frs/v1/intelligentAnalysis/searchPerson",
+      {
+        ...params,
+        genderType: "1",
+      }
+    )
+  }
+
+  getPic(url: string) {
+    return this.postData<{ picData: string }>(
+      "/artemis/api/frs/v1/intelligentAnalysis/getPic",
+      {
+        url,
+      }
     )
   }
 }

@@ -35,6 +35,7 @@ import { id } from "date-fns/locale"
 import { MAT_DATE_LOCALE } from "@angular/material/core"
 import { VehicleSearchComponent } from "./vehicle-search/vehicle-search.component"
 import { VehicleDetailsComponent } from "./vehicle-search/vehicle-details/vehicle-details.component"
+import { PersonSearchComponent } from "./person-search/person-search.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -62,6 +63,11 @@ export const dialogRoutes: Routes = [
     component: VehicleSearchComponent,
     // canActivate: [AuthGuard],
   },
+  {
+    path: "person",
+    component: PersonSearchComponent,
+    // canActivate: [AuthGuard],
+  },
 ]
 
 export const MY_FORMATS = {
@@ -86,6 +92,7 @@ export const MY_FORMATS = {
     ChartDataComponent,
     VehicleSearchComponent,
     VehicleDetailsComponent,
+    PersonSearchComponent,
   ],
   imports: [
     CommonModule,

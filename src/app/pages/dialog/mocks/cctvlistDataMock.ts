@@ -7,6 +7,8 @@ import {
 import * as cctvListResponse from "./cctvListResponse.json"
 import * as hcpResponse from "./hcpResponse.json"
 import * as hcmVehicle from "./hcmVehicle.json"
+import * as hcpSearchPerson from "./searchPerson.json"
+import * as hcpGetPic from "./getPic.json"
 
 export const cctvMockUrls: IMockURLStructure[] = [
   {
@@ -28,6 +30,14 @@ export const cctvMockUrls: IMockURLStructure[] = [
   {
     urlRegex: /artemis\/api\/resource\/v1\/cameras/,
     json: hcpResponse,
+  },
+  {
+    urlRegex: /artemis\/api\/frs\/v1\/intelligentAnalysis\/searchPerson/,
+    json: hcpSearchPerson,
+  },
+  {
+    urlRegex: /artemis\/api\/frs\/v1\/intelligentAnalysis\/getPic/,
+    json: hcpGetPic,
   },
   {
     urlRegex: /v1\/camera\/bulk/i,

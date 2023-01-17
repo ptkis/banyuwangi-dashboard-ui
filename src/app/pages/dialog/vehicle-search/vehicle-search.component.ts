@@ -13,12 +13,11 @@ import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { format, subDays } from "date-fns"
 import { ToastrService } from "ngx-toastr"
+import { DATE_FORMAT } from "src/app/shared/constants/app.constants"
 import { ViolationItem } from "src/app/shared/services/hcm.model"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { ModalService } from "src/app/shared/services/modal.service"
 import { VehicleDetailsComponent } from "./vehicle-details/vehicle-details.component"
-
-const DATE_FORMAT = "yyyy-MM-dd"
 
 @Component({
   selector: "app-vehicle-search",

@@ -1,0 +1,89 @@
+<ng-template #content>
+  <ng-container *transloco="let t; read: 'personsearch'">
+    <button data-testid="btn-close" (click)="dialogRef.close()" mat-icon-button>
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <form
+      [formGroup]="searchForm"
+      class="toolbar-outside d-flex w-100"
+      (ngSubmit)="search()"
+    >
+      <div class="flex-grow-1">
+        <mat-form-field class="custom-form-field2 daterange" appearance="fill">
+          <mat-label>{{ t("daterange") }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="flex-shrink-1 text-right d-flex align-items-center">
+        <!-- <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
+          <mat-label>{{ t("cameraIndexCode") }}</mat-label>
+          <input
+            matInput
+            data-testid="camerainput"
+            placeholder="label"
+            formControlName="cameraIndexCode"
+          />
+        </mat-form-field> -->
+        <button
+          mat-raised-button
+          data-testid="btn-search-submit"
+          class="btn btn-primary"
+        >
+          {{ t("search") }}
+        </button>
+      </div>
+    </form>
+    <app-chart-panel class="pencarian-orang">
+      <ng-template #customTitle>
+        <div class="title">
+          {{ t("title") }}
+        </div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="loader-component" *ngIf="isLoading; else notLoading">
+          <mat-spinner></mat-spinner>
+        </div>
+        <ng-template #notLoading>
+          <div class="p-2" *ngIf="!personDataList?.length">
+            <ng-container *ngIf="!errorMessage; else errorTmp">
+              {{ t("no_data_found") }}
+            </ng-container>
+            <ng-template #errorTmp>
+              <span class="text-danger">{{
+                "error_network" | transloco: { message: errorMessage }
+              }}</span>
+            </ng-template>
+          </div>
+          <div
+            class="content-container p-3"
+            waIntersectionObserver
+            waIntersectionThreshold="0.5"
+          >
+            <ng-container *ngFor="let item of personDataList; let idx = index">
+              <div (waIntersectionObservee)="onIntersection($event, picture)">
+                <app-hcp-picture
+                  #picture
+                  [data]="item"
+                  [autoload]="idx < 20"
+                ></app-hcp-picture>
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
+      </ng-template>
+    </app-chart-panel>
+  </ng-container>
+</ng-template>
