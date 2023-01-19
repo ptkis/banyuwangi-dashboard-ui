@@ -12,7 +12,7 @@ export const environment = {
     hcp: {
       appKey: "21078063",
       appSecret: "VLb5HhLwF1ZSRYEQCPWz",
-      baseUrl: "http://192.168.253.83:9016",
+      baseUrl: "https://192.168.253.83:443",
     },
   },
   serverBaseUrl: "https://api.smartbanyuwangi.dasbor.id",
