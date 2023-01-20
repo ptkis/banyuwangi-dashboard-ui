@@ -40,7 +40,7 @@
     "@ngneat/transloco": "^4.2.1",
     "@ngneat/until-destroy": "^9.2.2",
     "@videogular/ngx-videogular": "^6.0.0",
-    "bootstrap": "^5.2.2",
+    "bootstrap": "^5.2.3",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.29.3",
     "echarts": "^5.4.0",
