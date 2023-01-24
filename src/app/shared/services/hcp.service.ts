@@ -12,6 +12,7 @@ import {
 } from "rxjs"
 
 import { environment } from "src/environments/environment"
+import { EnumHCPGenderType } from "../constants/app.constants"
 import {
   CCTVData,
   HikCameraList,
@@ -260,8 +261,8 @@ export class HCPService extends HIKService {
     return this.postData<PersonResponse>(
       "/artemis/api/frs/v1/intelligentAnalysis/searchPerson",
       {
+        genderType: EnumHCPGenderType.ALL,
         ...params,
-        genderType: "1",
       }
     )
   }

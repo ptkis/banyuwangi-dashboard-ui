@@ -209,3 +209,10 @@ export const HCP_ALL_CAMERA_ID = [
   "1166",
   "1164",
 ]
+
+export enum EnumHCPGenderType {
+  ALL = "0",
+  MALE = "1",
+  FEMALE = "2",
+  UNKNOWN = "3",
+}

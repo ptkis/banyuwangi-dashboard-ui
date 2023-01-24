@@ -17,26 +17,17 @@
       &::after {
         content: counter(css-counter);
         border-radius: 50%;
-        width: 40px;
-        background: black;
-        opacity: 0.5;
+        width: 27px;
+        height: 27px;
+        background: rgba(0, 0, 0, 0.5);
         position: absolute;
-        top: 30px;
+        top: 10px;
         right: 10px;
         z-index: 6;
-        height: 40px;
         color: white;
         display: grid;
         place-content: center;
-        font-size: 21px;
-        font-weight: bold;
-        visibility: hidden;
-      }
-
-      &:hover {
-        &::after {
-          visibility: visible;
-        }
+        font-size: 12px;
       }
 
       img {
@@ -59,5 +50,58 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.pencarian-orang-container {
+  position: relative;
+
+  [data-testid="btn-close"] {
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn {
+    width: 101px;
+    border: 1px solid #23639e;
+  }
+
+  .custom-form-field2 {
+    min-width: min(242px, 100%);
+  }
+
+  form {
+    margin-bottom: 10px;
+
+    .form-image-container {
+      width: 191px;
+      height: 150px;
+      background: rgba(35, 99, 158, 0.36);
+      margin-right: 16px;
+
+      mat-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      input {
+        display: none;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .image-info {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: white;
   }
 }

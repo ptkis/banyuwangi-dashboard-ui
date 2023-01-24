@@ -15,14 +15,17 @@ import { MatTableModule } from "@angular/material/table"
 import { RouterTestingModule } from "@angular/router/testing"
 import { IntersectionObserverModule } from "@ng-web-apis/intersection-observer"
 import { render, screen } from "@testing-library/angular"
+import { fireEvent, waitFor } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { ToastrModule } from "ngx-toastr"
 import { throwError } from "rxjs"
+import { ReusableImageCanvasComponent } from "src/app/shared/components/reusable-image-canvas/reusable-image-canvas.component"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
 import { DialogModule } from "../dialog.module"
 import { cctvHttpMockProviders } from "../mocks/cctvlistDataMock"
+import { HcpPictureComponent } from "./hcp-picture/hcp-picture.component"
 
 import { PersonSearchComponent } from "./person-search.component"
 
@@ -31,7 +34,7 @@ jest.mock("@ng-web-apis/intersection-observer")
 describe("PersonSearchComponent", () => {
   const renderComponent = async (providers: any[] = []) => {
     return await render(PersonSearchComponent, {
-      declarations: [PersonSearchComponent],
+      declarations: [PersonSearchComponent, HcpPictureComponent],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
@@ -53,6 +56,7 @@ describe("PersonSearchComponent", () => {
         MatDatepickerModule,
         MatNativeDateModule,
         IntersectionObserverModule,
+        ReusableImageCanvasComponent,
       ],
       providers: [cctvHttpMockProviders, ...providers],
     })
@@ -93,6 +97,76 @@ describe("PersonSearchComponent", () => {
     const user = userEvent.setup()
     const btnSearch = screen.getByTestId("btn-search-submit")
     await user.click(btnSearch)
+    await fixture.whenStable()
+  })
+
+  it("should read image", async () => {
+    const { fixture } = await renderComponent()
+    await fixture.whenStable()
+
+    const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" })
+
+    expect(fixture.componentInstance.imageSrc).toBe(null)
+
+    const uploader = screen.getByTestId("uploader")
+    await waitFor(() =>
+      fireEvent.change(uploader, {
+        target: { files: [file] },
+      })
+    )
+
+    const imageSelect = screen.getByTestId("image-select")
+    await waitFor(() => fireEvent.dragOver(imageSelect, {}))
+    await waitFor(() =>
+      fireEvent.drop(imageSelect, {
+        dataTransfer: { files: [file] },
+      })
+    )
+
+    await fixture.whenStable()
+    await waitFor(
+      () => expect(fixture.componentInstance.imageData?.base64).toBeDefined(),
+      {
+        timeout: 2000,
+      }
+    )
+
+    const user = userEvent.setup()
+    const btnSearch = screen.getByTestId("btn-search-submit")
+    await user.click(btnSearch)
+
+    const btnReset = screen.getByTestId("btn-search-clear")
+    await user.click(btnReset)
+
+    await fixture.whenStable()
+
+    expect(fixture.componentInstance.imageData?.base64).toBeUndefined()
+  })
+
+  it("should download image", async () => {
+    // Mock Image onload
+    Object.defineProperty(Image.prototype, "onload", {
+      get: function () {
+        return this._onload
+      },
+      set: function (fn) {
+        this._onload = fn
+
+        setTimeout(() => {
+          fn()
+        })
+      },
+    })
+    const { fixture } = await renderComponent()
+    await fixture.whenStable()
+
+    const checkbox = screen.getAllByTestId("image-checkbox")
+    const user = userEvent.setup()
+    await user.click(checkbox[0].querySelector("input")!)
+
+    const btndownload = screen.getByTestId("btn-download")
+    await user.click(btndownload)
+
     await fixture.whenStable()
   })
 })
