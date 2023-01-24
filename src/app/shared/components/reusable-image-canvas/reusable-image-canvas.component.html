@@ -1,0 +1,16 @@
+<div class="image-canvas-container">
+  <canvas #bgCanvas [width]="canvasWidth" [height]="canvasHeight"></canvas>
+  <canvas
+    id="rectCanvas"
+    #canvas
+    [width]="canvasWidth"
+    [height]="canvasHeight"
+  ></canvas>
+
+  <mat-checkbox
+    *ngIf="showCheckbox"
+    [(ngModel)]="selected"
+    data-testid="image-checkbox"
+  ></mat-checkbox>
+  <ng-content></ng-content>
+</div>

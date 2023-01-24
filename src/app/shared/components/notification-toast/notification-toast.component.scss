@@ -23,6 +23,13 @@
   color: #333 !important;
   border-radius: 16px;
 
+  .close-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+  }
+
   .top-container {
     padding: 12px;
     display: flex;

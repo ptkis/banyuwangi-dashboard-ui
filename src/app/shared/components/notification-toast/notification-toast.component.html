@@ -3,6 +3,12 @@
   (click)="action($event)"
   data-testid="toast-container"
 >
+  <span
+    class="material-icons-outlined close-btn"
+    (click)="remove(); $event.stopPropagation()"
+  >
+    close
+  </span>
   <div class="top-container">
     <img *ngIf="data?.image_logo" [src]="data?.image_logo" alt="Logo" />
     <div class="text-container">

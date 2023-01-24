@@ -1,0 +1,10 @@
+<ng-container *ngIf="isLoading; else notLoading"> Loading... </ng-container>
+<ng-template #notLoading>
+  <ng-container *ngIf="isError; else notError"> Error </ng-container>
+
+  <ng-template #notError>
+    <app-reusable-image-canvas (imageLoaded)="imageLoaded()">
+      <ng-content></ng-content>
+    </app-reusable-image-canvas>
+  </ng-template>
+</ng-template>
