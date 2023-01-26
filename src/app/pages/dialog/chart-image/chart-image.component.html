@@ -28,6 +28,7 @@
         <a
           data-testid="btn-filter"
           [disabled]="isLoading"
+          [ngClass]="{ 'has-badge': isFilterActive }"
           mat-button
           (click)="filterDrawer.toggle()"
         >
@@ -42,20 +43,21 @@
         <mat-drawer #filter position="end" mode="side">
           <div class="filter-container p-3">
             <div class="list-filter">
-              <h3>By Camera</h3>
-              <app-list-filter
-                #listFilterCamera
-                [items]="allCameras"
-                [selected]="selectedCameras"
-                (click)="$event.stopPropagation()"
-              ></app-list-filter>
-            </div>
-            <div class="list-filter">
               <h3>By Location</h3>
               <app-list-filter
                 #listFilterLocation
                 [items]="allLocations"
                 [selected]="selectedLocations"
+                (click)="$event.stopPropagation()"
+                (selectionChanged)="filterLocation($event)"
+              ></app-list-filter>
+            </div>
+            <div class="list-filter">
+              <h3>By Camera</h3>
+              <app-list-filter
+                #listFilterCamera
+                [items]="allCameras"
+                [selected]="selectedCameras"
                 (click)="$event.stopPropagation()"
               ></app-list-filter>
             </div>
@@ -73,6 +75,7 @@
                 data-testid="btn-form-submit"
                 (click)="applyFilter()"
                 class="btn btn-primary"
+                [disabled]="!listFilterCamera.selectedItems.selected.length"
               >
                 Save
               </button>
@@ -86,11 +89,11 @@
             waIntersectionThreshold="0.5"
           >
             <app-image-canvas
-              *ngFor="let item of imageData"
+              *ngFor="let item of displayedImageData"
               [chartImageContent]="item"
             ></app-image-canvas>
             <div
-              *ngIf="!paginator.last"
+              *ngIf="!paginator.last && !isFilterActive"
               class="load-more"
               (waIntersectionObservee)="onIntersection($event)"
             >
