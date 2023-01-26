@@ -70,3 +70,20 @@
     }
   }
 }
+
+[data-testid="btn-filter"] {
+  position: relative;
+
+  &.has-badge {
+    &::after {
+      content: " ";
+      background-color: red;
+      position: absolute;
+      top: 10px;
+      left: 31px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+  }
+}

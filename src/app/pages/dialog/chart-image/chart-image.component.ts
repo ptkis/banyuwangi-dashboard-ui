@@ -40,6 +40,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   isLoading = false
   dialogRef!: DialogRef<string>
   imageData: ChartImageContent<Annotation>[] = []
+  displayedImageData: ChartImageContent<Annotation>[] = []
   paginator = {
     index: 0,
     length: 10,
@@ -50,9 +51,15 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
 
   allLocations: string[] = []
   selectedLocations: string[] = []
+  selectedFilterLocations: string[] = []
 
   allCameras: string[] = []
   selectedCameras: string[] = []
+  selectedFilterCameras: string[] = []
+
+  allLocationNested: Record<string, string[]> = {}
+
+  isFilterActive = false
 
   constructor(
     public dialog: Dialog,
@@ -105,9 +112,21 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   }
 
   initializeFilter(data: typeof this.imageData) {
-    this.allLocations = [...new Set(data?.map((d) => d.location) || [])]
+    this.displayedImageData = data
+    const tmp: typeof this.allLocationNested = {}
+    for (const item of data) {
+      tmp[item.location] = [
+        ...new Set(
+          data
+            .filter((d1) => d1.location === item.location)
+            .map((d2) => d2.cameraName)
+        ),
+      ]
+    }
+    this.allLocationNested = tmp
+    this.allLocations = Object.keys(tmp)
     this.selectedLocations = this.allLocations
-    this.allCameras = [...new Set(data?.map((d) => d.cameraName) || [])]
+    this.allCameras = this.getCameras(this.selectedLocations)
     this.selectedCameras = this.allCameras
   }
 
@@ -121,11 +140,36 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   applyFilter() {
     const filterCamera = this.listFilterCamera.selectedItems.selected
     const filterLocation = this.listFilterLocation.selectedItems.selected
-    console.log({
-      filterCamera,
-      filterLocation,
-    })
+    this.selectedFilterLocations = filterLocation
+    this.selectedFilterCameras = filterCamera
+    this.displayedImageData = this.imageData.filter(
+      (d) =>
+        filterLocation.includes(d.location) &&
+        filterCamera.includes(d.cameraName)
+    )
     this.filterDrawer.close()
+    if (
+      filterLocation.length < this.allLocations.length ||
+      filterCamera.length < this.allCameras.length
+    ) {
+      this.isFilterActive = true
+    } else {
+      this.isFilterActive = false
+    }
+  }
+
+  getCameras(selectedLocations: string[]) {
+    const arr = Object.keys(this.allLocationNested)
+      .filter((key) => selectedLocations.includes(key))
+      .map((key) => this.allLocationNested[key])
+    return arr.reduce((acc, curVal) => {
+      return acc.concat(curVal)
+    }, [])
+  }
+
+  filterLocation(selectedLocations: string[]) {
+    this.allCameras = this.getCameras(selectedLocations)
+    this.selectedCameras = this.allCameras
   }
 
   downloadImages() {
