@@ -339,7 +339,7 @@ export class MapDashboardComponent implements AfterViewInit {
 
   showError(message: string, title?: string) {
     return this.toastr.error(message, title || "Error", {
-      disableTimeOut: true,
+      timeOut: environment.toast.errorTimeout,
     })
   }
 

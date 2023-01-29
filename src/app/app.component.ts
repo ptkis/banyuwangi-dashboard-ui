@@ -6,6 +6,7 @@ import { TranslocoService } from "@ngneat/transloco"
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy"
 import { KeycloakEventType, KeycloakService } from "keycloak-angular"
 import { take } from "rxjs"
+import { environment } from "src/environments/environment"
 import { AppService } from "./app.service"
 import { ModalService } from "./shared/services/modal.service"
 
@@ -107,7 +108,7 @@ export class AppComponent implements OnInit {
             data: message.data,
           },
           {
-            disableTimeOut: true,
+            timeOut: environment.toast.peringatanTimeout,
           }
         )
 
