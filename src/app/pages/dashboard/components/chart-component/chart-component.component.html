@@ -7,6 +7,7 @@
         mat-icon-button
         class="panel_button"
         [matMenuTriggerFor]="filterMenu"
+        [disabled]="isLoading"
       >
         <mat-icon>menu</mat-icon>
       </button>
@@ -15,6 +16,10 @@
           Location ({{ selectedLocations.selected.length }}/{{
             allLocations.length
           }})
+        </button>
+        <button mat-menu-item [matMenuTriggerFor]="chartDetail">
+          <mat-icon>show_chart</mat-icon>
+          <span>{{ t("menu_tampilan_chart") }}</span>
         </button>
         <button mat-menu-item (click)="menuClick('image')">
           <mat-icon>image</mat-icon>
@@ -27,6 +32,21 @@
         <button mat-menu-item (click)="menuClick('download')">
           <mat-icon>download</mat-icon>
           <span>{{ t("menu_download") }}</span>
+        </button>
+      </mat-menu>
+
+      <mat-menu #chartDetail="matMenu">
+        <button mat-menu-item (click)="chartDetailMenuClick(false)">
+          <mat-icon>{{
+            !showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
+          }}</mat-icon>
+          <span>Total</span>
+        </button>
+        <button mat-menu-item (click)="chartDetailMenuClick(true)">
+          <mat-icon>{{
+            showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
+          }}</mat-icon>
+          <span>Detail</span>
         </button>
       </mat-menu>
 

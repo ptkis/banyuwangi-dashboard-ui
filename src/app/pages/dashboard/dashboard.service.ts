@@ -153,6 +153,24 @@ export class DashboardService {
     )
   }
 
+  getTotalChartData(retry?: boolean, searchParams?: { [key: string]: string }) {
+    let params = {
+      ...searchParams,
+    }
+    if (retry) {
+      params = {
+        ...params,
+        rt: new Date().getTime() + "",
+      }
+    }
+    return this.http.get<ChartResponse>(
+      `${environment.serverBaseUrl}/v1/chart/total`,
+      {
+        params,
+      }
+    )
+  }
+
   getDetectionChartData(
     pageNo: number,
     pageSize: number,

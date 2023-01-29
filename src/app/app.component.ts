@@ -8,7 +8,10 @@ import { KeycloakEventType, KeycloakService } from "keycloak-angular"
 import { take } from "rxjs"
 import { environment } from "src/environments/environment"
 import { AppService } from "./app.service"
-import { ModalService } from "./shared/services/modal.service"
+import {
+  INotificationToastData,
+  ModalService,
+} from "./shared/services/modal.service"
 
 @UntilDestroy()
 @Component({
@@ -49,7 +52,9 @@ export class AppComponent implements OnInit {
   setupNotification() {
     const nData = localStorage.getItem("nData")
     if (!nData) {
-      this.confirmNotification()
+      setTimeout(() => {
+        this.confirmNotification()
+      }, 5000)
     } else if (nData === "1") {
       this.requestPermission()
     } else {
@@ -57,7 +62,9 @@ export class AppComponent implements OnInit {
       const shouldPrompt =
         new Date(+nData).getTime() < Date.now() - minute * 60 * 1000
       if (shouldPrompt) {
-        this.confirmNotification()
+        setTimeout(() => {
+          this.confirmNotification()
+        }, 5000)
       }
     }
   }
@@ -99,18 +106,20 @@ export class AppComponent implements OnInit {
     this.afMessaging.messages.subscribe((message) => {
       if (message.notification) {
         const { title, image, body } = message.notification
-        const toastRef = this.modalService.showNotificationToast(
-          {
-            title,
-            message: body || "",
-            image_main: image,
-            image_logo: "/assets/images/alert.svg",
-            data: message.data,
-          },
-          {
-            timeOut: environment.toast.peringatanTimeout,
-          }
-        )
+
+        const toastData: INotificationToastData = {
+          title,
+          message: body || "",
+          image_main: image,
+          image_logo: "/assets/images/alert.svg",
+          data: message.data,
+        }
+
+        this.service.notificationSubject$.next(toastData)
+
+        const toastRef = this.modalService.showNotificationToast(toastData, {
+          timeOut: environment.toast.peringatanTimeout,
+        })
 
         toastRef.onAction.subscribe((e) => {
           const data = e?.["data"]?.["alarm"]
