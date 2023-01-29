@@ -17,6 +17,7 @@ import { format } from "date-fns/esm"
 import { ToastrService } from "ngx-toastr"
 import { finalize } from "rxjs"
 import { ModalService } from "src/app/shared/services/modal.service"
+import { environment } from "src/environments/environment"
 import { CCTVListService } from "../cctvlist/cctvlist.service"
 import { SnapshotCount } from "../chart-image-single/chart-image-single.component"
 
@@ -149,7 +150,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
 
   showError(message: string, title?: string) {
     return this.toastr.error(message, title || "Error", {
-      disableTimeOut: true,
+      timeOut: environment.toast.errorTimeout,
     })
   }
 

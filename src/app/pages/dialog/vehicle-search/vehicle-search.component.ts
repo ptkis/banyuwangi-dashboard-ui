@@ -17,6 +17,7 @@ import { DATE_FORMAT } from "src/app/shared/constants/app.constants"
 import { ViolationItem } from "src/app/shared/services/hcm.model"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { ModalService } from "src/app/shared/services/modal.service"
+import { environment } from "src/environments/environment"
 import { VehicleDetailsComponent } from "./vehicle-details/vehicle-details.component"
 
 @Component({
@@ -160,7 +161,7 @@ export class VehicleSearchComponent implements AfterViewInit {
 
   showError(message: string, title?: string) {
     return this.toastr.error(message, title || "Error", {
-      disableTimeOut: true,
+      timeOut: environment.toast.errorTimeout,
     })
   }
 

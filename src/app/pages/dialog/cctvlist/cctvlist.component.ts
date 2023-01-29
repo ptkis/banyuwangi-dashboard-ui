@@ -17,6 +17,7 @@ import { ModalService } from "src/app/shared/services/modal.service"
 import { Router } from "@angular/router"
 import { TranslocoService, TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { ToastrService } from "ngx-toastr"
+import { environment } from "src/environments/environment"
 
 const TRANSLATE_SCOPE = "cctvlist"
 
@@ -104,7 +105,7 @@ export class CCTVListComponent implements AfterViewInit {
 
   showError(message: string, title?: string) {
     return this.toastr.error(message, title || "Error", {
-      disableTimeOut: true,
+      timeOut: environment.toast.errorTimeout,
     })
   }
 
