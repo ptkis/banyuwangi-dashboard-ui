@@ -2,71 +2,82 @@
   <ng-template #customTitle>
     <div class="title">{{ panelTitle }}</div>
 
-    <ng-container *ngIf="true">
-      <button
-        mat-icon-button
-        class="panel_button"
-        [matMenuTriggerFor]="filterMenu"
-        [disabled]="isLoading"
-      >
-        <mat-icon>menu</mat-icon>
+    <button
+      mat-icon-button
+      class="panel_button"
+      [matMenuTriggerFor]="filterMenu"
+      [disabled]="isLoading"
+      data-testid="btn-menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #filterMenu="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="locationMenu" class="d-none">
+        Location ({{ selectedLocations.selected.length }}/{{
+          allLocations.length
+        }})
       </button>
-      <mat-menu #filterMenu="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="locationMenu" class="d-none">
-          Location ({{ selectedLocations.selected.length }}/{{
-            allLocations.length
-          }})
-        </button>
-        <button mat-menu-item [matMenuTriggerFor]="chartDetail">
-          <mat-icon>show_chart</mat-icon>
-          <span>{{ t("menu_tampilan_chart") }}</span>
-        </button>
-        <button mat-menu-item (click)="menuClick('image')">
-          <mat-icon>image</mat-icon>
-          <span>{{ t("menu_deteksi") }}</span>
-        </button>
-        <button mat-menu-item (click)="menuClick('data')">
-          <mat-icon>table_view</mat-icon>
-          <span>{{ t("menu_data") }}</span>
-        </button>
-        <button mat-menu-item (click)="menuClick('download')">
-          <mat-icon>download</mat-icon>
-          <span>{{ t("menu_download") }}</span>
-        </button>
-      </mat-menu>
+      <button
+        mat-menu-item
+        [matMenuTriggerFor]="chartDetail"
+        data-testid="btn-tampilan"
+      >
+        <mat-icon>show_chart</mat-icon>
+        <span>{{ t("menu_tampilan_chart") }}</span>
+      </button>
+      <button mat-menu-item (click)="menuClick('image')">
+        <mat-icon>image</mat-icon>
+        <span>{{ t("menu_deteksi") }}</span>
+      </button>
+      <button mat-menu-item (click)="menuClick('data')">
+        <mat-icon>table_view</mat-icon>
+        <span>{{ t("menu_data") }}</span>
+      </button>
+      <button mat-menu-item (click)="menuClick('download')">
+        <mat-icon>download</mat-icon>
+        <span>{{ t("menu_download") }}</span>
+      </button>
+    </mat-menu>
 
-      <mat-menu #chartDetail="matMenu">
-        <button mat-menu-item (click)="chartDetailMenuClick(false)">
-          <mat-icon>{{
-            !showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
-          }}</mat-icon>
-          <span>Total</span>
-        </button>
-        <button mat-menu-item (click)="chartDetailMenuClick(true)">
-          <mat-icon>{{
-            showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
-          }}</mat-icon>
-          <span>Detail</span>
-        </button>
-      </mat-menu>
+    <mat-menu #chartDetail="matMenu">
+      <button
+        mat-menu-item
+        (click)="chartDetailMenuClick(false)"
+        data-testid="btn-chart-detail"
+      >
+        <mat-icon>{{
+          !showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
+        }}</mat-icon>
+        <span>Total</span>
+      </button>
+      <button
+        mat-menu-item
+        (click)="chartDetailMenuClick(true)"
+        data-testid="btn-chart-total"
+      >
+        <mat-icon>{{
+          showChartDetail ? "radio_button_checked" : "radio_button_unchecked"
+        }}</mat-icon>
+        <span>Detail</span>
+      </button>
+    </mat-menu>
 
-      <mat-menu #locationMenu="matMenu">
-        <ng-template matMenuContent>
-          <button mat-menu-item (click)="listFilter.inverseSelection($event)">
-            Invert Selection
-          </button>
-          <div class="list-filter">
-            <app-list-filter
-              #listFilter
-              [items]="allLocations"
-              [selected]="selectedLocations.selected"
-              (click)="$event.stopPropagation()"
-              (selectionChanged)="locationFilterChanged($event)"
-            ></app-list-filter>
-          </div>
-        </ng-template>
-      </mat-menu>
-    </ng-container>
+    <mat-menu #locationMenu="matMenu">
+      <ng-template matMenuContent>
+        <button mat-menu-item (click)="listFilter.inverseSelection($event)">
+          Invert Selection
+        </button>
+        <div class="list-filter">
+          <app-list-filter
+            #listFilter
+            [items]="allLocations"
+            [selected]="selectedLocations.selected"
+            (click)="$event.stopPropagation()"
+            (selectionChanged)="locationFilterChanged($event)"
+          ></app-list-filter>
+        </div>
+      </ng-template>
+    </mat-menu>
   </ng-template>
 
   <ng-template #contentBody>

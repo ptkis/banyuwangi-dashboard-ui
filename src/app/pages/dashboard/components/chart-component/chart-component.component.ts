@@ -17,7 +17,7 @@ import { defaultChartConfig } from "src/app/shared/constants/charts"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { AppService } from "src/app/app.service"
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy"
-import { format, subMonths } from "date-fns"
+import { format, isToday, subMonths } from "date-fns"
 
 @UntilDestroy()
 @Component({
@@ -171,14 +171,14 @@ export class ChartComponentComponent {
     if (!!this.getChartData) {
       this.setLoading(true)
 
-      let req = this._dashboardService.getTotalChartData(retry, {
-        type: this.chartType.toUpperCase(),
+      let req = this.getChartData.bind(this._dashboardService)(retry, {
         startDate: this.startDate,
         endDate: this.endDate,
       })
 
-      if (this.showChartDetail) {
-        req = this.getChartData.bind(this._dashboardService)(retry, {
+      if (!this.showChartDetail && this._dashboardService.getTotalChartData) {
+        req = this._dashboardService.getTotalChartData(retry, {
+          type: this.chartType.toUpperCase(),
           startDate: this.startDate,
           endDate: this.endDate,
         })
@@ -238,11 +238,19 @@ export class ChartComponentComponent {
         data: this.labels,
         axisLabel: {
           color: "#fff",
-          formatter: function (value: string, _idx: number) {
+          formatter: (value: string, _idx: number) => {
             const tgl = new Date(value)
-            return tgl.toLocaleDateString("id-ID")
+            if (this.showChartDetail) {
+              return tgl.toLocaleDateString("id-ID")
+            }
+            return format(tgl, "HH:mm")
           },
         },
+      },
+      yAxis: {
+        ...this.chartOption.yAxis,
+        minInterval: 1,
+        min: 5,
       },
       series,
       tooltip: {
@@ -254,6 +262,7 @@ export class ChartComponentComponent {
         backgroundColor: "rgba(255, 255, 255, 0.8)",
         position: tooltipPos,
         appendToBody: true,
+        order: "valueDesc",
         extraCssText: "width: 200px; text-align: left",
       },
       dataZoom: [
@@ -264,8 +273,13 @@ export class ChartComponentComponent {
         {
           ...(this.chartOption.dataZoom as DataZoomComponentOption[])[1],
           start: minDatazoom > 0 ? minDatazoom : 0,
+          show: this.showChartDetail,
         },
       ],
+      grid: {
+        ...this.chartOption.grid,
+        bottom: this.showChartDetail ? "80px" : "50px",
+      },
     }
   }
 

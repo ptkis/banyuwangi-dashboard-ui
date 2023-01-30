@@ -14,6 +14,7 @@ import { DashboardService } from "../dashboard.service"
 import { render, screen } from "@testing-library/angular"
 import { dashboardComponents } from ".."
 import { dashboardMaterialModules } from "../dashboard.module"
+import userEvent from "@testing-library/user-event"
 
 jest.setTimeout(15000)
 
@@ -112,5 +113,32 @@ describe("ChartOverlayComponent", () => {
     service.getCrowdChartData(true)
 
     expect(service).toBeDefined()
+  })
+
+  it("should test chart total/detail", async () => {
+    const res = await renderComponent()
+    const fixture = res.fixture
+    fixture.detectChanges()
+    const user = userEvent.setup()
+    const btnMenu = screen.getAllByTestId("btn-menu")[0]
+    await user.click(btnMenu)
+
+    const btnTampilan = screen.getByTestId("btn-tampilan")
+    await user.click(btnTampilan)
+
+    await fixture.whenStable()
+
+    const btnDetail = screen.getByTestId("btn-chart-detail")
+    await user.click(btnDetail)
+
+    await user.click(btnMenu)
+    await user.click(btnTampilan)
+
+    await fixture.whenStable()
+
+    const btnTotal = screen.getByTestId("btn-chart-total")
+    await user.click(btnTotal)
+
+    await fixture.whenStable()
   })
 })
