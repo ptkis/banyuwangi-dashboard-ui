@@ -171,14 +171,14 @@ export class ChartComponentComponent {
     if (!!this.getChartData) {
       this.setLoading(true)
 
-      let req = this._dashboardService.getTotalChartData(retry, {
-        type: this.chartType.toUpperCase(),
+      let req = this.getChartData.bind(this._dashboardService)(retry, {
         startDate: this.startDate,
         endDate: this.endDate,
       })
 
-      if (this.showChartDetail) {
-        req = this.getChartData.bind(this._dashboardService)(retry, {
+      if (!this.showChartDetail && this._dashboardService.getTotalChartData) {
+        req = this._dashboardService.getTotalChartData(retry, {
+          type: this.chartType.toUpperCase(),
           startDate: this.startDate,
           endDate: this.endDate,
         })
