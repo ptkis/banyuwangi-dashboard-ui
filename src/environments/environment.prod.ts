@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  keycloakUrl: "https://auth.smartbanyuwangi.dasbor.id/",
+  keycloakUrl: "https://auth.banyuwangikab.go.id/",
   keycloakRealm: "banyuwangi",
   keycloakClientId: "angular-banyuwangi",
   hikOpenapi: {
@@ -15,7 +15,7 @@ export const environment = {
       baseUrl: "https://192.168.253.83:443",
     },
   },
-  serverBaseUrl: "https://api.smartbanyuwangi.dasbor.id",
+  serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
   useHCPHCMData: false,
   firebase: {
     apiKey: "AIzaSyBKcA_zpHBNItBCa0wjwh1xcWXrvGhFT-0",
