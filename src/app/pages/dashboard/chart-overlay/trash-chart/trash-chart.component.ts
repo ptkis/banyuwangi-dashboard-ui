@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core"
-import { Router } from "@angular/router"
-import { EChartsType } from "echarts"
+import { Component, Input } from "@angular/core"
 import { Observable } from "rxjs"
 import { ChartResponse, DashboardService } from "../../dashboard.service"
 
@@ -8,7 +6,7 @@ import { ChartResponse, DashboardService } from "../../dashboard.service"
   selector: "app-trash-chart",
   template: `
     <app-chart-component
-      panelTitle="Sampah Jalan Raya"
+      panelTitle="Sampah Jalan Raya & Sungai"
       [getChartData]="getData"
       [tooltipPosition]="tooltipPosition"
     ></app-chart-component>
