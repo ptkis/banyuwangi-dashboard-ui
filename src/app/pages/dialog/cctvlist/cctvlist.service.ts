@@ -239,16 +239,19 @@ export class CCTVListService {
           this.getEcelChartData(pageNo, pageSize, {
             ...params,
             type: chartType !== "all" ? chartType.toUpperCase() : null,
-          })
-            .pipe(finalize(() => dialogRef?.close()))
-            .subscribe((resp) => {
+          }).subscribe({
+            next: (resp) => {
               const worksheet = utils.json_to_sheet(resp)
               // const csv = utils.sheet_to_csv(sheet)
               const workbook = utils.book_new()
               utils.book_append_sheet(workbook, worksheet, `${typeTranslate}`)
               writeFile(workbook, `${typeTranslate}.xlsx`)
-              dialogRef?.close()
-            })
+              dialogRef.close()
+            },
+            error: (_) => {
+              dialogRef.close()
+            },
+          })
         },
       })
   }
