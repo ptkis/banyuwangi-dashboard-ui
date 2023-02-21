@@ -13,7 +13,7 @@ import { PageEvent } from "@angular/material/paginator"
 import { Sort, SortDirection } from "@angular/material/sort"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
-import { format } from "date-fns/esm"
+import { format } from "date-fns"
 import { ToastrService } from "ngx-toastr"
 import { finalize } from "rxjs"
 import { ModalService } from "src/app/shared/services/modal.service"
@@ -202,7 +202,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
   exportData(e: Event) {
     e.preventDefault()
     const data = this.buildParams()
-    this._cctvService.downloadExcel(1, 5000, data)
+    this._cctvService.downloadExcel(1, 500000, data)
   }
 
   buildParams() {

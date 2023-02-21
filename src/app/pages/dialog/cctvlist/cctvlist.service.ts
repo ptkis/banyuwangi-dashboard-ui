@@ -172,38 +172,49 @@ export class CCTVListService {
                 map((resp) => {
                   const data = resp.data.content
                   if (data) {
-                    return data.map((row, idx) => {
-                      return {
-                        [this.translocoService.translate("chartdata.No")]:
-                          idx + 1,
-                        [this.translocoService.translate(
-                          "chartdata.timestamp"
-                        )]: row.snapshotCreated,
-                        [this.translocoService.translate("chartdata.Name")]:
-                          row.snapshotCameraName,
-                        [this.translocoService.translate("chartdata.Location")]:
-                          row.snapshotCameraLocation,
-                        [this.translocoService.translate("chartdata.Latitude")]:
-                          row.snapshotCameraLatitude,
-                        [this.translocoService.translate(
-                          "chartdata.Longitude"
-                        )]: row.snapshotCameraLongitude,
-                        [this.translocoService.translate("chartdata.type")]:
-                          row.type,
-                        [this.translocoService.translate("chartdata.maxValue", {
-                          type: this.translocoService.translate(
-                            "dashboard." +
-                              (params["type"] || "all").toLowerCase()
-                          ),
-                        })]: row.maxValue,
-                        [this.translocoService.translate("chartdata.value", {
-                          type: this.translocoService.translate(
-                            "dashboard." +
-                              (params["type"] || "all").toLowerCase()
-                          ),
-                        })]: row.value,
-                      }
-                    })
+                    return [...data]
+                      .sort(
+                        (a, b) =>
+                          new Date(a.snapshotCreated).getTime() -
+                          new Date(b.snapshotCreated).getTime()
+                      )
+                      .map((row, idx) => {
+                        return {
+                          [this.translocoService.translate("chartdata.No")]:
+                            idx + 1,
+                          [this.translocoService.translate(
+                            "chartdata.timestamp"
+                          )]: row.snapshotCreated,
+                          [this.translocoService.translate("chartdata.Name")]:
+                            row.snapshotCameraName,
+                          [this.translocoService.translate(
+                            "chartdata.Location"
+                          )]: row.snapshotCameraLocation,
+                          [this.translocoService.translate(
+                            "chartdata.Latitude"
+                          )]: row.snapshotCameraLatitude,
+                          [this.translocoService.translate(
+                            "chartdata.Longitude"
+                          )]: row.snapshotCameraLongitude,
+                          [this.translocoService.translate("chartdata.type")]:
+                            row.type,
+                          [this.translocoService.translate(
+                            "chartdata.maxValue",
+                            {
+                              type: this.translocoService.translate(
+                                "dashboard." +
+                                  (params["type"] || "all").toLowerCase()
+                              ),
+                            }
+                          )]: row.maxValue,
+                          [this.translocoService.translate("chartdata.value", {
+                            type: this.translocoService.translate(
+                              "dashboard." +
+                                (params["type"] || "all").toLowerCase()
+                            ),
+                          })]: row.value,
+                        }
+                      })
                   }
                   return []
                 })
@@ -229,13 +240,14 @@ export class CCTVListService {
             ...params,
             type: chartType !== "all" ? chartType.toUpperCase() : null,
           })
-            .pipe(finalize(() => dialogRef.close()))
+            .pipe(finalize(() => dialogRef?.close()))
             .subscribe((resp) => {
               const worksheet = utils.json_to_sheet(resp)
               // const csv = utils.sheet_to_csv(sheet)
               const workbook = utils.book_new()
               utils.book_append_sheet(workbook, worksheet, `${typeTranslate}`)
               writeFile(workbook, `${typeTranslate}.xlsx`)
+              dialogRef?.close()
             })
         },
       })
