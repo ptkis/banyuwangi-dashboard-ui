@@ -14,6 +14,7 @@ import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { format, subDays } from "date-fns"
 import { ToastrService } from "ngx-toastr"
 import { DATE_FORMAT } from "src/app/shared/constants/app.constants"
+import { colorTypes } from "src/app/shared/services/hcm.constants"
 import { ViolationItem } from "src/app/shared/services/hcm.model"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { ModalService } from "src/app/shared/services/modal.service"
@@ -67,14 +68,21 @@ export class VehicleSearchComponent implements AfterViewInit {
   startDate = format(subDays(new Date(), 30), DATE_FORMAT)
   endDate = format(new Date(), DATE_FORMAT)
   plateNo: string | null = null
+  vehicleColor: string | null = null
+  qtype: string | null = null
 
   searchForm = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
     plateNo: new FormControl<string | null>(null),
+    vehicleColor: new FormControl<string | null>(null),
+    qtype: new FormControl<string>("0"),
   })
 
   params: Record<string, string | null> = {}
+
+  colorTypes = colorTypes
+  qtypes = ["vehiclepass", "vehiclealarm"]
 
   constructor(
     private _HCMService: HCMService,
@@ -102,6 +110,8 @@ export class VehicleSearchComponent implements AfterViewInit {
       const startDate = params.get("startDate")
       const endDate = params.get("endDate")
       const plateNo = params.get("plateNo")
+      const vehicleColor = params.get("vehicleColor")
+      const qtype = params.get("qtype")
 
       if (startDate && endDate) {
         this.startDate = startDate
@@ -109,11 +119,15 @@ export class VehicleSearchComponent implements AfterViewInit {
       }
 
       this.plateNo = plateNo
+      this.vehicleColor = vehicleColor
+      this.qtype = qtype
 
       const qparams = {
         startDate: this.startDate,
         endDate: this.endDate,
         plateNo: this.plateNo,
+        vehicleColor: this.vehicleColor,
+        queryType: this.qtypes[+(qtype || "0")],
       }
 
       this.getVehicleData(qparams)
@@ -126,16 +140,22 @@ export class VehicleSearchComponent implements AfterViewInit {
 
   getVehicleData(params: Record<string, string | null>, page = 1, size = 10) {
     this.params = params
-    const { startDate, endDate, plateNo } = params
+    const { startDate, endDate, plateNo, vehicleColor, qtype } = params
     if (startDate && endDate) {
       this.searchForm.patchValue({
         start: new Date(startDate),
         end: new Date(endDate),
+        qtype,
       })
     }
     if (plateNo) {
       this.searchForm.patchValue({
         plateNo,
+      })
+    }
+    if (vehicleColor) {
+      this.searchForm.patchValue({
+        vehicleColor,
       })
     }
     this._HCMService.getVehicleData(this.params, page, size).subscribe({
@@ -173,15 +193,19 @@ export class VehicleSearchComponent implements AfterViewInit {
   }
 
   search() {
-    const { start, end, plateNo } = this.searchForm.value
+    const { start, end, plateNo, vehicleColor, qtype } = this.searchForm.value
     const data: Record<string, string> = {}
     if (start && end) {
       data["startDate"] = format(start, DATE_FORMAT)
       data["endDate"] = format(end, DATE_FORMAT)
     }
+    data["qtype"] = qtype || "0"
 
     if (plateNo) {
       data["plateNo"] = plateNo
+    }
+    if (vehicleColor) {
+      data["vehicleColor"] = vehicleColor
     }
 
     this.router.navigate([], {
