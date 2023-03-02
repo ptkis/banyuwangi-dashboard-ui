@@ -27,6 +27,17 @@
         </mat-form-field>
       </div>
       <div class="flex-shrink-1 text-right d-flex align-items-center">
+        <mat-form-field class="custom-form-field2" appearance="fill">
+          <mat-label>{{ t("vehicleColor") }}</mat-label>
+          <mat-select
+            placeholder="{{ t('vehicleColor') }}"
+            formControlName="vehicleColor"
+          >
+            <mat-option *ngFor="let item of colorTypes" [value]="item.name">
+              {{ item.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
           <mat-label>{{ t("plateNo") }}</mat-label>
           <input

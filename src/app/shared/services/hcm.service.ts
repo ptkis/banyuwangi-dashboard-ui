@@ -130,7 +130,6 @@ export class HCMService extends HIKService {
       {
         data: {
           ...theParams,
-          queryType: "vehiclealarm",
         },
         metadata: {
           pageNo: page,
