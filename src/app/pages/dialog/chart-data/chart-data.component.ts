@@ -160,13 +160,13 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
       type: this.type?.toUpperCase() || null,
       startDate: this.startDate,
       endDate: this.endDate,
-      camera: this.camera,
+      cameraName: this.camera,
       direction: this.direction,
       sort: this.sort,
     }
 
     this.searchForm.setValue({
-      camera: params.camera,
+      camera: params.cameraName,
       type: params.type?.toLowerCase() || null,
       start: new Date(params.startDate),
       end: new Date(params.endDate),
