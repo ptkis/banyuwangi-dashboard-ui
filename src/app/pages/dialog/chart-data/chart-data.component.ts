@@ -180,7 +180,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
           this.paginator = {
             index: resp.data.number,
             length: resp.data.totalElements,
-            size: resp.data.numberOfElements,
+            size: pageSize,
           }
           this.dataSource = resp.data.content
           this.allCameras = [

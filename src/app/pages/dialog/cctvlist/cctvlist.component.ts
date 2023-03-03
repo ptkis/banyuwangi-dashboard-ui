@@ -119,7 +119,7 @@ export class CCTVListComponent implements AfterViewInit {
           this.paginator = {
             index: resp.data.number,
             length: resp.data.totalElements,
-            size: resp.data.numberOfElements,
+            size: pageSize,
           }
           this.dataSource = resp.data.content
         },
