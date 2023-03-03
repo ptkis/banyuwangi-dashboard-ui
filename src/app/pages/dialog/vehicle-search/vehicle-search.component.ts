@@ -166,7 +166,7 @@ export class VehicleSearchComponent implements AfterViewInit {
           this.paginator = {
             index: resp.data.metadata.pageNo - 1,
             length: resp.data.metadata.totalCount,
-            size: resp.data.metadata.pageSize,
+            size,
           }
         } else {
           this.dataSource = []

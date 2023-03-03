@@ -103,7 +103,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
         this.paginator = {
           index: resp.data.number,
           length: resp.data.totalElements,
-          size: resp.data.numberOfElements,
+          size: this.paginator.size,
           last: resp.data.last,
         }
         this.imageData = [...this.imageData, ...resp.data.content]
