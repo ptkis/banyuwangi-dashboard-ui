@@ -83,6 +83,11 @@ export const vehicleTypes = [
 
 export const colorTypes = [
   {
+    code: -1,
+    name: "",
+    description: "All",
+  },
+  {
     code: 0,
     name: "unknown",
     description: "Unknown",

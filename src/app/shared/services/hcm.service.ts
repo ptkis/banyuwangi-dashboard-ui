@@ -114,7 +114,7 @@ export class HCMService extends HIKService {
         "T00:00:00.000+07:00",
       endTime:
         format(new Date(params["endDate"] as string), "yyyy-MM-dd") +
-        "T00:00:00.000+07:00",
+        "T23:59:50.000+07:00",
     }
 
     delete theParams["startDate"]
