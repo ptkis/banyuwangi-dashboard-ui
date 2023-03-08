@@ -75,7 +75,7 @@ export class VehicleSearchComponent implements AfterViewInit {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
     plateNo: new FormControl<string | null>(null),
-    vehicleColor: new FormControl<string | null>(null),
+    vehicleColor: new FormControl<string | null>(""),
     qtype: new FormControl<string>("0"),
   })
 
@@ -165,7 +165,8 @@ export class VehicleSearchComponent implements AfterViewInit {
 
           this.paginator = {
             index: resp.data.metadata.pageNo - 1,
-            length: resp.data.metadata.totalCount,
+            // length: resp.data.metadata.totalCount,
+            length: 9_999_999,
             size,
           }
         } else {
