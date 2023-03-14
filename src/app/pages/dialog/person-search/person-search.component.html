@@ -1,89 +1,173 @@
 <ng-template #content>
   <ng-container *transloco="let t; read: 'personsearch'">
-    <button data-testid="btn-close" (click)="dialogRef.close()" mat-icon-button>
-      <mat-icon>keyboard_backspace</mat-icon>
-    </button>
-    <form
-      [formGroup]="searchForm"
-      class="toolbar-outside d-flex w-100"
-      (ngSubmit)="search()"
-    >
-      <div class="flex-grow-1">
-        <mat-form-field class="custom-form-field2 daterange" appearance="fill">
-          <mat-label>{{ t("daterange") }}</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input
-              matStartDate
-              placeholder="Start date"
-              formControlName="start"
-            />
-            <input matEndDate placeholder="End date" formControlName="end" />
-          </mat-date-range-input>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-      </div>
-      <div class="flex-shrink-1 text-right d-flex align-items-center">
-        <!-- <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
-          <mat-label>{{ t("cameraIndexCode") }}</mat-label>
-          <input
-            matInput
-            data-testid="camerainput"
-            placeholder="label"
-            formControlName="cameraIndexCode"
-          />
-        </mat-form-field> -->
-        <button
-          mat-raised-button
-          data-testid="btn-search-submit"
-          class="btn btn-primary"
-        >
-          {{ t("search") }}
-        </button>
-      </div>
-    </form>
-    <app-chart-panel class="pencarian-orang">
-      <ng-template #customTitle>
-        <div class="title">
-          {{ t("title") }}
-        </div>
-      </ng-template>
+    <div class="pencarian-orang-container mt-4">
+      <button
+        data-testid="btn-close"
+        (click)="dialogRef.close()"
+        mat-icon-button
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <form
+        [formGroup]="searchForm"
+        class="toolbar-outside d-flex w-100"
+        (ngSubmit)="search()"
+      >
+        <div class="flex-grow-1">
+          <div class="d-flex">
+            <div
+              data-testid="image-select"
+              (drop)="onDrop($event)"
+              (dragover)="onDragOver($event)"
+              class="form-image-container flex-shrink-0 d-flex flex-column align-items-center justify-content-center"
+            >
+              <img
+                *ngIf="imageData?.base64; else showUpload"
+                [src]="imageSrc"
+                alt="image"
+              />
+              <ng-template #showUpload>
+                <mat-icon class="material-icons-outlined">image</mat-icon>
+                <a
+                  class="mt-2"
+                  href="#"
+                  (click)="fileUpload.click(); $event.preventDefault()"
+                  >{{ t("upload_image") }}</a
+                >
 
-      <ng-template #contentBody>
-        <div class="loader-component" *ngIf="isLoading; else notLoading">
-          <mat-spinner></mat-spinner>
-        </div>
-        <ng-template #notLoading>
-          <div class="p-2" *ngIf="!personDataList?.length">
-            <ng-container *ngIf="!errorMessage; else errorTmp">
-              {{ t("no_data_found") }}
-            </ng-container>
-            <ng-template #errorTmp>
-              <span class="text-danger">{{
-                "error_network" | transloco: { message: errorMessage }
-              }}</span>
-            </ng-template>
-          </div>
-          <div
-            class="content-container p-3"
-            waIntersectionObserver
-            waIntersectionThreshold="0.5"
-          >
-            <ng-container *ngFor="let item of personDataList; let idx = index">
-              <div (waIntersectionObservee)="onIntersection($event, picture)">
-                <app-hcp-picture
-                  #picture
-                  [data]="item"
-                  [autoload]="idx < 20"
-                ></app-hcp-picture>
+                <input
+                  data-testid="uploader"
+                  #fileUpload
+                  type="file"
+                  (change)="selectImage(fileUpload?.files?.[0])"
+                  accept="image/*"
+                />
+              </ng-template>
+            </div>
+            <div class="flex-grow-1">
+              <div>
+                <mat-form-field class="custom-form-field2" appearance="fill">
+                  <mat-label>{{ t("genderType") }}</mat-label>
+                  <mat-select formControlName="genderType">
+                    <mat-option
+                      *ngFor="let item of allGenderTypes"
+                      [value]="item.value"
+                    >
+                      {{ t(item.label) }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
-            </ng-container>
+              <div>
+                <mat-form-field
+                  class="custom-form-field2 daterange"
+                  appearance="fill"
+                >
+                  <mat-label>{{ t("daterange") }}</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input
+                      matStartDate
+                      placeholder="Start date"
+                      formControlName="start"
+                    />
+                    <input
+                      matEndDate
+                      placeholder="End date"
+                      formControlName="end"
+                    />
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+              <div class="mt-4">
+                {{ image?.name || t("nofile") }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-shrink-1 text-right d-flex align-items-end">
+          <button
+            mat-raised-button
+            data-testid="btn-search-clear"
+            class="btn mx-3"
+            type="button"
+            (click)="resetForm()"
+          >
+            {{ t("clear") }}
+          </button>
+          <button
+            mat-raised-button
+            data-testid="btn-search-submit"
+            class="btn btn-primary"
+          >
+            {{ t("search") }}
+          </button>
+        </div>
+      </form>
+      <app-chart-panel class="pencarian-orang">
+        <ng-template #customTitle>
+          <div class="title">
+            {{ t("title") }}
+          </div>
+          <div class="toolbar-container panel_button">
+            <a
+              data-testid="btn-download"
+              [disabled]="isLoading"
+              mat-button
+              (click)="downloadImages()"
+            >
+              <mat-icon>download_file</mat-icon>
+              {{ t("download") }}</a
+            >
           </div>
         </ng-template>
-      </ng-template>
-    </app-chart-panel>
+
+        <ng-template #contentBody>
+          <div class="loader-component" *ngIf="isLoading; else notLoading">
+            <mat-spinner></mat-spinner>
+          </div>
+          <ng-template #notLoading>
+            <div class="p-2" *ngIf="!personDataList?.length">
+              <ng-container *ngIf="!errorCode; else errorTmp">
+                {{ t("no_data_found") }}
+              </ng-container>
+              <ng-template #errorTmp>
+                <span class="text-danger">{{
+                  "error_network" | transloco: { message: errorCode }
+                }}</span>
+              </ng-template>
+
+              <div class="text-danger" *ngIf="this.errorMessage">
+                {{ this.errorMessage }}
+              </div>
+            </div>
+            <div
+              class="content-container p-3"
+              waIntersectionObserver
+              waIntersectionThreshold="0.5"
+            >
+              <ng-container
+                *ngFor="let item of personDataList; let idx = index"
+              >
+                <div (waIntersectionObservee)="onIntersection($event, picture)">
+                  <app-hcp-picture #picture [data]="item" [autoload]="idx < 20">
+                    <div class="image-info">
+                      {{ +(item?.similarity || 0) * 100 }}%
+                      <ng-container *ngIf="item?.genderType">
+                        {{ t($any(genderTypeOutput[item?.genderType || "3"])) }}
+                      </ng-container>
+                    </div>
+                  </app-hcp-picture>
+                </div>
+              </ng-container>
+            </div>
+          </ng-template>
+        </ng-template>
+      </app-chart-panel>
+    </div>
   </ng-container>
 </ng-template>

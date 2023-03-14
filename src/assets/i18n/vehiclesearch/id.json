@@ -13,6 +13,7 @@
   "vehicleColorName": "Warna Kendaraan",
   "violativeActionName": "Pelanggaran",
   "plateNo": "Plat No",
+  "vehicleColor": "Warna",
   "plateImagePath": "Gambar Plat No",
   "imagePath": "Gambar Pelanggaran",
   "Action": "Action",

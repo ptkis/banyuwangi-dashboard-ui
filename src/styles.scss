@@ -293,3 +293,27 @@ body {
 .mat-drawer-container {
   background-color: transparent;
 }
+
+.echarts-tooltip {
+  > div {
+    > div {
+      > div {
+        div {
+          > div {
+            display: grid !important;
+            grid-template-columns: auto 1fr auto;
+
+            span {
+              display: block;
+
+              &:nth-of-type(2) {
+                white-space: pre-line;
+                line-height: 19px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

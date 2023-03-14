@@ -4,10 +4,13 @@
   "flood": "Genangan Air",
   "streetvendor": "Pedagang Kaki Lima",
   "traffic": "Kepadatan Lalu Lintas",
-  "trash": "Sampah Jalan Raya",
+  "trash": "Sampah Jalan Raya & Sungai",
   "Filter": "Filter",
   "download": "Unduh Hasil Capture",
   "menu_deteksi": "Lihat hasil deteksi",
   "menu_data": "Lihat data",
-  "menu_download": "Download Excel"
+  "menu_download": "Download Excel",
+  "menu_tampilan_chart": "Tampilan Chart",
+  "menu_tampilan_chart_total": "Total",
+  "menu_tampilan_chart_detail": "Detail"
 }

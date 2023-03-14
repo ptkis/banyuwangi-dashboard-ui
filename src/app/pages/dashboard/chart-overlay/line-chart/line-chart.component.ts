@@ -11,6 +11,7 @@ import { ChartResponse } from "../../dashboard.service"
     <app-chart-component
       [panelTitle]="chartTitle"
       [getChartData]="getData"
+      [chartType]="chartType"
       [tooltipPosition]="tooltipPosition"
       (chartInitialized)="echartLoaded($event)"
       (menuClicked)="menuClick($event)"

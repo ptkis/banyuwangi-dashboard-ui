@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core"
-import { graphic, EChartsOption, EChartsType } from "echarts"
+import {
+  graphic,
+  EChartsOption,
+  EChartsType,
+  DataZoomComponentOption,
+} from "echarts"
 import {
   ChartData,
   ChartResponse,
@@ -10,7 +15,11 @@ import { DatePipe } from "@angular/common"
 import { finalize, Observable } from "rxjs"
 import { defaultChartConfig } from "src/app/shared/constants/charts"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
+import { AppService } from "src/app/app.service"
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy"
+import { format, isToday, subMonths } from "date-fns"
 
+@UntilDestroy()
 @Component({
   selector: "app-chart-component",
   templateUrl: "./chart-component.component.html",
@@ -27,6 +36,7 @@ export class ChartComponentComponent {
   @Input() tooltipPosition: "left" | "right" | "top" = "right"
 
   @Input() getChartData!: (...args: any[]) => Observable<ChartResponse>
+  @Input() chartType = "TRASH"
 
   @Output() chartInitialized = new EventEmitter<EChartsType>()
   @Output() menuClicked = new EventEmitter<string>()
@@ -56,9 +66,16 @@ export class ChartComponentComponent {
 
   errorMessage = ""
 
+  showChartDetail = false
+  isLoading = false
+
+  startDate = format(subMonths(new Date(), 1), "yyyy-MM-dd")
+  endDate = format(new Date(), "yyyy-MM-dd")
+
   constructor(
     private _dashboardService: DashboardService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private appService: AppService
   ) {}
 
   setLoading(loading: boolean) {
@@ -66,6 +83,7 @@ export class ChartComponentComponent {
       loading
         ? this.echartsInstance.showLoading()
         : this.echartsInstance.hideLoading()
+      this.isLoading = loading
     }
   }
 
@@ -90,6 +108,14 @@ export class ChartComponentComponent {
         snapshotId,
       })
     })
+
+    this.appService.notificationSubject$
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        if (!this.isLoading && !this.showChartDetail) {
+          this.loadChartData()
+        }
+      })
   }
 
   generateSeries(data: typeof this.data) {
@@ -142,30 +168,46 @@ export class ChartComponentComponent {
   }
 
   loadChartData(retry = false) {
-    if (this.getChartData) {
+    if (!!this.getChartData) {
       this.setLoading(true)
-      this.getChartData
-        .bind(this._dashboardService)(retry)
-        .pipe(finalize(() => this.setLoading(false)))
-        .subscribe({
-          next: (resp) => {
-            this.labels = resp.labels.map((val) => {
-              const tgl = new Date(val)
-              return (
-                this.datePipe
-                  .transform(tgl, "yyyy-MM-dd HH:mm:ss")
-                  ?.toString() || ""
-              )
-            })
-            this.data = resp.data
-            this.rawData = resp
-            this.allLocations = Object.keys(this.data)
-            this.selectedLocations.select(...this.allLocations)
-            this.initCharts()
-          },
-          error: (err) => this.setError(err),
+
+      let req = this.getChartData.bind(this._dashboardService)(retry, {
+        startDate: this.startDate,
+        endDate: this.endDate,
+      })
+
+      if (!this.showChartDetail && this._dashboardService.getTotalChartData) {
+        req = this._dashboardService.getTotalChartData(retry, {
+          type: this.chartType.toUpperCase(),
+          startDate: this.startDate,
+          endDate: this.endDate,
         })
+      }
+
+      req.pipe(finalize(() => this.setLoading(false))).subscribe({
+        next: (resp) => {
+          this.labels = resp.labels.map((val) => {
+            const tgl = new Date(val)
+            return (
+              this.datePipe.transform(tgl, "yyyy-MM-dd HH:mm:ss")?.toString() ||
+              ""
+            )
+          })
+          this.data = resp.data
+          this.rawData = resp
+          this.allLocations = Object.keys(this.data)
+          this.selectedLocations.select(...this.allLocations)
+          this.initCharts()
+        },
+        error: (err) => this.setError(err),
+      })
     }
+  }
+
+  chartDetailMenuClick(detail: boolean) {
+    this.showChartDetail = detail
+
+    this.loadChartData()
   }
 
   generateChartOptions() {
@@ -184,6 +226,10 @@ export class ChartComponentComponent {
         bottom: 220,
       }
     }
+    const maxData = 20
+    const dataLength = series?.[0]?.data.length
+    const minDatazoom = 100 - (maxData / dataLength) * 100
+
     return {
       ...this.chartOption,
       xAxis: {
@@ -192,11 +238,19 @@ export class ChartComponentComponent {
         data: this.labels,
         axisLabel: {
           color: "#fff",
-          formatter: function (value: string, _idx: number) {
+          formatter: (value: string, _idx: number) => {
             const tgl = new Date(value)
-            return tgl.toLocaleDateString("id-ID")
+            if (this.showChartDetail) {
+              return tgl.toLocaleDateString("id-ID")
+            }
+            return format(tgl, "HH:mm")
           },
         },
+      },
+      yAxis: {
+        ...this.chartOption.yAxis,
+        minInterval: 1,
+        min: 5,
       },
       series,
       tooltip: {
@@ -207,7 +261,24 @@ export class ChartComponentComponent {
         className: "echarts-tooltip",
         backgroundColor: "rgba(255, 255, 255, 0.8)",
         position: tooltipPos,
+        appendToBody: true,
+        order: "valueDesc",
         extraCssText: "width: 200px; text-align: left",
+      },
+      dataZoom: [
+        {
+          ...(this.chartOption.dataZoom as DataZoomComponentOption[])[0],
+          start: minDatazoom > 0 ? minDatazoom : 0,
+        },
+        {
+          ...(this.chartOption.dataZoom as DataZoomComponentOption[])[1],
+          start: minDatazoom > 0 ? minDatazoom : 0,
+          show: this.showChartDetail,
+        },
+      ],
+      grid: {
+        ...this.chartOption.grid,
+        bottom: this.showChartDetail ? "80px" : "50px",
       },
     }
   }

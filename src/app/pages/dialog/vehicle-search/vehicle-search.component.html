@@ -27,6 +27,17 @@
         </mat-form-field>
       </div>
       <div class="flex-shrink-1 text-right d-flex align-items-center">
+        <mat-form-field class="custom-form-field2" appearance="fill">
+          <mat-label>{{ t("vehicleColor") }}</mat-label>
+          <mat-select
+            placeholder="{{ t('vehicleColor') }}"
+            formControlName="vehicleColor"
+          >
+            <mat-option *ngFor="let item of colorTypes" [value]="item.name">
+              {{ item.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field class="custom-form-field2 mx-4" appearance="fill">
           <mat-label>{{ t("plateNo") }}</mat-label>
           <input
@@ -148,7 +159,9 @@
                 {{ t("plateImagePath") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
-                <img [src]="row.plateImagePath" alt="" />
+                <div class="img-container">
+                  <app-proxy-image [url]="row.plateImagePath"></app-proxy-image>
+                </div>
               </td>
             </ng-container>
 
@@ -157,7 +170,9 @@
                 {{ t("imagePath") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
-                <img [src]="row.imagePath" alt="" />
+                <div class="img-container">
+                  <app-proxy-image [url]="row.imagePath"></app-proxy-image>
+                </div>
               </td>
             </ng-container>
 
@@ -178,7 +193,7 @@
                   data-testid="btn-view"
                   [disabled]="isLoading"
                   mat-icon-button
-                  title="{{ t('View Data') }}"
+                  title="{{ t('details') }}"
                   (click)="viewData(row)"
                 >
                   <mat-icon>visibility</mat-icon>

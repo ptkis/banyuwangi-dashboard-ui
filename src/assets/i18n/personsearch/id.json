@@ -2,9 +2,17 @@
   "title": "Pencarian Orang",
   "daterange": "Rentang Tanggal",
   "search": "cari",
-  "export": "Export",
+  "clear": "clear",
+  "download": "Export",
   "cameraIndexCode": "Kamera",
   "details": "Details",
   "download_image": "Unduh gambar",
-  "no_data_found": "Data tidak ditemukan pada rentang tanggal dipilih!"
+  "no_data_found": "Data tidak ditemukan pada parameter dipilih!",
+  "upload_image": "Unggah Foto",
+  "genderType": "Jenis Kelamin",
+  "all": "Semua",
+  "male": "Laki-laki",
+  "female": "Perempuan",
+  "unknown": "Tidak diketahui",
+  "nofile": "Belum ada gambar"
 }

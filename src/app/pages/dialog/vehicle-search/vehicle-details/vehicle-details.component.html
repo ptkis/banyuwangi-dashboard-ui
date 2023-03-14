@@ -95,7 +95,7 @@
             {{ t("plateImagePath") }}
           </div>
           <div class="text-value">
-            <img [src]="data.plateImagePath" [alt]="t('plateImagePath')" />
+            <app-proxy-image [url]="data.plateImagePath"></app-proxy-image>
           </div>
         </div>
       </div>
@@ -108,7 +108,8 @@
             *ngIf="$any(data)['imagePath' + item] as src"
           >
             <a
-              [href]="src"
+              *ngIf="img?.imageUrl"
+              [href]="img.imageUrl"
               [download]="data.passTime + '_' + data.plateNo + '.jpg'"
               target="_blank"
             >
@@ -117,7 +118,7 @@
               >
               {{ t("download_image") }}
             </a>
-            <img [src]="src" [alt]="t('imagePath') + item" />
+            <app-proxy-image #img [url]="src"></app-proxy-image>
           </div>
         </ng-container>
       </div>

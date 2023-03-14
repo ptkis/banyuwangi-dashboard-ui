@@ -13,10 +13,11 @@ import { PageEvent } from "@angular/material/paginator"
 import { Sort, SortDirection } from "@angular/material/sort"
 import { ActivatedRoute, Router } from "@angular/router"
 import { TRANSLOCO_SCOPE } from "@ngneat/transloco"
-import { format } from "date-fns/esm"
+import { format } from "date-fns"
 import { ToastrService } from "ngx-toastr"
 import { finalize } from "rxjs"
 import { ModalService } from "src/app/shared/services/modal.service"
+import { environment } from "src/environments/environment"
 import { CCTVListService } from "../cctvlist/cctvlist.service"
 import { SnapshotCount } from "../chart-image-single/chart-image-single.component"
 
@@ -149,7 +150,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
 
   showError(message: string, title?: string) {
     return this.toastr.error(message, title || "Error", {
-      disableTimeOut: true,
+      timeOut: environment.toast.errorTimeout,
     })
   }
 
@@ -159,13 +160,13 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
       type: this.type?.toUpperCase() || null,
       startDate: this.startDate,
       endDate: this.endDate,
-      camera: this.camera,
+      cameraName: this.camera,
       direction: this.direction,
       sort: this.sort,
     }
 
     this.searchForm.setValue({
-      camera: params.camera,
+      camera: params.cameraName,
       type: params.type?.toLowerCase() || null,
       start: new Date(params.startDate),
       end: new Date(params.endDate),
@@ -179,7 +180,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
           this.paginator = {
             index: resp.data.number,
             length: resp.data.totalElements,
-            size: resp.data.numberOfElements,
+            size: pageSize,
           }
           this.dataSource = resp.data.content
           this.allCameras = [
@@ -201,7 +202,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
   exportData(e: Event) {
     e.preventDefault()
     const data = this.buildParams()
-    this._cctvService.downloadExcel(1, 5000, data)
+    this._cctvService.downloadExcel(1, 500000, data)
   }
 
   buildParams() {

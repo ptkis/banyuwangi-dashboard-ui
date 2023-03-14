@@ -56,7 +56,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DialogModule,
 
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: environment.toast.defaultTimeout,
       preventDuplicates: true,
     }),
 

@@ -6,17 +6,21 @@ import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
 import { VehicleDetailsComponent } from "./vehicle-details.component"
 import * as hcmVehicle from "../../mocks/hcmVehicle.json"
+import { ProxyImageComponent } from "src/app/shared/components/proxy-image/proxy-image.component"
+import { HttpClientTestingModule } from "@angular/common/http/testing"
 
 describe("VehicleDetailsComponent", () => {
   const renderComponent = async (providers: any[] = []) => {
     return await render(VehicleDetailsComponent, {
       declarations: [VehicleDetailsComponent],
       imports: [
+        HttpClientTestingModule,
         SharedModule,
         MatButtonModule,
         MatIconModule,
         DialogModule,
         getTranslocoModule(),
+        ProxyImageComponent,
       ],
       providers: [
         {

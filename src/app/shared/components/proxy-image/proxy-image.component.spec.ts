@@ -1,19 +1,18 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { ComponentFixture, TestBed } from "@angular/core/testing"
 
-import { HcpPictureComponent } from "./hcp-picture.component"
+import { ProxyImageComponent } from "./proxy-image.component"
 
-describe("HcpPictureComponent", () => {
-  let component: HcpPictureComponent
-  let fixture: ComponentFixture<HcpPictureComponent>
+describe("ProxyImageComponent", () => {
+  let component: ProxyImageComponent
+  let fixture: ComponentFixture<ProxyImageComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HcpPictureComponent],
-      imports: [HttpClientTestingModule],
+      imports: [ProxyImageComponent, HttpClientTestingModule],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(HcpPictureComponent)
+    fixture = TestBed.createComponent(ProxyImageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  keycloakUrl: "https://auth.smartbanyuwangi.dasbor.id/",
+  keycloakUrl: "https://auth.banyuwangikab.go.id/",
   keycloakRealm: "banyuwangi",
   keycloakClientId: "angular-banyuwangi",
   hikOpenapi: {
@@ -15,7 +15,7 @@ export const environment = {
       baseUrl: "https://192.168.253.83:443",
     },
   },
-  serverBaseUrl: "https://api.smartbanyuwangi.dasbor.id",
+  serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
   useHCPHCMData: false,
   firebase: {
     apiKey: "AIzaSyBKcA_zpHBNItBCa0wjwh1xcWXrvGhFT-0",
@@ -25,5 +25,11 @@ export const environment = {
     messagingSenderId: "536041587255",
     appId: "1:536041587255:web:a5cde06490e51a6d31f5b2",
     measurementId: "G-QCZJSY35D6",
+  },
+  toast: {
+    defaultTimeout: 3000,
+    peringatanTimeout: 3000,
+    errorTimeout: 3000,
+    infoTimeout: 3000,
   },
 }
