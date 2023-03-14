@@ -1,0 +1,11 @@
+<ng-container *ngIf="isLoading; else notLoading"> Loading... </ng-container>
+
+<ng-template #notLoading>
+  <ng-container *ngIf="imageUrl && !isError; else errorTmpl">
+    <img *ngIf="imageUrl" [src]="imageUrl" alt="image" />
+  </ng-container>
+
+  <ng-template #errorTmpl>
+    <span class="text-danger"> Error fetching image </span>
+  </ng-template>
+</ng-template>
