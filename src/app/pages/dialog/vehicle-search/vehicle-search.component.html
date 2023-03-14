@@ -159,7 +159,9 @@
                 {{ t("plateImagePath") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
-                <img [src]="row.plateImagePath" alt="" />
+                <div class="img-container">
+                  <app-proxy-image [url]="row.plateImagePath"></app-proxy-image>
+                </div>
               </td>
             </ng-container>
 
@@ -168,7 +170,9 @@
                 {{ t("imagePath") }}
               </th>
               <td mat-cell *matCellDef="let row; let i = index">
-                <img [src]="row.imagePath" alt="" />
+                <div class="img-container">
+                  <app-proxy-image [url]="row.imagePath"></app-proxy-image>
+                </div>
               </td>
             </ng-container>
 
@@ -189,7 +193,7 @@
                   data-testid="btn-view"
                   [disabled]="isLoading"
                   mat-icon-button
-                  title="{{ t('View Data') }}"
+                  title="{{ t('details') }}"
                   (click)="viewData(row)"
                 >
                   <mat-icon>visibility</mat-icon>

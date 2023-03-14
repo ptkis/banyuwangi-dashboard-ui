@@ -15,7 +15,8 @@ import { render } from "@testing-library/angular"
 import { screen } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { ToastrModule } from "ngx-toastr"
-import { throwError } from "rxjs"
+import { of, throwError } from "rxjs"
+import { ProxyImageComponent } from "src/app/shared/components/proxy-image/proxy-image.component"
 import { HCMService } from "src/app/shared/services/hcm.service"
 import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
@@ -46,6 +47,7 @@ describe("VehicleSearchComponent", () => {
         ToastrModule.forRoot(),
         MatDatepickerModule,
         MatNativeDateModule,
+        ProxyImageComponent,
       ],
       providers: [cctvHttpMockProviders, ...providers],
     })
@@ -81,6 +83,26 @@ describe("VehicleSearchComponent", () => {
     class mockService {
       getVehicleData() {
         return throwError(() => ({ statusText: "Error" }))
+      }
+    }
+    const res = await renderComponent([
+      {
+        provide: HCMService,
+        useClass: mockService,
+      },
+    ])
+    const fixture = res.fixture
+    fixture.detectChanges()
+    await fixture.whenStable()
+  })
+
+  it("should test image proxy", async () => {
+    class mockService extends HCMService {
+      override getImageFromProxy(uri: string) {
+        const file = new File(["(⌐□_□)"], "chucknorris.png", {
+          type: "image/jpg",
+        })
+        return of(file)
       }
     }
     const res = await renderComponent([

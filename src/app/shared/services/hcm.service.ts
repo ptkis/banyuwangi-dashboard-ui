@@ -138,4 +138,17 @@ export class HCMService extends HIKService {
       }
     )
   }
+
+  getImageFromProxy(uri: string) {
+    return this.http.post(
+      `${environment.serverBaseUrl}/v1/image/proxy`,
+      {
+        headers: {},
+        uri,
+      },
+      {
+        responseType: "blob",
+      }
+    )
+  }
 }

@@ -53,6 +53,10 @@ export const cctvMockUrls: IMockURLStructure[] = [
     urlRegex: /v1\/vehicle\/data\/query/i,
     json: hcmVehicle,
   },
+  {
+    urlRegex: /v1\/image\/proxy/i,
+    json: "hcmVehicle",
+  },
 ]
 
 export const cctvHttpMockProviders = [

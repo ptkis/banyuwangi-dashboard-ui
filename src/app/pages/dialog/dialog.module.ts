@@ -38,6 +38,7 @@ import { VehicleDetailsComponent } from "./vehicle-search/vehicle-details/vehicl
 import { PersonSearchComponent } from "./person-search/person-search.component"
 import { HcpPictureComponent } from "./person-search/hcp-picture/hcp-picture.component"
 import { ReusableImageCanvasComponent } from "src/app/shared/components/reusable-image-canvas/reusable-image-canvas.component"
+import { ProxyImageComponent } from "src/app/shared/components/proxy-image/proxy-image.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -122,6 +123,7 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     MatDateFnsModule,
     ReusableImageCanvasComponent,
+    ProxyImageComponent,
   ],
   providers: [
     {

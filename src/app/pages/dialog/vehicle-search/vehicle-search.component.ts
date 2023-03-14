@@ -214,4 +214,8 @@ export class VehicleSearchComponent implements AfterViewInit {
       queryParams: data,
     })
   }
+
+  getImageProxy(uri: string) {
+    return this._HCMService.getImageFromProxy(uri)
+  }
 }
