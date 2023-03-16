@@ -182,7 +182,7 @@ export class PersonSearchComponent implements AfterViewInit {
         next: (resp) => {
           if (!resp.data?.list) {
             this.personDataList = []
-            if (typeof resp.data.total === "undefined") {
+            if (typeof resp.data?.total === "undefined") {
               this.errorMessage = resp.msg
             }
           } else {
