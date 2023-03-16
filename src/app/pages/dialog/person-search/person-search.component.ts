@@ -23,7 +23,7 @@ import {
   startOfDay,
   subDays,
 } from "date-fns"
-import { finalize } from "rxjs"
+import { finalize, lastValueFrom } from "rxjs"
 import {
   DATE_FORMAT,
   EnumHCPGenderType,
@@ -109,7 +109,7 @@ export class PersonSearchComponent implements AfterViewInit {
     private hcpService: HCPService
   ) {}
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
       width: "1335px",
     })
@@ -118,6 +118,14 @@ export class PersonSearchComponent implements AfterViewInit {
         this.router.navigate(["", { outlets: { dialog: null } }])
       })
     })
+
+    try {
+      const req = this.hcpService.getCameraIndexCodes()
+      const resp = await lastValueFrom(req)
+      if (Array.isArray(resp?.data)) {
+        this.allCameraIndexCodes = resp?.data
+      }
+    } catch (_) {}
 
     this.route.queryParamMap.subscribe((params) => {
       const startTime = params.get("startTime")
