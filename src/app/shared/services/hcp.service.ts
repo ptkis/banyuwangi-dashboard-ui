@@ -237,6 +237,17 @@ export class HCPService extends HIKService {
     )
   }
 
+  getCameraIndexCodes() {
+    return this.http.get<NonHCPCCTVResponse<string[]>>(
+      `${environment.serverBaseUrl}/v1/camera/cameraIndexCode`,
+      {
+        params: {
+          face: true,
+        },
+      }
+    )
+  }
+
   getNonHCPData(): Observable<CCTVData[]> {
     return this.getNonHCPCamera().pipe(
       map((resp) => {

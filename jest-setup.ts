@@ -22,6 +22,9 @@ window.MutationObserver = window.ResizeObserver = jest
     disconnect: jest.fn(),
   }))
 
+global.URL.createObjectURL = jest.fn()
+global.URL.revokeObjectURL = jest.fn()
+
 jest.mock("three", () => {
   const THREE = jest.requireActual("three")
   return {

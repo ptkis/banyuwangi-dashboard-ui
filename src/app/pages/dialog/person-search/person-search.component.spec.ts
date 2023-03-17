@@ -1,5 +1,4 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing"
-import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { MatButtonModule } from "@angular/material/button"
 import { MatCheckboxModule } from "@angular/material/checkbox"
@@ -18,9 +17,9 @@ import { render, screen } from "@testing-library/angular"
 import { fireEvent, waitFor } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { ToastrModule } from "ngx-toastr"
-import { throwError } from "rxjs"
+import { of } from "rxjs"
 import { ReusableImageCanvasComponent } from "src/app/shared/components/reusable-image-canvas/reusable-image-canvas.component"
-import { HCMService } from "src/app/shared/services/hcm.service"
+import { HCPService } from "src/app/shared/services/hcp.service"
 import { SharedModule } from "src/app/shared/shared.module"
 import { getTranslocoModule } from "src/app/transloco-testing.module"
 import { DialogModule } from "../dialog.module"
@@ -167,6 +166,37 @@ describe("PersonSearchComponent", () => {
     const btndownload = screen.getByTestId("btn-download")
     await user.click(btndownload)
 
+    await fixture.whenStable()
+  })
+
+  it("should test negative scenario", async () => {
+    class mockService extends HCPService {
+      override getCameraIndexCodes() {
+        return of({
+          success: false,
+          message: "ok",
+        }) as any
+      }
+
+      override personSearch() {
+        return of({
+          success: false,
+          message: "ok",
+        }) as any
+      }
+    }
+
+    const { fixture } = await renderComponent([
+      {
+        provide: HCPService,
+        useClass: mockService,
+      },
+    ])
+    await fixture.whenStable()
+
+    const user = userEvent.setup()
+    const btnSearch = screen.getByTestId("btn-search-submit")
+    await user.click(btnSearch)
     await fixture.whenStable()
   })
 })
