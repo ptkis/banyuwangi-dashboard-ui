@@ -156,7 +156,7 @@
                 <div (waIntersectionObservee)="onIntersection($event, picture)">
                   <app-hcp-picture #picture [data]="item" [autoload]="idx < 20">
                     <div class="image-info">
-                      {{ +(item?.similarity || 0) * 100 }}%
+                      {{ +(item?.similarity || 0) | number: "1.0-2" }}%
                       <ng-container *ngIf="item?.genderType">
                         {{ t($any(genderTypeOutput[item?.genderType || "3"])) }}
                       </ng-container>
