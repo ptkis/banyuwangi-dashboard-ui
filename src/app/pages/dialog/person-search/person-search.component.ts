@@ -171,7 +171,7 @@ export class PersonSearchComponent implements AfterViewInit {
     if (this.imageData?.base64) {
       // params['picData'] = this.imageSrc
       params["picData"] = this.imageData.base64
-      params["similarity"] = "10.5"
+      params["similarity"] = "70.0"
     }
     this.errorCode = ""
     this.errorMessage = ""
