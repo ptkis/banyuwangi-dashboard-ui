@@ -14,5 +14,6 @@
   "male": "Laki-laki",
   "female": "Perempuan",
   "unknown": "Tidak diketahui",
-  "nofile": "Belum ada gambar"
+  "nofile": "Belum ada gambar",
+  "similarity": "Kemiripan"
 }

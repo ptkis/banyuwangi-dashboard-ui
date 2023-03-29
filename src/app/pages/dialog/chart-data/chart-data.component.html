@@ -113,7 +113,7 @@
                   {{ t("timestamp") }}
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index">
-                  {{ row["snapshotCreated"] }}
+                  {{ row["snapshotCreated"] | dateFormat }}
                 </td>
               </ng-container>
 
