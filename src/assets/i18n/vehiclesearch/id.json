@@ -15,7 +15,7 @@
   "plateNo": "Plat No",
   "vehicleColor": "Warna",
   "plateImagePath": "Gambar Plat No",
-  "imagePath": "Gambar Pelanggaran",
+  "imagePath": "Gambar Kendaraan",
   "Action": "Action",
   "details": "Details",
   "download_image": "Unduh gambar"
