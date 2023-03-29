@@ -1,5 +1,7 @@
 export const DATE_FORMAT = "yyyy-MM-dd"
 
+export const READABLE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
+
 export const HCP_ALL_CAMERA_ID = [
   "1239",
   "1090",

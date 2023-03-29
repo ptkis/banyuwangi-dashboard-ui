@@ -125,10 +125,6 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     })
   }
 
-  formatDate(str: string) {
-    return format(new Date(str), "yyyy-MM-dd HH:mm:ss")
-  }
-
   ngAfterViewInit(): void {
     this.dialog.closeAll()
     this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
