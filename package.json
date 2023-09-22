@@ -84,7 +84,7 @@
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/angular": "^12.1.2",
-    "@testing-library/dom": "^8.19.0",
+    "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
     "@types/crypto-js": "^4.1.1",
