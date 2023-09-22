@@ -18,7 +18,7 @@ export const environment = {
   serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
   useHCPHCMData: false,
   firebase: {
-    apiKey: "AIzaSyBKcA_zpHBNItBCa0wjwh1xcWXrvGhFT-0",
+    apiKey: "changeme",
     authDomain: "banyuwangi-dashboard.firebaseapp.com",
     projectId: "banyuwangi-dashboard",
     storageBucket: "banyuwangi-dashboard.appspot.com",

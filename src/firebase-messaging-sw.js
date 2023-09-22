@@ -5,7 +5,7 @@ importScripts(
   "https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging-compat.js"
 )
 firebase.initializeApp({
-  apiKey: "AIzaSyBKcA_zpHBNItBCa0wjwh1xcWXrvGhFT-0",
+  apiKey: "changeme",
   authDomain: "banyuwangi-dashboard.firebaseapp.com",
   projectId: "banyuwangi-dashboard",
   storageBucket: "banyuwangi-dashboard.appspot.com",
