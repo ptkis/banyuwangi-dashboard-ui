@@ -11,6 +11,14 @@
   text-align: center;
 }
 
+.mat-column-host {
+  padding: 0 16px;
+}
+
+.mat-column-action {
+  width: 145px;
+}
+
 .content-container {
   min-height: 300px;
 }
@@ -45,7 +53,6 @@ th.gradient-bg-1 {
 .toolbar-container {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
 .mat-cell {
