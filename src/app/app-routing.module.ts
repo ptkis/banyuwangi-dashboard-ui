@@ -1,11 +1,18 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { AuthGuard } from "src/app/shared/guards/auth.guard"
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dashboard",
+    redirectTo: "live",
     pathMatch: "full",
+  },
+  {
+    path: "live",
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import("./pages/live/live.component").then((m) => m.LiveComponent),
   },
   {
     path: "dashboard",

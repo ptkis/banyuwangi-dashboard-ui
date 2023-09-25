@@ -1,24 +1,5 @@
 <div class="chart-container" *transloco="let t; read: 'dashboard'">
   <div class="main">
-    <div class="custom-radio-group map-select">
-      <label
-        class="custom-radio-container"
-        [routerLink]="['/dashboard']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <input type="radio" name="radio" />
-        <span class="custom-radio-button"> Map Dashboard </span>
-      </label>
-      <label
-        class="custom-radio-container"
-        [routerLink]="['/dashboard/3d']"
-        routerLinkActive="active"
-      >
-        <input type="radio" name="radio" />
-        <span class="custom-radio-button"> 3D Dashboard </span>
-      </label>
-    </div>
     <ng-content select="[slot=main]"></ng-content>
   </div>
   <div class="left-area">

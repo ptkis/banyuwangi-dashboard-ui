@@ -1,9 +1,15 @@
 <header>
   <div class="left-content">
-    {{ time$ | async | date: "dd / MM / yy &nbsp;&nbsp; HH:mm" }} WIB
+    {{ time$ | async | date: "dd / MM / yyyy &nbsp;&nbsp; HH:mm" }} WIB
   </div>
   <div class="center-content">DASHBOARD BANYUWANGI</div>
   <div class="right-content d-flex justify-content-end align-items-center">
+    <a mat-icon-button href="#"><mat-icon>search</mat-icon></a>
+    <a mat-icon-button href="#">
+      <mat-icon class="material-icons-outlined"
+        >notification_important</mat-icon
+      >
+    </a>
     <a mat-icon-button [matMenuTriggerFor]="settingsMenu"
       ><mat-icon>settings</mat-icon></a
     >
@@ -23,5 +29,25 @@
         <span>CCTV List</span>
       </a>
     </mat-menu>
+  </div>
+
+  <div class="custom-radio-group map-select">
+    <label
+      class="custom-radio-container"
+      [routerLink]="['/live']"
+      routerLinkActive="active"
+    >
+      <input type="radio" name="radio" />
+      <span class="custom-radio-button"> Live Monitor </span>
+    </label>
+    <label
+      class="custom-radio-container"
+      [routerLink]="['/dashboard']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <input type="radio" name="radio" />
+      <span class="custom-radio-button"> Map Dashboard </span>
+    </label>
   </div>
 </header>
