@@ -14,12 +14,3 @@ PACKAGE_VERSION="$(< package.json \
 npm run env
 node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng build --configuration "$configuration"
 #npm run test && npm run build:static
-
-# Prevent "Error: Cannot perform an interactive login from a non TTY device"
-[ -z "$DOCKER_HUB_PASSWORD" ] && echo "Please set DOCKER_HUB_PASSWORD in repository secret"
-
-echo "$DOCKER_HUB_PASSWORD" | docker login -u ptkis --password-stdin
-docker build . -t "ptkis/$PACKAGE_NAME:latest-$configuration"
-docker tag "ptkis/$PACKAGE_NAME:latest-$configuration" "ptkis/$PACKAGE_NAME:$PACKAGE_VERSION"
-docker push "ptkis/$PACKAGE_NAME:latest-$configuration" && \
-docker push "ptkis/$PACKAGE_NAME:$PACKAGE_VERSION"
