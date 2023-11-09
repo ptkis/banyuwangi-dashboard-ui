@@ -30,14 +30,22 @@
       </mat-form-field>
     </form>
   </div>
-  <div class="cctv-container">
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-    <div>1</div>
-  </div>
+  <cdk-virtual-scroll-viewport itemSize="180" class="cctv-container">
+    <ng-container *cdkVirtualFor="let item of CCTVLists; templateCacheSize: 0">
+      <div *ngFor="let cctv of item" class="cctv-item">
+        <ng-container *ngIf="cctv.isOnline; else offlineTmpl">
+          <app-hik-video-2 [url]="cctv.liveViewUrl"></app-hik-video-2>
+        </ng-container>
+        <ng-template #offlineTmpl>
+          <div class="offline-text">
+            CCTV Offline
+            <div class="subtext" *ngIf="cctv.name as name">{{ name }}</div>
+            <div class="subtext" *ngIf="cctv.location as location">
+              {{ location }}
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
 </div>

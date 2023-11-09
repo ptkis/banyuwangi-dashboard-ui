@@ -34,4 +34,9 @@ export const environment = {
     errorTimeout: 3000,
     infoTimeout: 3000,
   },
+  reloadHealthCheckInterval: 30, // satuan detik
+  reloadErrorInterval: 10, // satuan detik
+  liveCheckInterval: 2, // satuan detik
+  liveCheckMaxDiff: 300, // satuan detik
+  liveCheckSeek: 0.5, // satuan detik sebelum akhir dari video
 }

@@ -1,0 +1,73 @@
+<ng-container *ngIf="isLoading; else notLoading">{{
+  "loading" | transloco
+}}</ng-container>
+<ng-template #notLoading>
+  <div
+    class="video-wrapper"
+    *ngIf="url && !isError; else urlError"
+    (click)="$event.stopPropagation()"
+  >
+    <ng-container *ngIf="(videoEl?.nativeElement?.readyState || 0) < 3">
+      <div class="video-loading">Loading...</div>
+    </ng-container>
+
+    <ng-container>
+      <vg-player (onPlayerReady)="onPlayerReady($event)">
+        <video
+          #media
+          #vgHls="vgHls"
+          [vgMedia]="$any(media)"
+          [vgHls]="url"
+          id="my-video"
+          [autoplay]="autoplay"
+          muted
+        ></video>
+      </vg-player>
+      <ng-container
+        *tuiLet="
+          (videoEl?.nativeElement?.duration || 0) -
+          (videoEl?.nativeElement?.currentTime || 0) as diff
+        "
+      >
+        <div [ngClass]="{ invisible: !isDebug }" class="debug-element-1">
+          <div>attached: {{ !!hlsMedia }}</div>
+          <div>Paused: {{ videoEl?.nativeElement?.paused }}</div>
+          <div>Loading: {{ videoEl?.nativeElement?.readyState !== 4 }}</div>
+          <div>Error: {{ isHlsError }}</div>
+          <div>Reloading: {{ isReloading }}</div>
+          <div>diff: {{ diff | number: "1.0-0" }}</div>
+        </div>
+        <ng-container
+          *ngIf="
+            (!isHlsError &&
+              !hlsMedia &&
+              !isReloading &&
+              videoEl?.nativeElement?.paused === true) ||
+            diff > 15 ||
+            diff < 1
+          "
+        >
+          <div
+            [ngClass]="{ invisible: !isDebug }"
+            class="debug-element-1 bottom"
+            *tuiLet="healthChecktimer$ | async as timer"
+          >
+            {{ "healthcheck_reload" | transloco: { value: timer } }}
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="isHlsError && !isReloading">
+      <div class="debug-element-1 bottom" *tuiLet="timer$ | async as timer">
+        {{ "error_reload" | transloco: { value: timer } }}
+      </div>
+    </ng-container>
+    <ng-template #thumbnailElement>
+      <div class="absolute inset-0" *ngIf="thumbnail">
+        <img class="object-cover" [src]="thumbnail" [alt]="thumbnail" />
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #urlError>{{ "error_invalid_url" | transloco }}</ng-template>
+</ng-template>

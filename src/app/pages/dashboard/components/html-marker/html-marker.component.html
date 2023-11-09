@@ -1,0 +1,44 @@
+<div
+  *ngIf="{
+    isOffline: data?.cctv_status === 'Offline',
+    hasAlert: hasAlert$ | async
+  } as dt"
+  class="marker-wrapper"
+>
+  <div
+    class="marker-container"
+    [title]="data?.cctv_title"
+    [ngClass]="{
+      offline: dt.isOffline,
+      hasAlert: dt.hasAlert
+    }"
+  >
+    <div *ngIf="dt.hasAlert" class="alert-container">
+      <ng-container *ngIf="timer$ | async as timer">
+        <img
+          class="animate__animated animate__headShake"
+          src="/assets/images/cctv-alert.png"
+          width="22"
+          height="22"
+          alt=""
+        />
+        <div
+          class="loading-bar"
+          [ngStyle]="{ width: (timer / dismissTime) * 100 + '%' }"
+        ></div>
+      </ng-container>
+    </div>
+    <div class="cctv-img" (click)="cctvClick()">
+      <img
+        [src]="
+          '/assets/images/cctv-' +
+          (dt.isOffline ? 'offline' : 'online') +
+          '.png'
+        "
+        width="22"
+        height="22"
+        alt=""
+      />
+    </div>
+  </div>
+</div>

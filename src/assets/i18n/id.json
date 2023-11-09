@@ -6,5 +6,8 @@
     "btnCancel": "Later",
     "btnConfirm": "Allow"
   },
-  "error_network": "Gagal mengambil data! ({{message}})"
+  "error_network": "Gagal mengambil data! ({{message}})",
+  "healthcheck_reload": "Reload in {{value}}...",
+  "error_reload": "Playback error. Will reload in {{value}}...",
+  "loading": "Loading..."
 }

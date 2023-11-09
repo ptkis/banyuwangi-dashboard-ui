@@ -1,11 +1,17 @@
-import { DomPortalOutlet, TemplatePortal } from "@angular/cdk/portal"
+import {
+  ComponentPortal,
+  DomPortalOutlet,
+  TemplatePortal,
+} from "@angular/cdk/portal"
 import {
   AfterViewInit,
   Component,
+  ComponentFactoryResolver,
   ElementRef,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from "@angular/core"
 import {
   Map,
@@ -19,7 +25,6 @@ import {
 } from "maptalks"
 import * as THREE from "three"
 import { ThreeLayer } from "maptalks.three"
-import { SVGLoader, SVGResult } from "three/examples/jsm/loaders/SVGLoader"
 
 import { ToastrService } from "ngx-toastr"
 import { HttpErrorResponse } from "@angular/common/http"
@@ -29,7 +34,10 @@ import { HCMService } from "src/app/shared/services/hcm.service"
 import { CCTVData } from "src/app/shared/services/hik.service"
 import { environment } from "src/environments/environment"
 import { ActivatedRoute } from "@angular/router"
+import { HTMLMarkerComponent } from "src/app/pages/dashboard/components/html-marker/html-marker.component"
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy"
 
+@UntilDestroy()
 @Component({
   selector: "app-map-dashboard",
   templateUrl: "./map-dashboard.component.html",
@@ -51,6 +59,8 @@ export class MapDashboardComponent implements AfterViewInit {
 
   showButtons = false
   isMapReady = false
+
+  cfr = inject(ComponentFactoryResolver)
 
   constructor(
     protected _viewContainerRef: ViewContainerRef,
@@ -97,7 +107,16 @@ export class MapDashboardComponent implements AfterViewInit {
     this.isMapReady = true
   }
 
+  getHTMLMarker(coordinates: number[], marker_data: CCTVData) {
+    const id = `marker-${marker_data.cctv_id}`
+    return new ui.UIMarker(coordinates, {
+      content: `<div id="${id}" class="text_marker"></div>`,
+      dy: -20,
+    })
+  }
+
   getMarker(coordinates: number[], svgFile: string) {
+    // https://github.com/maptalks/maptalks.js/wiki/Symbol-Reference
     return new Marker(coordinates, {
       symbol: [
         {
@@ -216,11 +235,55 @@ export class MapDashboardComponent implements AfterViewInit {
     const marker = this.getMarker(
       [+marker_data.cctv_longitude, +marker_data.cctv_latitude],
       svg
-    ).addTo(this.layer)
+    )
+      .addTo(this.layer)
+      .hide()
+
+    const htmlMarker = this.getHTMLMarker(
+      [+marker_data.cctv_longitude, +marker_data.cctv_latitude],
+      marker_data
+    ).addTo(this.map)
+
+    this.attachMarkerComponent(htmlMarker, marker_data, marker)
 
     this.markers = [...this.markers, marker]
 
     this.setupMarkerInfoWindow(marker, marker_data)
+  }
+
+  attachMarkerComponent(
+    marker: ui.UIMarker,
+    marker_data: CCTVData,
+    markerref: Marker
+  ) {
+    // console.log(marker.getDOM())
+    // const content = marker.getContent().toString()
+    // const regex = /<div\s+id="([^"]+)"/i
+    // const match = content.match(regex)
+    // const divId = match?.[1]
+    // if (!divId) {
+    //   return
+    // }
+
+    // const domElement = document.getElementById(divId)
+    // @ts-ignore
+    const domElement = marker.getDOM()
+    if (domElement) {
+      const po = new DomPortalOutlet(domElement)
+      const componentPortal = new ComponentPortal(
+        HTMLMarkerComponent,
+        this._viewContainerRef,
+        undefined,
+        this.cfr
+      )
+      const componentRef = componentPortal.attach(po)
+      componentRef.instance.data = marker_data
+      componentRef.instance.markerClick
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          markerref.fire("click", {})
+        })
+    }
   }
 
   setupMarkerInfoWindow(marker: Marker, marker_data: CCTVData) {
@@ -231,6 +294,7 @@ export class MapDashboardComponent implements AfterViewInit {
     marker.setInfoWindow({
       title: marker_data.cctv_title,
       content: "",
+      zIndex: 11,
     })
 
     const iw: ui.InfoWindow = marker.getInfoWindow()
