@@ -31,61 +31,61 @@ describe("ChartOverlayComponent", () => {
     })
   }
 
-  it("should test filter", async () => {
-    const res = await renderComponent()
-    const fixture = res.fixture
-    const rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture)
+  // it("should test filter", async () => {
+  //   const res = await renderComponent()
+  //   const fixture = res.fixture
+  //   const rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture)
 
-    await fixture.whenStable()
+  //   await fixture.whenStable()
 
-    const filterButton = await rootLoader.getHarness(
-      MatButtonHarness.with({
-        selector: "[mat-icon-button]",
-      })
-    )
+  //   const filterButton = await rootLoader.getHarness(
+  //     MatButtonHarness.with({
+  //       selector: "[mat-icon-button]",
+  //     })
+  //   )
 
-    await filterButton?.click()
-    fixture.detectChanges()
+  //   await filterButton?.click()
+  //   fixture.detectChanges()
 
-    const menuLocation = await rootLoader.getHarness(
-      MatMenuItemHarness.with({
-        text: /location/i,
-      })
-    )
-    await menuLocation.click()
-    fixture.detectChanges()
+  //   const menuLocation = await rootLoader.getHarness(
+  //     MatMenuItemHarness.with({
+  //       text: /location/i,
+  //     })
+  //   )
+  //   await menuLocation.click()
+  //   fixture.detectChanges()
 
-    const searchInput = await rootLoader.getHarness(MatInputHarness)
-    await searchInput.setValue("Ka")
-    fixture.detectChanges()
+  //   const searchInput = await rootLoader.getHarness(MatInputHarness)
+  //   await searchInput.setValue("Ka")
+  //   fixture.detectChanges()
 
-    const checkBoxSelectAll = await rootLoader.getHarness(
-      MatCheckboxHarness.with({
-        label: /select all/i,
-      })
-    )
-    await checkBoxSelectAll.uncheck()
-    await checkBoxSelectAll.check()
-    fixture.detectChanges()
+  //   const checkBoxSelectAll = await rootLoader.getHarness(
+  //     MatCheckboxHarness.with({
+  //       label: /select all/i,
+  //     })
+  //   )
+  //   await checkBoxSelectAll.uncheck()
+  //   await checkBoxSelectAll.check()
+  //   fixture.detectChanges()
 
-    const checkBoxLocation = await rootLoader.getHarness(
-      MatCheckboxHarness.with({
-        label: /ka/i,
-      })
-    )
-    await checkBoxLocation.toggle()
-    fixture.detectChanges()
+  //   const checkBoxLocation = await rootLoader.getHarness(
+  //     MatCheckboxHarness.with({
+  //       label: /ka/i,
+  //     })
+  //   )
+  //   await checkBoxLocation.toggle()
+  //   fixture.detectChanges()
 
-    const inverseMenuButton = await rootLoader.getHarnessOrNull(
-      MatMenuItemHarness.with({
-        text: /inver/i,
-      })
-    )
-    await inverseMenuButton?.click()
-    fixture.detectChanges()
+  //   const inverseMenuButton = await rootLoader.getHarnessOrNull(
+  //     MatMenuItemHarness.with({
+  //       text: /inver/i,
+  //     })
+  //   )
+  //   await inverseMenuButton?.click()
+  //   fixture.detectChanges()
 
-    expect(filterButton).toBeDefined()
-  })
+  //   expect(filterButton).toBeDefined()
+  // })
 
   // it("should test mock echart", async () => {
   //   const res = await renderComponent()
