@@ -43,7 +43,7 @@
     "@videogular/ngx-videogular": "^6.0.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.3",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "date-fns": "^2.29.3",
     "echarts": "^5.4.0",
     "firebase": "^9.15.0",
