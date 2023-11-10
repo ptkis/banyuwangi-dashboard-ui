@@ -1,0 +1,75 @@
+.marker-wrapper {
+  position: relative;
+  width: 40px;
+  height: 44px;
+}
+.marker-container {
+  position: absolute;
+  background: rgba(23, 50, 82, 0.8);
+  border-radius: 4px;
+  border: 1px solid #7d7d7d;
+  padding: 8px;
+  color: white;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.offline {
+    background: rgba(255, 255, 255, 0.8);
+
+    &:after {
+      border-top-color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  &.hasAlert {
+    z-index: 99999999;
+  }
+
+  &:before,
+  &:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:before {
+    border-color: rgba(125, 125, 125, 0);
+    border-top-color: #7d7d7d;
+    border-width: 6px;
+    margin-left: -6px;
+  }
+
+  &:after {
+    border-color: rgba(125, 125, 125, 0);
+    border-top-color: #173252cc;
+    border-width: 5px;
+    margin-left: -5px;
+  }
+
+  .alert-container {
+    display: flex;
+    gap: 8px;
+    position: static;
+  }
+
+  .cctv-img {
+    cursor: pointer;
+  }
+
+  .loading-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    transition: width 1s;
+  }
+}

@@ -1,5 +1,15 @@
 <app-chart-panel *transloco="let t; read: 'dashboard'">
   <ng-template #customTitle>
+    <button
+      mat-icon-button
+      class="panel_button"
+      [disabled]="isLoading"
+      data-testid="btn-expand"
+      (click)="toggleExpanded()"
+    >
+      <mat-icon>{{ isExpanded ? "expand_more" : "expand_less" }}</mat-icon>
+    </button>
+
     <div class="title">{{ panelTitle }}</div>
 
     <button
@@ -81,7 +91,7 @@
   </ng-template>
 
   <ng-template #contentBody>
-    <div class="p-2 body">
+    <div class="p-2 body" *ngIf="isExpanded">
       <div *ngIf="errorMessage" class="error-message">
         <div class="text-center">
           <div>{{ errorMessage }}</div>

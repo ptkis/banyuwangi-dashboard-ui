@@ -24,6 +24,8 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
 import { TranslocoModule, TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
+import { HeaderComponent } from "src/app/pages/dashboard/components/header/header.component"
+import { TuiLetModule } from "@taiga-ui/cdk"
 
 export const dashboardRoutes: Routes = [
   {
@@ -53,6 +55,7 @@ export const dashboardMaterialModules = [
   MatCheckboxModule,
   MatFormFieldModule,
   DialogModule,
+  TuiLetModule,
 ]
 
 @NgModule({
@@ -73,6 +76,7 @@ export const dashboardMaterialModules = [
 
     ListFilterComponent,
   ],
+  exports: [HeaderComponent],
   providers: [
     {
       provide: TRANSLOCO_SCOPE,

@@ -1,0 +1,55 @@
+.live-container {
+  margin-top: 80px;
+  height: calc(100vh - 80px - 43px);
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+
+  .search-container {
+    flex-shrink: 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #132a46;
+
+    form {
+      gap: 18px;
+    }
+  }
+
+  .cctv-container {
+    padding-top: 12px;
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    margin-right: -24px;
+
+    .cdk-virtual-scroll-content-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(10px, 1fr));
+      gap: 14px;
+      padding-right: 24px;
+
+      .cctv-item {
+        border-radius: 4px;
+        border: 2px solid #2769a5;
+        aspect-ratio: 16 / 9;
+        overflow-wrap: anywhere;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .offline-text {
+          font-size: 24px;
+          font-weight: bold;
+          color: white;
+          text-align: center;
+
+          .subtext {
+            font-size: 0.5em;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+}

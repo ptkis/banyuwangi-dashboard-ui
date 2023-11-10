@@ -26,10 +26,17 @@ export const environment = {
     appId: "1:536041587255:web:a5cde06490e51a6d31f5b2",
     measurementId: "G-QCZJSY35D6",
   },
+  mapCenter: [114.36461695575213, -8.206547262582632],
+  mapZoom: 11,
   toast: {
     defaultTimeout: 3000,
     peringatanTimeout: 3000,
     errorTimeout: 3000,
     infoTimeout: 3000,
   },
+  reloadHealthCheckInterval: 30, // satuan detik
+  reloadErrorInterval: 10, // satuan detik
+  liveCheckInterval: 2, // satuan detik
+  liveCheckMaxDiff: 300, // satuan detik
+  liveCheckSeek: 0.5, // satuan detik sebelum akhir dari video
 }

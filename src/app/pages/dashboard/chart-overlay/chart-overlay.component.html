@@ -1,29 +1,11 @@
 <div class="chart-container" *transloco="let t; read: 'dashboard'">
   <div class="main">
-    <div class="custom-radio-group map-select">
-      <label
-        class="custom-radio-container"
-        [routerLink]="['/dashboard']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <input type="radio" name="radio" />
-        <span class="custom-radio-button"> Map Dashboard </span>
-      </label>
-      <label
-        class="custom-radio-container"
-        [routerLink]="['/dashboard/3d']"
-        routerLinkActive="active"
-      >
-        <input type="radio" name="radio" />
-        <span class="custom-radio-button"> 3D Dashboard </span>
-      </label>
-    </div>
     <ng-content select="[slot=main]"></ng-content>
   </div>
   <div class="left-area">
     <div>
       <app-line-chart
+        panelID="flood"
         [chartTitle]="t('flood')"
         chartType="flood"
         [getData]="_dashboardService.getFloodChartData"
@@ -32,6 +14,7 @@
     </div>
     <div>
       <app-line-chart
+        panelID="trash"
         #trashChart
         [chartTitle]="t('trash')"
         chartType="trash"
@@ -39,10 +22,19 @@
         tooltipPosition="right"
       ></app-line-chart>
     </div>
+
+    <app-line-chart
+      panelID="crowd"
+      [chartTitle]="t('crowd')"
+      chartType="crowd"
+      [getData]="_dashboardService.getCrowdChartData"
+      tooltipPosition="right"
+    ></app-line-chart>
   </div>
   <div class="right-area">
     <div>
       <app-line-chart
+        panelID="streetvendor"
         [chartTitle]="t('streetvendor')"
         chartType="streetvendor"
         [getData]="_dashboardService.getStreetVendorChartData"
@@ -51,41 +43,12 @@
     </div>
     <div>
       <app-line-chart
+        panelID="traffic"
         [chartTitle]="t('traffic')"
         chartType="traffic"
         [getData]="_dashboardService.getTrafficChartData"
         tooltipPosition="left"
       ></app-line-chart>
     </div>
-  </div>
-  <div class="footer-area">
-    <!-- <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Sampah Sungai</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 133px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel>
-    <app-chart-panel>
-      <ng-template #customTitle>
-        <div class="title">Kepadatan Lalu Lintas</div>
-      </ng-template>
-
-      <ng-template #contentBody>
-        <div class="p-2">
-          <div echarts [options]="chartOption" style="height: 133px"></div>
-        </div>
-      </ng-template>
-    </app-chart-panel> -->
-    <app-line-chart
-      [chartTitle]="t('crowd')"
-      chartType="crowd"
-      [getData]="_dashboardService.getCrowdChartData"
-      tooltipPosition="right"
-    ></app-line-chart>
   </div>
 </div>

@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class="live-container">
+  <div class="search-container">
+    <form [formGroup]="searchForm" class="d-flex w-100" (ngSubmit)="search()">
+      <mat-form-field class="custom-form-field2" appearance="fill">
+        <mat-label>Cari</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          data-testid="search"
+          placeholder="Cari..."
+          formControlName="search"
+        />
+      </mat-form-field>
+      <mat-form-field class="custom-form-field2" appearance="fill">
+        <mat-label>Deteksi</mat-label>
+        <mat-select formControlName="detection">
+          <mat-option *ngFor="let item of detections" [value]="item.value">
+            {{ item.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="custom-form-field2" appearance="fill">
+        <mat-label>Lokasi</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let item of locations" [value]="item.value">
+            {{ item.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+  <cdk-virtual-scroll-viewport itemSize="180" class="cctv-container">
+    <ng-container *cdkVirtualFor="let item of CCTVLists; templateCacheSize: 0">
+      <div *ngFor="let cctv of item" class="cctv-item">
+        <ng-container *ngIf="cctv.isOnline; else offlineTmpl">
+          <app-hik-video-2 [url]="cctv.liveViewUrl"></app-hik-video-2>
+        </ng-container>
+        <ng-template #offlineTmpl>
+          <div class="offline-text">
+            CCTV Offline
+            <div class="subtext" *ngIf="cctv.name as name">{{ name }}</div>
+            <div class="subtext" *ngIf="cctv.location as location">
+              {{ location }}
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+</div>

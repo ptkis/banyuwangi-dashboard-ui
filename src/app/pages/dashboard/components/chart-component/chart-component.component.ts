@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core"
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core"
 import {
   graphic,
   EChartsOption,
@@ -31,7 +38,8 @@ import { format, isToday, subMonths } from "date-fns"
     },
   ],
 })
-export class ChartComponentComponent {
+export class ChartComponentComponent implements AfterViewInit {
+  @Input() panelID = "Chart"
   @Input() panelTitle = "Chart"
   @Input() tooltipPosition: "left" | "right" | "top" = "right"
 
@@ -68,6 +76,7 @@ export class ChartComponentComponent {
 
   showChartDetail = false
   isLoading = false
+  isExpanded = true
 
   startDate = format(subMonths(new Date(), 1), "yyyy-MM-dd")
   endDate = format(new Date(), "yyyy-MM-dd")
@@ -75,8 +84,19 @@ export class ChartComponentComponent {
   constructor(
     private _dashboardService: DashboardService,
     private datePipe: DatePipe,
-    private appService: AppService
+    private appService: AppService,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  ngAfterViewInit(): void {
+    const expData = sessionStorage.getItem(`${this.panelID}-expanded`)
+    if (expData === "false") {
+      this.isExpanded = false
+    } else {
+      this.isExpanded = true
+    }
+    this.cdr.detectChanges()
+  }
 
   setLoading(loading: boolean) {
     if (this.echartsInstance && !this.echartsInstance.isDisposed()) {
@@ -292,5 +312,13 @@ export class ChartComponentComponent {
 
   menuClick(type: string) {
     this.menuClicked.emit(type)
+  }
+
+  toggleExpanded() {
+    this.isExpanded = !this.isExpanded
+    sessionStorage.setItem(
+      `${this.panelID}-expanded`,
+      JSON.stringify(this.isExpanded)
+    )
   }
 }

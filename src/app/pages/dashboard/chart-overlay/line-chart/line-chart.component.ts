@@ -9,6 +9,7 @@ import { ChartResponse } from "../../dashboard.service"
   selector: "app-line-chart",
   template: `
     <app-chart-component
+      [panelID]="panelID"
       [panelTitle]="chartTitle"
       [getChartData]="getData"
       [chartType]="chartType"
@@ -20,6 +21,7 @@ import { ChartResponse } from "../../dashboard.service"
   `,
 })
 export class LineChartComponent {
+  @Input() panelID = "Line Chart"
   @Input() chartTitle = "Line Chart"
   @Input() chartType = "trash"
   @Input() tooltipPosition: "left" | "right" | "top" = "right"

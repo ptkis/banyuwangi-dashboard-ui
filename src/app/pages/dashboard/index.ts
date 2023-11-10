@@ -1,3 +1,4 @@
+import { HTMLMarkerComponent } from "src/app/pages/dashboard/components/html-marker/html-marker.component"
 import { ChartOverlayComponent } from "./chart-overlay/chart-overlay.component"
 import { CrowdChartComponent } from "./chart-overlay/crowd-chart/crowd-chart.component"
 import { FloodChartComponent } from "./chart-overlay/flood-chart/flood-chart.component"
@@ -17,6 +18,7 @@ export const dashboardComponents = [
   ChartOverlayComponent,
   MapDashboardComponent,
   Map3dDashboardComponent,
+  HTMLMarkerComponent,
 
   ChartComponentComponent,
   LineChartComponent,

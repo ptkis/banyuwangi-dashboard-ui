@@ -228,24 +228,4 @@ describe("MapDashboardComponent", () => {
     }
     sessionStorage.removeItem("dataSourceSettings")
   })
-
-  it("should test satellite view", async () => {
-    const res = await renderComponent([
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          paramMap: of({
-            get: (key: string) => {
-              const data = {
-                type: "3d",
-              } as any
-              return data[key]
-            },
-          }),
-        },
-      },
-    ])
-
-    expect(res.fixture.componentInstance.map).toBeDefined()
-  })
 })
