@@ -35,4 +35,13 @@ export class LiveService {
       }
     )
   }
+
+  getLocationList(params?: Record<string, any>) {
+    return this.http.get<APIResponse<string[]>>(
+      `${environment.serverBaseUrl}/v1/live/location/list`,
+      {
+        params,
+      }
+    )
+  }
 }

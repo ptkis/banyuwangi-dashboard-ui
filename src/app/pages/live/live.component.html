@@ -9,14 +9,14 @@
           matInput
           data-testid="search"
           placeholder="Cari..."
-          formControlName="search"
+          formControlName="keyword"
         />
       </mat-form-field>
       <mat-form-field class="custom-form-field2" appearance="fill">
         <mat-label>Deteksi</mat-label>
-        <mat-select formControlName="detection">
+        <mat-select formControlName="type">
           <mat-option *ngFor="let item of detections" [value]="item.value">
-            {{ item.label }}
+            {{ item.label | transloco }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -30,7 +30,10 @@
       </mat-form-field>
     </form>
   </div>
-  <cdk-virtual-scroll-viewport itemSize="180" class="cctv-container">
+  <ng-container *ngIf="isLoading">
+    <div class="loader-long"></div>
+  </ng-container>
+  <cdk-virtual-scroll-viewport #vp itemSize="180" class="cctv-container mt-4">
     <ng-container *cdkVirtualFor="let item of CCTVLists; templateCacheSize: 0">
       <div *ngFor="let cctv of item" class="cctv-item">
         <ng-container *ngIf="cctv.isOnline; else offlineTmpl">
