@@ -9,5 +9,12 @@
   "error_network": "Gagal mengambil data! ({{message}})",
   "healthcheck_reload": "Reload in {{value}}...",
   "error_reload": "Playback error. Will reload in {{value}}...",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "WATERLEVEL": "Ketinggian Air",
+  "CROWD": "Keramaian",
+  "FLOOD": "Genangan Air",
+  "STREETVENDOR": "Kaki Lima",
+  "ANALYTIC": "Analitik",
+  "TRAFFIC": "Lalu Lintas",
+  "TRASH": "Sampah"
 }

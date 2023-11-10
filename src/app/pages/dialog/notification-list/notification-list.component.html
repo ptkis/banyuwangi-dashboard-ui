@@ -1,0 +1,82 @@
+<ng-template #content>
+  <ng-container *transloco="let t; read: 'chartdata'">
+    <app-chart-panel>
+      <ng-template #customTitle>
+        <div class="title">
+          <button
+            data-testid="btn-close"
+            (click)="dialogRef.close()"
+            mat-icon-button
+          >
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+          Peringatan
+        </div>
+      </ng-template>
+
+      <ng-template #contentBody>
+        <div class="content-container p-3">
+          <div class="table-container">
+            <table
+              mat-table
+              matSort
+              [dataSource]="dataSource"
+              class="mat-elevation-z8 w-100"
+            >
+              <ng-container matColumnDef="date">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  Date
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row["instant"] | date: "dd/MM/YYYY hh:mm:ss" }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  Jenis Deteksi
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row["type"] | transloco }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="camera">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  Kamera
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row["cameraName"] }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="latlon">
+                <th class="gradient-bg-1" mat-header-cell *matHeaderCellDef>
+                  Latitude Longitude
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row["location"] }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator
+              class="demo-paginator"
+              (page)="handlePageEvent($event)"
+              [length]="paginator.length"
+              [pageSize]="paginator.size"
+              [showFirstLastButtons]="true"
+              [pageIndex]="paginator.index"
+              [disabled]="isLoading"
+              [pageSizeOptions]="[5, 10]"
+              aria-label="Select page"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </ng-template>
+    </app-chart-panel>
+  </ng-container>
+</ng-template>
