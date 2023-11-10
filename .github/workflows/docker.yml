@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
@@ -32,6 +32,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get FIREBASE_JS from secrets and write to firebase-messaging-sw.js
+        run: |
+          echo $FIREBASE_JS > src/firebase-messaging-sw.js
+        env:
+          FIREBASE_JS: ${{ secrets.FIREBASE_JS }}
       - run: chmod +x build.sh
       - run: ./build.sh staging
       - name: Build docker
@@ -55,7 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
