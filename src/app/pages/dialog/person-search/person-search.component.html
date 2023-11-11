@@ -8,6 +8,21 @@
       >
         <mat-icon>close</mat-icon>
       </button>
+      <div class="button-tab">
+        <button class="gradient-bg-1 fw-bold">Pencarian Orang</button>
+        <button
+          [routerLink]="[
+            '',
+            {
+              outlets: {
+                dialog: ['vehicle']
+              }
+            }
+          ]"
+        >
+          Pencarian Kendaraan
+        </button>
+      </div>
       <form
         [formGroup]="searchForm"
         class="toolbar-outside d-flex w-100"

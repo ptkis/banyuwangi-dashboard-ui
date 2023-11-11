@@ -73,7 +73,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     latitude: "SNAPSHOT_CAMERA_LATITUDE",
     longitude: "SNAPSHOT_CAMERA_LONGITUDE",
     type: "TYPE",
-    maxValue: "MAXVALUE",
+    maxValue: "MAX_VALUE",
     value: "VALUE",
   }
 
@@ -234,7 +234,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
   sortChange(event: Sort) {
     this.direction = event.direction.toUpperCase()
     this.sort = this.fieldMap[event.active]
-    this.getChartDataList(1, this.paginator.length)
+    this.getChartDataList(1, this.paginator.size)
   }
 
   setMatSortData() {

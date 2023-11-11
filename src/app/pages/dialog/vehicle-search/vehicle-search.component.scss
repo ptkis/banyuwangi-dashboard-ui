@@ -51,3 +51,30 @@ th.gradient-bg-1 {
     min-width: 257px;
   }
 }
+
+.pencarian-container {
+  position: relative;
+  background: #09121d;
+  padding: 6px;
+
+  [data-testid="btn-close"] {
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.button-tab {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #235482;
+  margin-bottom: 14px;
+
+  button {
+    color: white;
+    background: #565656;
+    padding: 8px 18px;
+    border: 0;
+  }
+}
