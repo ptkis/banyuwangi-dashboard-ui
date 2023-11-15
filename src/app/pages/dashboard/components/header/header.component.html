@@ -4,7 +4,18 @@
   </div>
   <div class="center-content">DASHBOARD BANYUWANGI</div>
   <div class="right-content d-flex justify-content-end align-items-center">
-    <a mat-icon-button href="#"><mat-icon>search</mat-icon></a>
+    <a
+      mat-icon-button
+      [routerLink]="[
+        '',
+        {
+          outlets: {
+            dialog: ['person']
+          }
+        }
+      ]"
+      ><mat-icon>search</mat-icon></a
+    >
     <a
       mat-icon-button
       [routerLink]="[

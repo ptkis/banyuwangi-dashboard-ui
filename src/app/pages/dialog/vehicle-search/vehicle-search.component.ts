@@ -99,6 +99,7 @@ export class VehicleSearchComponent implements AfterViewInit {
       width: "1290px",
       disableClose: true,
       closeOnNavigation: true,
+      closeOnDestroy: true,
     })
     this.dialogRef.closed.subscribe(() => {
       this.zone.run(() => {
