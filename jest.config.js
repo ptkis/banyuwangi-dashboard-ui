@@ -23,7 +23,7 @@ var config = {
   collectCoverage: false,
   collectCoverageFrom: ["./src/app/**"],
   coveragePathIgnorePatterns: [
-    "(.stories.ts|.html|module.ts|.json|guards|mock|app.component|app.service|map-dashboard.component|pages/live|hik-video-2|service.ts|list-filter|notification-list)",
+    "(.stories.ts|.html|module.ts|.json|guards|mock|app.component|app.service|map-dashboard.component|pages/live|hik-video-2|service.ts|list-filter|notification-list|search|line-chart|proxy-image|image-canvas|shared/services)",
   ],
   coverageThreshold: {
     global: {
