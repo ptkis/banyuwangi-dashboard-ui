@@ -80,6 +80,46 @@ export class LineChartComponent {
       this.cctvService.downloadExcel(1, 5000, {
         type: this.chartType,
       })
+    } else if (type === "tertinggi") {
+      this.zone.run(() => {
+        this.router.navigate(
+          [
+            "",
+            {
+              outlets: {
+                dialog: ["chart-data"],
+              },
+            },
+          ],
+          {
+            queryParams: {
+              type: this.chartType,
+              sort: "VALUE",
+              direction: "DESC",
+            },
+          }
+        )
+      })
+    } else if (type === "terendah") {
+      this.zone.run(() => {
+        this.router.navigate(
+          [
+            "",
+            {
+              outlets: {
+                dialog: ["chart-data"],
+              },
+            },
+          ],
+          {
+            queryParams: {
+              type: this.chartType,
+              sort: "VALUE",
+              direction: "ASC",
+            },
+          }
+        )
+      })
     }
   }
 

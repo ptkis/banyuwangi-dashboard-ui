@@ -12,5 +12,7 @@
   "menu_download": "Download Excel",
   "menu_tampilan_chart": "Tampilan Chart",
   "menu_tampilan_chart_total": "Total",
-  "menu_tampilan_chart_detail": "Detail"
+  "menu_tampilan_chart_detail": "Detail",
+  "Tertinggi": "Tertinggi",
+  "Terendah": "Terendah"
 }

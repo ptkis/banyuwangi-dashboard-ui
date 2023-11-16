@@ -77,6 +77,25 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     value: "VALUE",
   }
 
+  urut = [
+    {
+      value: "SNAPSHOT_CREATED DESC",
+      label: "Terbaru",
+    },
+    {
+      value: "SNAPSHOT_CREATED ASC",
+      label: "Terlama",
+    },
+    {
+      value: "VALUE DESC",
+      label: "Tertinggi",
+    },
+    {
+      value: "VALUE ASC",
+      label: "Terendah",
+    },
+  ]
+
   type: string | null = null
   camera: string | null = null
   startDate = format(new Date(), DATE_FORMAT)
@@ -91,6 +110,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     end: new FormControl<Date | null>(null),
     type: new FormControl<string | null>(null),
     camera: new FormControl<string | null>(null),
+    urut: new FormControl<string | null>(this.urut[0].value),
   })
 
   allDetection = ["crowd", "flood", "streetvendor", "traffic", "trash"]
@@ -170,6 +190,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
       type: params.type?.toLowerCase() || null,
       start: new Date(params.startDate),
       end: new Date(params.endDate),
+      urut: `${params.sort} ${params.direction}`,
     })
 
     this._cctvService
@@ -206,7 +227,7 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
   }
 
   buildParams() {
-    const { start, end, camera, type } = this.searchForm.value
+    const { start, end, camera, type, urut } = this.searchForm.value
     const data: Record<string, string> = {}
     if (start && end) {
       data["startDate"] = format(start, DATE_FORMAT)
@@ -217,6 +238,13 @@ export class ChartDataComponent implements AfterViewInit, OnInit {
     }
     if (type) {
       data["type"] = type
+    }
+    if (urut) {
+      const [sort, direction] = urut.split(" ")
+      if (sort && direction) {
+        data["sort"] = sort
+        data["direction"] = direction
+      }
     }
 
     return data

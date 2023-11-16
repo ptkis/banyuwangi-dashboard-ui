@@ -12,5 +12,6 @@
   "Latitude": "Latitude",
   "Longitude": "Longitude",
   "maxValue": "Max {{type}}",
-  "value": "Nilai {{type}}"
+  "value": "Nilai {{type}}",
+  "urut": "Urutan Data"
 }

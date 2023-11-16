@@ -35,6 +35,14 @@
         <mat-icon>show_chart</mat-icon>
         <span>{{ t("menu_tampilan_chart") }}</span>
       </button>
+      <button mat-menu-item (click)="menuClick('tertinggi')">
+        <mat-icon>image</mat-icon>
+        <span>{{ t("Tertinggi") }}</span>
+      </button>
+      <button mat-menu-item (click)="menuClick('terendah')">
+        <mat-icon>image</mat-icon>
+        <span>{{ t("Terendah") }}</span>
+      </button>
       <button mat-menu-item (click)="menuClick('image')">
         <mat-icon>image</mat-icon>
         <span>{{ t("menu_deteksi") }}</span>
