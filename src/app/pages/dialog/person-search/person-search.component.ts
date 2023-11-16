@@ -3,11 +3,7 @@ import { HttpErrorResponse } from "@angular/common/http"
 import {
   AfterViewInit,
   Component,
-  NgZone,
-  OnInit,
   QueryList,
-  TemplateRef,
-  ViewChild,
   ViewChildren,
   ViewEncapsulation,
 } from "@angular/core"
@@ -51,8 +47,6 @@ import { HcpPictureComponent } from "./hcp-picture/hcp-picture.component"
   ],
 })
 export class PersonSearchComponent implements AfterViewInit {
-  @ViewChild("content") contentRef!: TemplateRef<HTMLDivElement>
-
   @ViewChildren(HcpPictureComponent)
   hcpImages!: QueryList<HcpPictureComponent>
 
@@ -105,20 +99,10 @@ export class PersonSearchComponent implements AfterViewInit {
     public dialog: Dialog,
     private router: Router,
     private route: ActivatedRoute,
-    private zone: NgZone,
     private hcpService: HCPService
   ) {}
 
   async ngAfterViewInit() {
-    this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
-      width: "1335px",
-    })
-    this.dialogRef.closed.subscribe(() => {
-      this.zone.run(() => {
-        this.router.navigate(["", { outlets: { dialog: null } }])
-      })
-    })
-
     try {
       const req = this.hcpService.getCameraIndexCodes()
       const resp = await lastValueFrom(req)
