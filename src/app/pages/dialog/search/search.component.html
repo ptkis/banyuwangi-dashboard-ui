@@ -1,0 +1,29 @@
+<ng-template #content>
+  <ng-container>
+    <div class="pencarian-container mt-4">
+      <button
+        data-testid="btn-close"
+        (click)="dialogRef.close()"
+        mat-icon-button
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      <div class="button-tab">
+        <button
+          [ngClass]="{ 'gradient-bg-1 fw-bold': activeIndex === 0 }"
+          (click)="activeIndex = 0"
+        >
+          Pencarian Orang
+        </button>
+        <button
+          [ngClass]="{ 'gradient-bg-1 fw-bold': activeIndex === 1 }"
+          (click)="activeIndex = 1"
+        >
+          Pencarian Kendaraan
+        </button>
+      </div>
+      <app-person-search *ngIf="activeIndex === 0"></app-person-search>
+      <app-vehicle-search *ngIf="activeIndex === 1"></app-vehicle-search>
+    </div>
+  </ng-container>
+</ng-template>

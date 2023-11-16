@@ -40,6 +40,7 @@ import { HcpPictureComponent } from "./person-search/hcp-picture/hcp-picture.com
 import { ReusableImageCanvasComponent } from "src/app/shared/components/reusable-image-canvas/reusable-image-canvas.component"
 import { ProxyImageComponent } from "src/app/shared/components/proxy-image/proxy-image.component"
 import { NotificationListComponent } from "src/app/pages/dialog/notification-list/notification-list.component"
+import { SearchComponent } from "src/app/pages/dialog/search/search.component"
 
 export const dialogRoutes: Routes = [
   {
@@ -62,14 +63,19 @@ export const dialogRoutes: Routes = [
     component: ChartDataComponent,
     canActivate: [AuthGuard],
   },
+  // {
+  //   path: "vehicle",
+  //   component: VehicleSearchComponent,
+  //   // canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: "person",
+  //   component: PersonSearchComponent,
+  //   // canActivate: [AuthGuard],
+  // },
   {
-    path: "vehicle",
-    component: VehicleSearchComponent,
-    // canActivate: [AuthGuard],
-  },
-  {
-    path: "person",
-    component: PersonSearchComponent,
+    path: "search",
+    component: SearchComponent,
     // canActivate: [AuthGuard],
   },
   {
@@ -104,6 +110,7 @@ export const MY_FORMATS = {
     PersonSearchComponent,
     HcpPictureComponent,
     NotificationListComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

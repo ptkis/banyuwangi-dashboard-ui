@@ -1,12 +1,6 @@
 import { Dialog, DialogRef } from "@angular/cdk/dialog"
 import { HttpErrorResponse } from "@angular/common/http"
-import {
-  Component,
-  AfterViewInit,
-  TemplateRef,
-  ViewChild,
-  NgZone,
-} from "@angular/core"
+import { Component, AfterViewInit } from "@angular/core"
 import { FormControl, FormGroup } from "@angular/forms"
 import { PageEvent } from "@angular/material/paginator"
 import { ActivatedRoute, Router } from "@angular/router"
@@ -39,8 +33,6 @@ import { VehicleDetailsComponent } from "./vehicle-details/vehicle-details.compo
   ],
 })
 export class VehicleSearchComponent implements AfterViewInit {
-  @ViewChild("content") contentRef!: TemplateRef<HTMLDivElement>
-
   isLoading = false
   dialogRef!: DialogRef<string>
 
@@ -90,23 +82,10 @@ export class VehicleSearchComponent implements AfterViewInit {
     public modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
-    private zone: NgZone,
     private toastr: ToastrService
   ) {}
 
   ngAfterViewInit(): void {
-    this.dialogRef = this.dialog.open<string, HTMLDivElement>(this.contentRef, {
-      width: "1290px",
-      disableClose: true,
-      closeOnNavigation: true,
-      closeOnDestroy: true,
-    })
-    this.dialogRef.closed.subscribe(() => {
-      this.zone.run(() => {
-        this.router.navigate(["", { outlets: { dialog: null } }])
-      })
-    })
-
     this.route.queryParamMap.subscribe((params) => {
       const startDate = params.get("startDate")
       const endDate = params.get("endDate")
