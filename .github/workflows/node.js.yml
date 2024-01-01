@@ -30,11 +30,11 @@ jobs:
       - run: npm run build --if-present
       - run: npm run test:ci
       - run: npm run e2e:ci
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos/
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage
