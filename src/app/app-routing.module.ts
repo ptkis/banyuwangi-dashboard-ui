@@ -5,7 +5,7 @@ import { AuthGuard } from "src/app/shared/guards/auth.guard"
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "live",
+    redirectTo: "dashboard",
     pathMatch: "full",
   },
   {
