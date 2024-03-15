@@ -8,7 +8,7 @@
     (click)="$event.stopPropagation()"
   >
     <ng-container *ngIf="(videoEl?.nativeElement?.readyState || 0) < 3">
-      <div class="video-loading">Loading...</div>
+      <div class="video-loading" *ngIf="isDebug">Loading...</div>
     </ng-container>
 
     <ng-container>
