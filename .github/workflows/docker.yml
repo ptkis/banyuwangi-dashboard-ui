@@ -11,6 +11,44 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    #    runs-on: [self-hosted, linux, x64]
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get DEV_FIREBASE_JS from secrets and write to firebase-messaging-sw.js
+        run: |
+          echo $FIREBASE_JS > src/firebase-messaging-sw.js
+        env:
+          FIREBASE_JS: ${{ secrets.DEV_FIREBASE_JS }}
+      - run: chmod +x build.sh
+      - run: ./build.sh development
+      - name: Build docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest-development
+            ghcr.io/${{ github.repository }}:0.0.${{ github.run_number}}-development
   deploy_staging:
     runs-on: ubuntu-latest
     #    runs-on: [self-hosted, linux, x64]
