@@ -1,4 +1,5 @@
 export const environment = {
+  version: "0.0.1",
   production: true,
   keycloakUrl: "https://auth.banyuwangikab.go.id/",
   keycloakRealm: "banyuwangi",
