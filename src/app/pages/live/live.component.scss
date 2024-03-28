@@ -37,6 +37,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+
+        .cctv-name {
+          color: white;
+          font-size: 14px;
+          font-weight: normal;
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+        }
 
         .offline-text {
           font-size: 24px;
