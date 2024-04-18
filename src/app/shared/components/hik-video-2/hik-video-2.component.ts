@@ -120,14 +120,12 @@ export class HikVideo2Component implements AfterViewInit {
     untilDestroyed(this)
   )
 
-  /*
   liveCheckTimer$ = timer(0, environment.liveCheckInterval * 1000).pipe(
     tap(() => {
       this.checkLive()
     }),
     untilDestroyed(this)
   )
-*/
 
   isDebug = false
 
@@ -154,7 +152,7 @@ export class HikVideo2Component implements AfterViewInit {
       this.isDebug = true
     }
     // create a timer to check if the player is live
-    // this.liveCheckTimer$.subscribe()
+    this.liveCheckTimer$.subscribe()
   }
 
   reloadPlayer() {
