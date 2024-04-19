@@ -8,12 +8,12 @@ export const environment = {
     hcm: {
       appKey: "29765272",
       appSecret: "TQQN1wGxFY1J8I1NHfoz",
-      baseUrl: "https://192.168.253.81:443",
+      baseUrl: "/hcm",
     },
     hcp: {
       appKey: "21078063",
       appSecret: "VLb5HhLwF1ZSRYEQCPWz",
-      baseUrl: "https://192.168.253.83:443",
+      baseUrl: "/hcp",
     },
   },
   serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
