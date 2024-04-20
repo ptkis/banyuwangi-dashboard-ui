@@ -17,6 +17,7 @@ import {
 } from "@videogular/ngx-videogular/core"
 import { AppService } from "src/app/app.service"
 import {
+  VgDashDirective,
   VgHlsDirective,
   VgStreamingModule,
 } from "@videogular/ngx-videogular/streaming"
@@ -64,8 +65,8 @@ export class HikVideo2Component implements AfterViewInit {
 
   _videoEl: ElementRef<HTMLVideoElement> | undefined
 
-  @ViewChild("vgHls")
-  set vgHls(directive: VgHlsDirective) {
+  @ViewChild("vgDash")
+  set vgDash(directive: VgDashDirective) {
     this.checkStatus(directive)
     this.hlsDirective = directive
     const media = directive?.target
@@ -94,7 +95,7 @@ export class HikVideo2Component implements AfterViewInit {
   }
   api: VgApiService | undefined
 
-  hlsDirective: VgHlsDirective | undefined
+  hlsDirective: VgDashDirective | undefined
 
   timer$ = timer(0, 1000).pipe(
     scan((acc) => --acc, environment.reloadErrorInterval),
@@ -186,9 +187,9 @@ export class HikVideo2Component implements AfterViewInit {
     }, 100)
   }
 
-  checkStatus(directive: VgHlsDirective) {
+  checkStatus(directive: VgDashDirective) {
     setTimeout(() => {
-      if (directive) {
+      if (directive && directive.dash) {
         // console.log(directive)
         const ev = {
           MEDIA_ATTACHING: "hlsMediaAttaching",
@@ -247,30 +248,30 @@ export class HikVideo2Component implements AfterViewInit {
           BACK_BUFFER_REACHED: "hlsBackBufferReached",
         }
         // for (const e of Object.keys(ev)) {
-        //   directive.hls.on((ev as any)[e], (event: any, data: any) => {
+        //   directive.dash.on((ev as any)[e], (event: any, data: any) => {
         //     console.log(`HLS ${e}`, event, data)
         //   })
         // }
-        directive.hls.on(ev.ERROR, (event: any, data: any) => {
+        directive.dash.on(ev.ERROR, (event: any, data: any) => {
           if (!!data.fatal) {
             // console.log(`HLS ${event}`, event, data)
             this.isHlsError = true
           }
         })
-        directive.hls.on(ev.LEVEL_LOADING, (event: any, data: any) => {
+        directive.dash.on(ev.LEVEL_LOADING, (event: any, data: any) => {
           this.isHlsLoading = true
         })
-        directive.hls.on(ev.LEVEL_LOADED, (event: any, data: any) => {
+        directive.dash.on(ev.LEVEL_LOADED, (event: any, data: any) => {
           this.isHlsLoading = false
         })
-        directive.hls.on(ev.MEDIA_DETACHED, (event: any, data: any) => {
+        directive.dash.on(ev.MEDIA_DETACHED, (event: any, data: any) => {
           // console.log(`HLS ${event}`, event, data)
           this.hlsMedia = undefined
         })
-        // directive.hls.on(ev.BUFFER_EOS, (event: any, data: any) => {
+        // directive.dash.on(ev.BUFFER_EOS, (event: any, data: any) => {
         //   console.log(`HLS ${event}`, event, data)
         // })
-        directive.hls.on(
+        directive.dash.on(
           ev.MEDIA_ATTACHED,
           (event: any, data: { media: HTMLVideoElement }) => {
             const { media } = data

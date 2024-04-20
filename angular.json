@@ -26,6 +26,11 @@
                 "input": "node_modules/hls.js/dist/",
                 "output": "./assets/js/hls"
               },
+              {
+                "glob": "**/dash.all.min.js",
+                "input": "node_modules/dashjs/dist/",
+                "output": "./assets/js/dash"
+              },
               "src/firebase-messaging-sw.js",
               "src/manifest.json"
             ],

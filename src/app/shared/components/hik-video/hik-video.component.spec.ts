@@ -12,7 +12,7 @@ import { render } from "@testing-library/angular"
 import { HCMService } from "../../services/hcm.service"
 import { of } from "rxjs"
 
-describe("HikVideoComponent", () => {
+describe("DashVideoComponent", () => {
   const renderComponent = async (
     props: Partial<HikVideoComponent>,
     providers: any[] = []

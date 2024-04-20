@@ -15,9 +15,9 @@
       <vg-player (onPlayerReady)="onPlayerReady($event)">
         <video
           #media
-          #vgHls="vgHls"
+          #vgDash="vgDash"
           [vgMedia]="$any(media)"
-          [vgHls]="url"
+          [vgDash]="url"
           id="my-video"
           [autoplay]="autoplay"
           muted
