@@ -178,9 +178,6 @@ export class HikVideo2Component implements AfterViewInit {
               console.error(err)
             }
           })
-          setTimeout(() => {
-            this.checkLive()
-          }, 500)
         }
         if (sessionStorage.getItem("debug")) {
           video.controls = true
@@ -285,9 +282,6 @@ export class HikVideo2Component implements AfterViewInit {
                   console.error(err)
                 }
               })
-              setTimeout(() => {
-                this.checkLive()
-              }, 500)
             }
             if (sessionStorage.getItem("debug")) {
               media.controls = true
