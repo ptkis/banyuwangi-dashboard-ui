@@ -38,6 +38,6 @@ export const environment = {
   reloadHealthCheckInterval: 10, // satuan detik
   reloadErrorInterval: 10, // satuan detik
   liveCheckInterval: 10, // satuan detik
-  liveCheckMaxDiff: 300, // satuan detik
+  liveCheckMaxDiff: 20, // satuan detik
   liveCheckSeek: 10, // satuan detik sebelum akhir dari video
 }
