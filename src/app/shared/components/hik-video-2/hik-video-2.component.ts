@@ -321,10 +321,7 @@ export class HikVideo2Component implements AfterViewInit {
         )
       }
       let diff1 = this.hlsMedia.duration - this.hlsMedia.currentTime
-      return (
-        diff1 < environment.liveCheckInterval ||
-        diff1 > environment.liveCheckMaxDiff
-      )
+      return diff1 < environment.liveCheckMaxDiff
     }
     if (this.api) {
       if (this.isDebug) {
@@ -336,10 +333,7 @@ export class HikVideo2Component implements AfterViewInit {
         )
       }
       let diff1 = this.api.duration - this.api.currentTime
-      return (
-        diff1 < environment.liveCheckInterval ||
-        diff1 > environment.liveCheckMaxDiff
-      )
+      return diff1 < environment.liveCheckMaxDiff
     }
     return false
   }
