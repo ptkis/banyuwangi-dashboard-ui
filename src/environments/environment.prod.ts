@@ -35,7 +35,7 @@ export const environment = {
     errorTimeout: 3000,
     infoTimeout: 3000,
   },
-  reloadHealthCheckInterval: 2, // satuan detik
+  reloadHealthCheckInterval: 20, // satuan detik
   reloadErrorInterval: 10, // satuan detik
   liveCheckInterval: 2, // satuan detik
   liveCheckMaxDiff: 20, // satuan detik
