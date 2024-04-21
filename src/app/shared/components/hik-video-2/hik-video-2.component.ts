@@ -188,7 +188,7 @@ export class HikVideo2Component implements AfterViewInit {
 
   checkStatus(directive: VgHlsDirective) {
     setTimeout(() => {
-      if (directive) {
+      if (directive && directive.hls) {
         // console.log(directive)
         const ev = {
           MEDIA_ATTACHING: "hlsMediaAttaching",
