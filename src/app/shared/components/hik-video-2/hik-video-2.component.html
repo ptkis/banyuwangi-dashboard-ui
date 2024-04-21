@@ -58,7 +58,7 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="isHlsError && !isReloading">
+    <ng-container *ngIf="isHlsError && !isReloading && isDebug">
       <div class="debug-element-1 bottom" *tuiLet="timer$ | async as timer">
         {{ "error_reload" | transloco: { value: timer } }}
       </div>
