@@ -61,6 +61,8 @@
   </ng-container>
 
   <ng-template #videoPlayer>
-    <app-hik-video [url]="liveViewURL"></app-hik-video>
+    <app-hik-video
+      [url]="liveViewURL.replace('live', 'stream').replace('m3u8', 'mp4')"
+    ></app-hik-video>
   </ng-template>
 </ng-template>
