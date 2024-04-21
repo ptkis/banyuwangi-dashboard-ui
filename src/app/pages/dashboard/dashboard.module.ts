@@ -25,6 +25,7 @@ import { TranslocoModule, TRANSLOCO_SCOPE } from "@ngneat/transloco"
 import { ListFilterComponent } from "src/app/shared/components/list-filter/list-filter.component"
 import { HeaderComponent } from "src/app/pages/dashboard/components/header/header.component"
 import { TuiLetModule } from "@taiga-ui/cdk"
+import { HikVideo2Component } from "../../shared/components/hik-video-2/hik-video-2.component"
 
 export const dashboardRoutes: Routes = [
   {
@@ -74,6 +75,7 @@ export const dashboardMaterialModules = [
     TranslocoModule,
 
     ListFilterComponent,
+    HikVideo2Component,
     HikVideo2Component,
   ],
   exports: [HeaderComponent],
