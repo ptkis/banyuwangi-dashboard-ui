@@ -40,5 +40,5 @@ export const environment = {
   liveCheckInterval: 2, // satuan detik
   liveCheckMaxDiff: 20, // satuan detik
   liveCheckSeek: 10, // satuan detik sebelum akhir dari video
-  reloadVideoInterval: 60, // satuan detik
+  reloadVideoInterval: 600, // satuan detik
 }
