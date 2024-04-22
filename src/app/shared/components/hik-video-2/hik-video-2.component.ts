@@ -87,6 +87,8 @@ export class HikVideo2Component implements AfterViewInit {
   isReloading = false
   hlsMedia: HTMLVideoElement | undefined
   isReady = false
+  modifiedUrl: string = ""
+  versionCounter = 0
 
   hlsConfig: Partial<IHLSConfig> = {
     maxBufferLength: 1,
@@ -127,6 +129,13 @@ export class HikVideo2Component implements AfterViewInit {
     untilDestroyed(this)
   )
 
+  reloadVideoTimer$ = timer(0, environment.reloadVideoInterval * 1000).pipe(
+    tap(() => {
+      this.reloadVideo()
+    }),
+    untilDestroyed(this)
+  )
+
   isDebug = false
 
   isMp4 = false
@@ -150,6 +159,9 @@ export class HikVideo2Component implements AfterViewInit {
           this.cdr.detectChanges()
         })
     }
+    if (this.url) {
+      this.modifiedUrl = this.modifyUrl(this.url)
+    }
     if (sessionStorage.getItem("debug")) {
       this.isDebug = true
     }
@@ -158,6 +170,7 @@ export class HikVideo2Component implements AfterViewInit {
     }
     // create a timer to check if the player is live
     this.liveCheckTimer$.subscribe()
+    this.reloadVideoTimer$.subscribe()
   }
 
   reloadPlayer() {
@@ -375,10 +388,21 @@ export class HikVideo2Component implements AfterViewInit {
     }
   }
 
-  mp4IfNecessary(url1: string): string {
-    if (this.isMp4) {
-      return url1.replace("live", "stream").replace("m3u8", "mp4")
+  reloadVideo() {
+    this.versionCounter += 1
+    if (this.url) {
+      this.modifiedUrl = this.modifyUrl(this.url)
     }
-    return url1
+  }
+
+  modifyUrl(url1: string): string {
+    if (this.isMp4) {
+      return (
+        url1.replace("live", "stream").replace("m3u8", "mp4") +
+        "?version=" +
+        this.versionCounter
+      )
+    }
+    return url1 + "?version=" + this.versionCounter
   }
 }
