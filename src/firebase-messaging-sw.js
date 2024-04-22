@@ -5,12 +5,12 @@ importScripts(
   "https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging-compat.js"
 )
 firebase.initializeApp({
-  apiKey: "changeme",
+  apiKey: "${FIREBASE_API_KEY}",
   authDomain: "banyuwangi-dashboard.firebaseapp.com",
   projectId: "banyuwangi-dashboard",
   storageBucket: "banyuwangi-dashboard.appspot.com",
   messagingSenderId: "536041587255",
-  appId: "1:536041587255:web:a5cde06490e51a6d31f5b2",
-  measurementId: "G-QCZJSY35D6",
+  appId: "1:536041587255:web:c461874e03273eaf31f5b2",
+  measurementId: "G-5L1MEWDCYZ",
 })
 const messaging = firebase.messaging()

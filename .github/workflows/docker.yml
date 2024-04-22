@@ -32,11 +32,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get DEV_FIREBASE_JS from secrets and write to firebase-messaging-sw.js
+      - name: Replace environment variables in firebase
         run: |
-          echo $FIREBASE_JS > src/firebase-messaging-sw.js
+          envsubst < src/firebase-messaging-sw.js > src/firebase-messaging-sw.js.tmp
+          envsubst < src/environments/environment.development.ts > src/environments/environment.development.ts.tmp
+
+          mv src/firebase-messaging-sw.js.tmp src/firebase-messaging-sw.js
+          mv src/environments/environment.development.ts.tmp src/environments/environment.development.ts
         env:
-          FIREBASE_JS: ${{ secrets.DEV_FIREBASE_JS }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY_DEV }}
       - run: chmod +x build.sh
       - run: ./build.sh development
       - name: Build docker
@@ -70,11 +74,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get FIREBASE_JS from secrets and write to firebase-messaging-sw.js
+      - name: Replace environment variables in firebase
         run: |
-          echo $FIREBASE_JS > src/firebase-messaging-sw.js
+          envsubst < src/firebase-messaging-sw.js > src/firebase-messaging-sw.js.tmp
+          envsubst < src/environments/environment.prod.ts > src/environments/environment.prod.ts.tmp
+
+          mv src/firebase-messaging-sw.js.tmp src/firebase-messaging-sw.js
+          mv src/environments/environment.prod.ts.tmp src/environments/environment.prod.ts
         env:
-          FIREBASE_JS: ${{ secrets.FIREBASE_JS }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       - run: chmod +x build.sh
       - run: ./build.sh staging
       - name: Build docker
@@ -108,6 +116,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Replace environment variables in firebase
+        run: |
+          envsubst < src/firebase-messaging-sw.js > src/firebase-messaging-sw.js.tmp
+          envsubst < src/environments/environment.prod.ts > src/environments/environment.prod.ts.tmp
+
+          mv src/firebase-messaging-sw.js.tmp src/firebase-messaging-sw.js
+          mv src/environments/environment.prod.ts.tmp src/environments/environment.prod.ts
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       - run: chmod +x build.sh
       - run: ./build.sh production
       - name: Build docker

@@ -10,6 +10,15 @@ export const environment = {
   keycloakUrl: "https://dev-auth.banyuwangikab.go.id/",
   serverBaseUrl: "https://dev-api-ai.banyuwangikab.go.id",
   // serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
+  firebase: {
+    apiKey: "${FIREBASE_API_KEY}",
+    authDomain: "smartdashboard-bwi.firebaseapp.com",
+    projectId: "smartdashboard-bwi",
+    storageBucket: "smartdashboard-bwi.appspot.com",
+    messagingSenderId: "666405773757",
+    appId: "1:666405773757:web:dee13c0ef51859a6d032d4",
+    measurementId: "G-L2F48S7T61",
+  },
 }
 
 /*
