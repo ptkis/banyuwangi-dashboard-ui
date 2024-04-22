@@ -17,7 +17,7 @@
           #media
           #vgHls="vgHls"
           [vgMedia]="$any(media)"
-          [vgHls]="url"
+          [vgHls]="mp4IfNecessary(url)"
           id="my-video"
           [autoplay]="autoplay"
           muted

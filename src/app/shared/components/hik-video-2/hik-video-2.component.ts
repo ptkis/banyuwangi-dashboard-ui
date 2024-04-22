@@ -369,4 +369,11 @@ export class HikVideo2Component implements AfterViewInit {
       }
     }
   }
+
+  mp4IfNecessary(url1: string): string {
+    if (sessionStorage.getItem("mp4")) {
+      return url1.replace("live", "stream").replace("m3u8", "mp4")
+    }
+    return url1
+  }
 }

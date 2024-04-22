@@ -37,11 +37,7 @@
     <ng-container *cdkVirtualFor="let item of CCTVLists; templateCacheSize: 0">
       <div *ngFor="let cctv of item" class="cctv-item">
         <ng-container *ngIf="cctv.isOnline; else offlineTmpl">
-          <app-hik-video-2
-            [url]="
-              cctv.liveViewUrl.replace('live', 'stream').replace('m3u8', 'mp4')
-            "
-          ></app-hik-video-2>
+          <app-hik-video-2 [url]="cctv.liveViewUrl"></app-hik-video-2>
           <div class="cctv-name" *ngIf="cctv.name as name">
             {{ name }}
           </div>
