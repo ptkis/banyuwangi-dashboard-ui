@@ -129,6 +129,8 @@ export class HikVideo2Component implements AfterViewInit {
 
   isDebug = false
 
+  isMp4 = false
+
   constructor(private _service: HCMService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
@@ -150,6 +152,9 @@ export class HikVideo2Component implements AfterViewInit {
     }
     if (sessionStorage.getItem("debug")) {
       this.isDebug = true
+    }
+    if (sessionStorage.getItem("mp4")) {
+      this.isMp4 = true
     }
     // create a timer to check if the player is live
     this.liveCheckTimer$.subscribe()
@@ -371,7 +376,7 @@ export class HikVideo2Component implements AfterViewInit {
   }
 
   mp4IfNecessary(url1: string): string {
-    if (sessionStorage.getItem("mp4")) {
+    if (this.isMp4) {
       return url1.replace("live", "stream").replace("m3u8", "mp4")
     }
     return url1
