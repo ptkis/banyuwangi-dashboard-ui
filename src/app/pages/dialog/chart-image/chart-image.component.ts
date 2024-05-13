@@ -44,7 +44,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   paginator = {
     index: 0,
     length: 10,
-    size: 9,
+    size: 3000,
     last: false,
   }
   type = "trash"
