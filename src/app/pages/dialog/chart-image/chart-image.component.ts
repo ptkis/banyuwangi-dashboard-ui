@@ -44,7 +44,7 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
   paginator = {
     index: 0,
     length: 10,
-    size: 3000,
+    size: Number(sessionStorage.getItem("size") || 100),
     last: false,
   }
   type = "trash"
@@ -97,6 +97,12 @@ export class ChartImageComponent implements AfterViewInit, OnInit {
     this.dashboardService
       .getDetectionChartData(pageNo, this.paginator.size, {
         type: this.type?.toUpperCase(),
+        ...(sessionStorage.getItem("startDate")
+          ? { startDate: sessionStorage.getItem("startDate") }
+          : {}),
+        ...(sessionStorage.getItem("endDate")
+          ? { endDate: sessionStorage.getItem("endDate") }
+          : {}),
       })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((resp) => {

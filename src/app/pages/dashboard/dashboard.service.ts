@@ -174,7 +174,7 @@ export class DashboardService {
   getDetectionChartData(
     pageNo: number,
     pageSize: number,
-    searchParams?: { [key: string]: string }
+    searchParams?: { type: string | undefined }
   ) {
     let params = {
       type: "TRASH",
