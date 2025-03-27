@@ -73,7 +73,7 @@
     "@babel/core": "^7.19.6",
     "@compodoc/compodoc": "^1.1.19",
     "@cypress/schematic": "^2.2.0",
-    "@happy-dom/jest-environment": "^7.7.0",
+    "@happy-dom/jest-environment": "^17.4.4",
     "@ng-web-apis/universal": "^2.1.0",
     "@ngneat/transloco-keys-manager": "^3.4.2",
     "@popperjs/core": "^2.11.8",
