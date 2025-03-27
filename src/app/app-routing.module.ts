@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
 import { AuthGuard } from "src/app/shared/guards/auth.guard"
-
 const routes: Routes = [
   {
     path: "",
@@ -13,6 +12,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadComponent: () =>
       import("./pages/live/live.component").then((m) => m.LiveComponent),
+  },
+  {
+    path: "statistik",
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import("./pages/statistik/statistik.component").then(
+        (m) => m.StatistikComponent
+      ),
   },
   {
     path: "dashboard",
