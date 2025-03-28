@@ -2,7 +2,7 @@
   <div class="left-content">
     {{ time$ | async | date: "dd / MM / yyyy &nbsp;&nbsp; HH:mm" }} WIB
   </div>
-  <div class="center-content">DASHBOARD BANYUWANGI</div>
+  <div class="center-content" style="color: white">DASHBOARD BANYUWANGI</div>
   <div class="right-content d-flex justify-content-end align-items-center">
     <a
       mat-icon-button
@@ -47,7 +47,7 @@
         ]"
       >
         <mat-icon>videocam</mat-icon>
-        <span>CCTV List</span>
+        <span style="color: white">CCTV List</span>
       </a>
     </mat-menu>
   </div>
@@ -59,8 +59,11 @@
       routerLinkActive="active"
     >
       <input type="radio" name="radio" />
-      <span class="custom-radio-button"> Live Monitor </span>
+      <span class="custom-radio-button" style="color: white">
+        Live Monitor
+      </span>
     </label>
+
     <label
       class="custom-radio-container"
       [routerLink]="['/dashboard']"
@@ -68,7 +71,18 @@
       [routerLinkActiveOptions]="{ exact: true }"
     >
       <input type="radio" name="radio" />
-      <span class="custom-radio-button"> Map Dashboard </span>
+      <span class="custom-radio-button" style="color: white">
+        Map Dashboard
+      </span>
+    </label>
+
+    <label
+      class="custom-radio-container"
+      [routerLink]="['/statistik']"
+      routerLinkActive="active"
+    >
+      <input type="radio" name="radio" />
+      <span class="custom-radio-button" style="color: white"> Analytics </span>
     </label>
   </div>
 </header>

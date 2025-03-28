@@ -1,0 +1,446 @@
+<app-header></app-header>
+
+<div class="statistik-container-top">
+  <div
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    "
+  >
+    <div style="display: flex; gap: 16px">
+      <label>
+        <span style="font-size: 14px; color: #4a5568">Rentang Tanggal : </span>
+        <input
+          id="startDate"
+          type="date"
+          [(ngModel)]="startDate"
+          style="padding: 8px; border: 1px solid #e2e8f0; border-radius: 4px"
+          (change)="fetchData()"
+        />
+        -
+        <input
+          id="endDate"
+          type="date"
+          [(ngModel)]="endDate"
+          style="padding: 8px; border: 1px solid #e2e8f0; border-radius: 4px"
+          (change)="fetchData()"
+        />
+      </label>
+      <label>
+        <span style="font-size: 14px; color: #4a5568">Waktu : </span>
+        <select
+          id="timePeriod"
+          [(ngModel)]="timePeriod"
+          style="padding: 8px; border: 1px solid #e2e8f0; border-radius: 4px"
+          (change)="fetchData()"
+        >
+          <option value="">Pilih Periode</option>
+          <option value="hari-ini">Hari Ini</option>
+          <option value="minggu-ini">Minggu Ini</option>
+          <option value="bulan-ini">Bulan Ini</option>
+        </select>
+      </label>
+    </div>
+    <button
+      (click)="exportData($event)"
+      style="
+        padding: 8px 16px;
+        background: hsl(211, 61%, 43%);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      "
+    >
+      EXPORT
+    </button>
+  </div>
+  <font color="black" style="margin-left: 20px; margin-right: 20px"
+    ><hr
+  /></font>
+  <div
+    style="
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      padding: 16px;
+    "
+  >
+    <div
+      *ngIf="dataFlood"
+      style="
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3 style="color: #4a5568; font-size: 14px; text-align: left">
+        Data Genangan Air
+      </h3>
+      <div style="display: flex; align-items: center; gap: 8px">
+        <img
+          src="assets/images/genangan_air.png"
+          style="width: 48px; height: 48px"
+          alt="Icon"
+        />
+        <p style="font-size: 24px; font-weight: bold; color: #1a202c">
+          {{ totalFlood }}
+        </p>
+      </div>
+      <div
+        style="
+          font-size: 14px;
+          color: #718096;
+          display: flex;
+          align-items: left;
+          gap: 8px;
+        "
+      >
+        <!-- <span>Hari Ini</span>
+        <span [ngStyle]="{color: 0 >= 0 ? 'green' : 'red'}" style="font-weight: 600; display: flex; align-items: center;">
+          {{fluktuasiFlood }}
+          <span *ngIf="0 >= 0">&#9650;</span>
+          <span *ngIf="0 < 0">&#9660;</span>
+        </span> -->
+      </div>
+    </div>
+
+    <div
+      *ngIf="dataTrash"
+      style="
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3 style="color: #4a5568; font-size: 14px; text-align: left">
+        Sampah Jalan & Sungai
+      </h3>
+      <div style="display: flex; align-items: center; gap: 8px">
+        <img
+          src="assets/images/sampah.png"
+          style="width: 48px; height: 48px"
+          alt="Icon"
+        />
+        <p style="font-size: 24px; font-weight: bold; color: #1a202c">
+          {{ totalTrash }}
+        </p>
+      </div>
+      <div
+        style="
+          font-size: 14px;
+          color: #718096;
+          display: flex;
+          align-items: left;
+          gap: 8px;
+        "
+      >
+        <!-- <span>Hari Ini</span>
+        <span [ngStyle]="{color: 0 >= 0 ? 'green' : 'red'}" style="font-weight: 600; display: flex; align-items: center;">
+          {{fluktuasiTrash }}
+          <span *ngIf="0 >= 0">&#9650;</span>
+          <span *ngIf="0 < 0">&#9660;</span>
+        </span> -->
+      </div>
+    </div>
+
+    <div
+      *ngIf="dataTraffict"
+      style="
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3 style="color: #4a5568; font-size: 14px; text-align: left">
+        Keramaian Orang
+      </h3>
+      <div style="display: flex; align-items: center; gap: 8px">
+        <img
+          src="assets/images/keramaian.png"
+          style="width: 48px; height: 48px"
+          alt="Icon"
+        />
+        <p style="font-size: 24px; font-weight: bold; color: #1a202c">
+          {{ totalTraffict }}
+        </p>
+      </div>
+      <div
+        style="
+          font-size: 14px;
+          color: #718096;
+          display: flex;
+          align-items: left;
+          gap: 8px;
+        "
+      >
+        <!-- <span>Hari Ini</span>
+        <span [ngStyle]="{color: 0 >= 0 ? 'green' : 'red'}" style="font-weight: 600; display: flex; align-items: center;">
+          {{fluktuasiTraffict }}
+          <span *ngIf="0 >= 0">&#9650;</span>
+          <span *ngIf="0 < 0">&#9660;</span>
+        </span> -->
+      </div>
+    </div>
+    <div
+      *ngIf="dataStreetVendor"
+      style="
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3 style="color: #4a5568; font-size: 14px; text-align: left">
+        Pedagang Kaki Lima
+      </h3>
+      <div style="display: flex; align-items: center; gap: 8px">
+        <img
+          src="assets/images/pedagang_kaki_lima.png"
+          style="width: 48px; height: 48px"
+          alt="Icon"
+        />
+        <p style="font-size: 24px; font-weight: bold; color: #1a202c">
+          {{ totalSreetVendor }}
+        </p>
+      </div>
+      <div
+        style="
+          font-size: 14px;
+          color: #718096;
+          display: flex;
+          align-items: left;
+          gap: 8px;
+        "
+      >
+        <!-- <span>Hari Ini</span>
+        <span [ngStyle]="{color: 0 >= 0 ? 'green' : 'red'}" style="font-weight: 600; display: flex; align-items: center;">
+          {{fluktuasiStreetVendor }}
+          <span *ngIf="0 >= 0">&#9650;</span>
+          <span *ngIf="0 < 0">&#9660;</span>
+        </span> -->
+      </div>
+    </div>
+    <div
+      *ngIf="dataCrowd"
+      style="
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3 style="color: #4a5568; font-size: 14px; text-align: left">
+        Kepadatan Lalu Lintas
+      </h3>
+      <div style="display: flex; align-items: center; gap: 8px">
+        <img
+          src="assets/images/lalu_lintas.png"
+          style="width: 48px; height: 48px"
+          alt="Icon"
+        />
+        <p style="font-size: 24px; font-weight: bold; color: #1a202c">
+          {{ totalCrowd }}
+        </p>
+      </div>
+      <div
+        style="
+          font-size: 14px;
+          color: #718096;
+          display: flex;
+          align-items: left;
+          gap: 8px;
+        "
+      >
+        <!-- <span>Hari Ini</span>
+        <span [ngStyle]="{color: 0 >= 0 ? 'green' : 'red'}" style="font-weight: 600; display: flex; align-items: center;">
+          {{fluktuasiCrowd }}
+          <span *ngIf="0 >= 0">&#9650;</span>
+          <span *ngIf="0 < 0">&#9660;</span>
+        </span> -->
+      </div>
+    </div>
+    <ng-template #noData>
+      <p>Data tidak tersedia.</p>
+    </ng-template>
+  </div>
+
+  <div class="button-container" style="align-items: left">
+    <h2>
+      <label>
+        <span style="font-size: 14px; color: #4a5568"> </span>
+        <select
+          id="pilihdeteksi"
+          [(ngModel)]="pilihdeteksi"
+          style="padding: 8px; border: 1px solid #e2e8f0; border-radius: 4px"
+          (change)="fetchData()"
+        >
+          <option value="">Pilih Detection</option>
+          <option value="FLOOD">Genangan Air</option>
+          <option value="TRASH">Sampah jalan dan Sungai</option>
+          <option value="TRAFFIC">Keramaian Orang</option>
+          <option value="STREETVENDOR">Pedagang Kaki Lima</option>
+          <option value="CROWD">Kepadatan Lalu Lintas</option>
+        </select>
+      </label>
+    </h2>
+    <!-- 
+ <button [routerLink]="[
+  '',
+  {
+    outlets: {
+      dialog: ['alert']
+    }
+  }
+]"><mat-icon>image</mat-icon>Genangan Air</button>
+
+
+  <button (click)="showAlert()"><mat-icon>image</mat-icon>Sampah Jalan & Sungai</button>
+  <button (click)="showAlert()"><mat-icon>table_view</mat-icon> Keramainan Orang</button>
+  <button (click)="showAlert()"><mat-icon>table_view</mat-icon>  Kaki Lima</button>
+  <button (click)="showAlert()"><mat-icon>table_view</mat-icon> Lalu Lintas</button> -->
+  </div>
+</div>
+
+<div
+  class="statistik-container custom-table"
+  *ngIf="pilihdeteksi === 'FLOOD'"
+  id="flood"
+>
+  <!-- <mat-card> class="custom-table"
+    <mat-card-header>
+      <mat-card-title>Judul Card</mat-card-title>
+      <mat-card-subtitle>Subjudul atau Deskripsi</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+     
+    </mat-card-content>
+  </mat-card> -->
+  <echarts [options]="chartOptionsFlood" class="echart"></echarts>
+</div>
+<div class="statistik-container" *ngIf="pilihdeteksi === 'TRASH'" id="trash">
+  <echarts [options]="chartOptionsTrash" class="echart"></echarts>
+</div>
+<div
+  class="statistik-container"
+  *ngIf="pilihdeteksi === 'TRAFFIC'"
+  id="traffic"
+>
+  <echarts [options]="chartOptionsTraffic" class="echart"></echarts>
+</div>
+
+<div
+  class="statistik-container"
+  *ngIf="pilihdeteksi === 'STREETVENDOR'"
+  id="streetvendor"
+>
+  <echarts [options]="chartOptionsStreetVendor" class="echart"></echarts>
+</div>
+<div class="statistik-container" *ngIf="pilihdeteksi === 'CROWD'" id="crowd">
+  <echarts [options]="chartOptionsCrowd" class="echart"></echarts>
+</div>
+
+<div class="statistik-container">
+  <table mat-table [dataSource]="detections" class="custom-table">
+    <!-- Timestamp Column -->
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+      <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
+    </ng-container>
+
+    <!-- Camera Name Column -->
+    <ng-container matColumnDef="cameraName">
+      <th mat-header-cell *matHeaderCellDef>Camera Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.cameraName }}</td>
+    </ng-container>
+
+    <!-- Camera Location Column -->
+    <ng-container matColumnDef="cameraLocation">
+      <th mat-header-cell *matHeaderCellDef>Location</th>
+      <td mat-cell *matCellDef="let element">{{ element.cameraLocation }}</td>
+    </ng-container>
+
+    <!-- Latitude Column -->
+    <ng-container matColumnDef="latitude">
+      <th mat-header-cell *matHeaderCellDef>Latitude</th>
+      <td mat-cell *matCellDef="let element">{{ element.latitude }}</td>
+    </ng-container>
+
+    <!-- Longitude Column -->
+    <ng-container matColumnDef="longitude">
+      <th mat-header-cell *matHeaderCellDef>Longitude</th>
+      <td mat-cell *matCellDef="let element">{{ element.longitude }}</td>
+    </ng-container>
+
+    <!-- Max Value Column -->
+    <ng-container matColumnDef="maxValue">
+      <th mat-header-cell *matHeaderCellDef>Max Value</th>
+      <td mat-cell *matCellDef="let element">{{ element.maxValue }}</td>
+    </ng-container>
+
+    <!-- Value Column -->
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef>Value</th>
+      <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="[
+        'timestamp',
+        'cameraName',
+        'cameraLocation',
+        'latitude',
+        'longitude',
+        'maxValue',
+        'value'
+      ]"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: [
+          'timestamp',
+          'cameraName',
+          'cameraLocation',
+          'latitude',
+          'longitude',
+          'maxValue',
+          'value'
+        ]
+      "
+    ></tr>
+  </table>
+  <!-- Tambahkan Paginator -->
+  <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>
