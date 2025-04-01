@@ -44,7 +44,7 @@ jobs:
       - run: chmod +x build.sh
       - run: ./build.sh development
       - name: Build docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
@@ -86,7 +86,7 @@ jobs:
       - run: chmod +x build.sh
       - run: ./build.sh staging
       - name: Build docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
@@ -128,7 +128,7 @@ jobs:
       - run: chmod +x build.sh
       - run: ./build.sh production
       - name: Build docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
