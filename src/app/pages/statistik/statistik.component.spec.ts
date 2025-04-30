@@ -8,6 +8,8 @@ import { HttpClientModule } from "@angular/common/http"
 import { of } from "rxjs"
 import { ActivatedRoute, RouterModule } from "@angular/router"
 import { NgxEchartsModule } from "ngx-echarts"
+import { format, subWeeks, subMonths } from "date-fns"
+import { expect } from '@jest/globals';
 
 describe("StatistikComponent", () => {
   let component: StatistikComponent
@@ -90,5 +92,108 @@ describe("StatistikComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should handle hari-ini time period", () => {
+    component.timePeriod = "hari-ini"
+    component.fetchData()
+    expect(component.startDate).toBe(format(new Date(), "yyyy-MM-dd"))
+    expect(component.endDate).toBe(format(new Date(), "yyyy-MM-dd"))
+  })
+
+  it("should handle minggu-ini time period", () => {
+    component.timePeriod = "minggu-ini"
+    component.fetchData()
+    expect(component.startDate).toBe(format(subWeeks(new Date(), 1), "yyyy-MM-dd"))
+    expect(component.endDate).toBe(format(new Date(), "yyyy-MM-dd"))
+  })
+
+  it("should handle bulan-ini time period", () => {
+    component.timePeriod = "bulan-ini"
+    component.fetchData()
+    expect(component.startDate).toBe(format(subMonths(new Date(), 1), "yyyy-MM-dd"))
+    expect(component.endDate).toBe(format(new Date(), "yyyy-MM-dd"))
+  })
+
+  it("should calculate percentage change correctly", () => {
+    const mockData = {
+      content: [
+        { value: 100 },
+        { value: 150 },
+        { value: 200 }
+      ]
+    }
+    const result = component.calculatePercentageChange(mockData)
+    expect(result).toBeDefined()
+    if (result) {
+      expect(result.percentageChange).toBeDefined()
+    }
+  })
+
+  it("should handle empty data in calculatePercentageChange", () => {
+    const mockData = {
+      content: []
+    }
+    const result = component.calculatePercentageChange(mockData)
+    expect(result).toBeNull()
+  })
+
+  it("should update flood chart data", () => {
+    const mockData = {
+      content: [
+        { value: 100, timestamp: "2024-01-01" },
+        { value: 150, timestamp: "2024-01-02" }
+      ]
+    }
+    component.updateChartFlood(mockData)
+    expect(component.chartOptionsFlood).toBeDefined()
+  })
+
+  it("should update trash chart data", () => {
+    const mockData = {
+      content: [
+        { value: 50, timestamp: "2024-01-01" },
+        { value: 75, timestamp: "2024-01-02" }
+      ]
+    }
+    component.updateChartTrash(mockData)
+    expect(component.chartOptionsTrash).toBeDefined()
+  })
+
+  it("should update traffic chart data", () => {
+    const mockData = {
+      content: [
+        { value: 200, timestamp: "2024-01-01" },
+        { value: 250, timestamp: "2024-01-02" }
+      ]
+    }
+    component.updateChartTraffic(mockData)
+    expect(component.chartOptionsTraffic).toBeDefined()
+  })
+
+  it("should handle export data", () => {
+    const mockEvent = { preventDefault: jest.fn() } as unknown as Event
+    component.exportData(mockEvent)
+    expect(mockEvent.preventDefault).toHaveBeenCalled()
+  })
+
+  it("should initialize with default values", () => {
+    expect(component.pilihdeteksi).toBe("FLOOD")
+    expect(component.totalFlood).toEqual([0])
+    expect(component.totalTrash).toEqual([0])
+    expect(component.totalTraffict).toEqual([0])
+    expect(component.totalSreetVendor).toEqual([0])
+    expect(component.totalCrowd).toEqual([0])
+  })
+
+  it("should handle detection type changes", () => {
+    component.pilihdeteksi = "TRASH"
+    component.fetchData()
+    expect(statisticsService.dataDetection).toHaveBeenCalledWith(
+      false,
+      expect.objectContaining({
+        type: "TRASH"
+      })
+    )
   })
 })
