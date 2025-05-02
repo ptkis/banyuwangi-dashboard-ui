@@ -321,11 +321,18 @@ export class StatistikComponent implements OnInit {
   detections: any[] = []
   fluctuations: { date: string; percentageChange: string }[] = []
   calculatePercentageChange(data: any) {
+    if (!data || !data.content || !Array.isArray(data.content)) {
+      return null
+    }
+
     const groupedData: { [date: string]: number } = {}
     // Kelompokkan nilai berdasarkan tanggal
     data.content.forEach((item: any) => {
+      if (!item || !item.snapshotCreated) {
+        return
+      }
       const date = item.snapshotCreated.split("T")[0] // Ambil YYYY-MM-DD
-      groupedData[date] = (groupedData[date] || 0) + item.value
+      groupedData[date] = (groupedData[date] || 0) + (item.value || 0)
     })
     // Ambil dua tanggal terbaru
     const sortedDates = Object.keys(groupedData).sort(
