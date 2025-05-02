@@ -35,9 +35,14 @@ import { ToastrService } from "ngx-toastr"
 export class StatistikComponent implements OnInit {
   constructor(
     private statisticsService: StatisticsService,
-    private _cctvService: CCTVListService,
+    private cctvService: CCTVListService,
     private toastrService: ToastrService
-  ) {}
+  ) {
+    this.startDate = ""
+    this.endDate = ""
+    this.timePeriod = ""
+    this.pilihdeteksi = "FLOOD"
+  }
 
   startDate: string = ""
   endDate: string = ""
@@ -260,7 +265,7 @@ export class StatistikComponent implements OnInit {
 
   exportData(e: Event) {
     e.preventDefault()
-    this._cctvService.downloadExcel(
+    this.cctvService.downloadExcel(
       1, // pageNo
       5000, // pageSize
       {
@@ -320,56 +325,45 @@ export class StatistikComponent implements OnInit {
   totalCrowd: any[] = [0]
   detections: any[] = []
   fluctuations: { date: string; percentageChange: string }[] = []
-  calculatePercentageChange(data: any) {
-    if (!data || !data.content || !Array.isArray(data.content)) {
-      return null
+  calculateFluctuations(content: Array<{ value: number }>) {
+    if (!content || content.length < 2) {
+      return 0
     }
 
-    const groupedData: { [date: string]: number } = {}
-    // Kelompokkan nilai berdasarkan tanggal
-    data.content.forEach((item: any) => {
-      if (!item || !item.snapshotCreated) {
-        return
-      }
-      const date = item.snapshotCreated.split("T")[0] // Ambil YYYY-MM-DD
-      groupedData[date] = (groupedData[date] || 0) + (item.value || 0)
-    })
-    // Ambil dua tanggal terbaru
-    const sortedDates = Object.keys(groupedData).sort(
-      (a, b) => new Date(a).getTime() - new Date(b).getTime()
-    )
-    if (sortedDates.length < 2) {
-      return null
+    const firstValue = content[0]?.value || 0
+    const lastValue = content[content.length - 1]?.value || 0
+
+    if (firstValue === 0) {
+      return 0
     }
-    const lastDate = sortedDates[sortedDates.length - 1]
-    const prevDate = sortedDates[sortedDates.length - 2]
-    const lastValue = groupedData[lastDate]
-    const prevValue = groupedData[prevDate]
-    // Hitung persentase perubahan
-    const percentageChange =
-      prevValue !== 0 ? ((lastValue - prevValue) / prevValue) * 100 : 0
-    return {
-      lastDate,
-      prevDate,
-      lastValue,
-      prevValue,
-      percentageChange: percentageChange.toFixed(2) + "%",
-    }
+
+    return ((lastValue - firstValue) / firstValue) * 100
   }
 
-  calculateFluctuations(content: any[]): number {
-    if (!content || content.length === 0) {
-      return 0
+  calculatePercentageChange(data: any) {
+    if (!data?.content || data.content.length < 2) {
+      return null
     }
 
-    const values = content.map((item) => item.value || 0)
-    if (values.length < 2) {
-      return 0
+    const firstValue = data.content[0]?.value || 0
+    const lastValue = data.content[data.content.length - 1]?.value || 0
+
+    if (firstValue === 0) {
+      return { percentageChange: 0 }
     }
 
-    const firstValue = values[0]
-    const lastValue = values[values.length - 1]
-    return ((lastValue - firstValue) / firstValue) * 100
+    const percentageChange = ((lastValue - firstValue) / firstValue) * 100
+    return { percentageChange }
+  }
+
+  calculateTotal(data: any): number {
+    if (!data || !data.content || !Array.isArray(data.content)) {
+      return 0
+    }
+    return data.content.reduce(
+      (sum: number, item: any) => sum + (item.value || 0),
+      0
+    )
   }
 
   ngOnInit(): void {

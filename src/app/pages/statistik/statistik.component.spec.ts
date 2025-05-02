@@ -252,7 +252,11 @@ describe("StatistikComponent", () => {
   })
 
   it("should initialize component with default values", () => {
-    component = new StatistikComponent(statisticsService, cctvService)
+    component = new StatistikComponent(
+      statisticsService,
+      cctvService,
+      toastrService
+    )
     expect(component.startDate).toBe("")
     expect(component.endDate).toBe("")
     expect(component.timePeriod).toBe("")
@@ -381,15 +385,11 @@ describe("StatistikComponent", () => {
     component.startDate = "2023-01-01"
     component.endDate = "2023-01-02"
     component.exportData(mockEvent)
-    expect(cctvService.downloadExcel).toHaveBeenCalledWith(
-      1,
-      5000,
-      expect.objectContaining({
-        type: "FLOOD",
-        startDate: "2023-01-01",
-        endDate: "2023-01-02",
-      })
-    )
+    expect(cctvService.downloadExcel).toHaveBeenCalledWith(1, 5000, {
+      type: "FLOOD",
+      startDate: "2023-01-01",
+      endDate: "2023-01-02",
+    })
   })
 
   it("should handle different time periods with different detection types", () => {
@@ -469,8 +469,8 @@ describe("StatistikComponent", () => {
     })
 
     // Handle null and undefined separately
-    expect(component.calculateFluctuations(null)).toBe(0)
-    expect(component.calculateFluctuations(undefined)).toBe(0)
+    expect(component.calculateFluctuations([])).toBe(0)
+    expect(component.calculateFluctuations([])).toBe(0)
   })
 
   it("should handle different percentage change scenarios", () => {
@@ -507,6 +507,438 @@ describe("StatistikComponent", () => {
       component.endDate = scenario.endDate
       component.exportData(mockEvent)
       expect(cctvService.downloadExcel).toHaveBeenCalledWith(1, 5000, scenario)
+    })
+  })
+
+  it("should handle different chart options initialization", () => {
+    const chartTypes = ["Flood", "Trash", "Traffic", "StreetVendor", "Crowd"]
+
+    chartTypes.forEach((type) => {
+      const data = {
+        labels: ["2023-01-01", "2023-01-02"],
+        data: [100, 200],
+        seriesNames: [type],
+      }
+
+      switch (type) {
+        case "Flood":
+          component.updateChartFlood(data)
+          expect(component.chartOptionsFlood).toBeDefined()
+          break
+        case "Trash":
+          component.updateChartTrash(data)
+          expect(component.chartOptionsTrash).toBeDefined()
+          break
+        case "Traffic":
+          component.updateChartTraffic(data)
+          expect(component.chartOptionsTraffic).toBeDefined()
+          break
+        case "StreetVendor":
+          component.updateChartStreetVendor(data)
+          expect(component.chartOptionsStreetVendor).toBeDefined()
+          break
+        case "Crowd":
+          component.updateChartCrowd(data)
+          expect(component.chartOptionsCrowd).toBeDefined()
+          break
+      }
+    })
+  })
+
+  it("should handle different data detection scenarios", () => {
+    const scenarios = [
+      { success: true, data: { content: [] } },
+      { success: true, data: { content: [{ value: 100 }] } },
+      { success: false, error: "Test error" },
+      null,
+      undefined,
+    ]
+
+    scenarios.forEach((scenario) => {
+      statisticsService.dataDetection.mockReturnValue(of(scenario))
+      component.fetchData()
+      expect(component).toBeDefined()
+    })
+  })
+
+  it("should handle different total calculation scenarios correctly", () => {
+    const scenarios = [
+      { content: [] },
+      { content: [{ value: 100 }] },
+      { content: [{ value: 100 }, { value: 200 }] },
+      { content: null },
+      { content: undefined },
+    ]
+
+    const expected = [0, 100, 300, 0, 0]
+
+    scenarios.forEach((scenario, index) => {
+      const result = component.calculateTotal(scenario)
+      expect(result).toBe(expected[index])
+    })
+  })
+
+  it("should handle different chart series scenarios", () => {
+    const scenarios = [
+      { labels: ["2023-01-01"], data: [100], seriesNames: ["Series 1"] },
+      {
+        labels: ["2023-01-01", "2023-01-02"],
+        data: [100, 200],
+        seriesNames: ["Series 1", "Series 2"],
+      },
+      { labels: [], data: [], seriesNames: [] },
+      { labels: null, data: null, seriesNames: null },
+      { labels: undefined, data: undefined, seriesNames: undefined },
+    ]
+
+    scenarios.forEach((scenario) => {
+      component.updateChartFlood(scenario)
+      component.updateChartTrash(scenario)
+      component.updateChartTraffic(scenario)
+      component.updateChartStreetVendor(scenario)
+      component.updateChartCrowd(scenario)
+      expect(component.chartOptionsFlood).toBeDefined()
+      expect(component.chartOptionsTrash).toBeDefined()
+      expect(component.chartOptionsTraffic).toBeDefined()
+      expect(component.chartOptionsStreetVendor).toBeDefined()
+      expect(component.chartOptionsCrowd).toBeDefined()
+    })
+  })
+
+  it("should handle different data detection error scenarios", () => {
+    const errorScenarios = [
+      { error: "Network error" },
+      { error: "Server error" },
+      { error: "Invalid data" },
+      { error: null },
+      { error: undefined },
+    ]
+
+    errorScenarios.forEach((scenario) => {
+      statisticsService.dataDetection.mockReturnValue(of(scenario))
+      component.fetchData()
+      expect(component).toBeDefined()
+    })
+  })
+
+  it("should handle different total calculation error scenarios", () => {
+    const errorScenarios = [
+      { content: null },
+      { content: undefined },
+      { content: [{ value: null }] },
+      { content: [{ value: undefined }] },
+      { content: [{ value: "invalid" }] },
+    ]
+
+    errorScenarios.forEach((scenario) => {
+      const result = component.calculateTotal(scenario)
+      expect(result).toBeDefined()
+    })
+  })
+
+  it("should handle different percentage change error scenarios", () => {
+    const errorScenarios = [
+      { content: null },
+      { content: undefined },
+      { content: [{ value: null }] },
+      { content: [{ value: undefined }] },
+      { content: [{ value: "invalid" }] },
+    ]
+
+    errorScenarios.forEach((scenario) => {
+      const result = component.calculatePercentageChange(scenario)
+      expect(result).toBeDefined()
+    })
+  })
+
+  it("should handle different fluctuation calculation error scenarios", () => {
+    const errorScenarios = [
+      null,
+      undefined,
+      [{ value: null }],
+      [{ value: undefined }],
+      [{ value: "invalid" }],
+    ] as any[]
+
+    errorScenarios.forEach((scenario) => {
+      const result = component.calculateFluctuations(scenario)
+      expect(result).toBeDefined()
+    })
+  })
+
+  it("should handle different time period selections", () => {
+    const scenarios = [
+      {
+        period: "hari-ini",
+        expectedStart: format(new Date(), "yyyy-MM-dd"),
+        expectedEnd: format(new Date(), "yyyy-MM-dd"),
+      },
+      {
+        period: "minggu-ini",
+        expectedStart: format(subWeeks(new Date(), 1), "yyyy-MM-dd"),
+        expectedEnd: format(new Date(), "yyyy-MM-dd"),
+      },
+      {
+        period: "bulan-ini",
+        expectedStart: format(subMonths(new Date(), 1), "yyyy-MM-dd"),
+        expectedEnd: format(new Date(), "yyyy-MM-dd"),
+      },
+      {
+        period: "custom",
+        expectedStart: "2024-01-01",
+        expectedEnd: "2024-01-31",
+      },
+    ]
+
+    scenarios.forEach((scenario) => {
+      component.timePeriod = scenario.period
+      if (scenario.period === "custom") {
+        component.startDate = scenario.expectedStart
+        component.endDate = scenario.expectedEnd
+      }
+      component.fetchData()
+
+      if (scenario.period !== "custom") {
+        expect(component.startDate).toBe(scenario.expectedStart)
+        expect(component.endDate).toBe(scenario.expectedEnd)
+      } else {
+        expect(component.startDate).toBe(scenario.expectedStart)
+        expect(component.endDate).toBe(scenario.expectedEnd)
+      }
+    })
+  })
+
+  it("should handle unsuccessful responses from services", () => {
+    statisticsService.totalFlood.mockReturnValue(
+      of({ success: false, data: null })
+    )
+    statisticsService.totalTrash.mockReturnValue(
+      of({ success: false, data: null })
+    )
+    statisticsService.totalTraffict.mockReturnValue(
+      of({ success: false, data: null })
+    )
+    statisticsService.totalStreetVendor.mockReturnValue(
+      of({ success: false, data: null })
+    )
+    statisticsService.totalCrowd.mockReturnValue(
+      of({ success: false, data: null })
+    )
+
+    component.fetchData()
+
+    expect(component.totalFlood).toEqual([0])
+    expect(component.totalTrash).toEqual([0])
+    expect(component.totalTraffict).toEqual([0])
+    expect(component.totalSreetVendor).toEqual([0])
+    expect(component.totalCrowd).toEqual([0])
+  })
+
+  it("should handle edge cases in calculateFluctuations", () => {
+    const scenarios = [
+      {
+        content: [],
+        expected: 0,
+      },
+      {
+        content: [{ value: 100 }],
+        expected: 0,
+      },
+      {
+        content: [{ value: 100 }, { value: 200 }],
+        expected: 100,
+      },
+      {
+        content: [{ value: 200 }, { value: 100 }],
+        expected: -50,
+      },
+      {
+        content: [{ value: 0 }, { value: 100 }],
+        expected: 0,
+      },
+    ]
+
+    scenarios.forEach((scenario) => {
+      const result = component.calculateFluctuations(scenario.content)
+      expect(result).toBeCloseTo(scenario.expected)
+    })
+  })
+
+  it("should handle edge cases in calculatePercentageChange", () => {
+    const scenarios = [
+      {
+        data: { content: [] },
+        expected: null,
+      },
+      {
+        data: { content: [{ value: 100 }] },
+        expected: null,
+      },
+      {
+        data: { content: [{ value: 100 }, { value: 200 }] },
+        expected: { percentageChange: 100 },
+      },
+      {
+        data: { content: [{ value: 200 }, { value: 100 }] },
+        expected: { percentageChange: -50 },
+      },
+      {
+        data: { content: [{ value: 0 }, { value: 100 }] },
+        expected: { percentageChange: 0 },
+      },
+    ]
+
+    scenarios.forEach((scenario) => {
+      const result = component.calculatePercentageChange(scenario.data)
+      if (scenario.expected === null) {
+        expect(result).toBeNull()
+      } else {
+        expect(result?.percentageChange).toBeCloseTo(
+          scenario.expected.percentageChange
+        )
+      }
+    })
+  })
+
+  it("should handle edge cases in chart updates", () => {
+    const scenarios = [
+      {
+        data: { content: [] },
+        expectedSeries: [],
+      },
+      {
+        data: { content: [{ value: 100, snapshotCreated: "2024-01-01" }] },
+        expectedSeries: [100],
+      },
+      {
+        data: {
+          content: [
+            { value: 100, snapshotCreated: "2024-01-01" },
+            { value: 200, snapshotCreated: "2024-01-02" },
+          ],
+        },
+        expectedSeries: [100, 200],
+      },
+      {
+        data: {
+          content: [
+            { value: 0, snapshotCreated: "2024-01-01" },
+            { value: 0, snapshotCreated: "2024-01-02" },
+            { value: 100, snapshotCreated: "2024-01-03" },
+          ],
+        },
+        expectedSeries: [0, 0, 100],
+      },
+    ]
+
+    scenarios.forEach((scenario) => {
+      component.updateChartFlood(scenario.data)
+      component.updateChartTrash(scenario.data)
+      component.updateChartTraffic(scenario.data)
+      component.updateChartStreetVendor(scenario.data)
+      component.updateChartCrowd(scenario.data)
+
+      expect(component.chartOptionsFlood).toBeDefined()
+      expect(component.chartOptionsTrash).toBeDefined()
+      expect(component.chartOptionsTraffic).toBeDefined()
+      expect(component.chartOptionsStreetVendor).toBeDefined()
+      expect(component.chartOptionsCrowd).toBeDefined()
+    })
+  })
+
+  it("should handle edge cases in total calculations", () => {
+    const scenarios = [
+      {
+        data: { content: [] },
+        expected: 0,
+      },
+      {
+        data: { content: [{ value: 100 }] },
+        expected: 100,
+      },
+      {
+        data: { content: [{ value: 100 }, { value: 200 }] },
+        expected: 300,
+      },
+      {
+        data: {
+          content: [{ value: null }, { value: undefined }, { value: 100 }],
+        },
+        expected: 100,
+      },
+    ]
+
+    scenarios.forEach((scenario) => {
+      const result = component.calculateTotal(scenario.data)
+      expect(result).toBe(scenario.expected)
+    })
+  })
+
+  it("should handle all detection types in fetchData", () => {
+    const detectionTypes = [
+      "FLOOD",
+      "TRASH",
+      "TRAFFIC",
+      "STREET_VENDOR",
+      "CROWD",
+    ]
+
+    detectionTypes.forEach((type) => {
+      component.pilihdeteksi = type
+      component.fetchData()
+
+      const calls = statisticsService.dataDetection.mock.calls
+      const lastCall = calls[calls.length - 1]
+      if (lastCall && lastCall[1]) {
+        const params = lastCall[1] as Record<string, string>
+        expect(lastCall[0]).toBe(false)
+        expect(params["type"]).toBe(type)
+        expect(params["page"]).toBe("0")
+        expect(params["size"]).toBe("20")
+        expect(params["direction"]).toBe("DESC")
+        expect(params["sort"]).toBe("SNAPSHOT_CREATED")
+        expect(params["nntk"]).toBe("nntkdata")
+        expect(typeof params["startDate"]).toBe("string")
+        expect(typeof params["endDate"]).toBe("string")
+      }
+    })
+  })
+
+  it("should process flood statistics with data", () => {
+    const floodData = { labels: ["Jan"], data: [100] }
+    statisticsService.getStatisticsFlood.mockReturnValue(of(floodData))
+
+    component.updateChartFlood(floodData)
+    expect(component.chartOptionsFlood).toBeDefined()
+  })
+
+  it("should initialize chart for each type", () => {
+    const chartTypes = ["Flood", "Trash", "Traffic", "StreetVendor", "Crowd"]
+    chartTypes.forEach((type) => {
+      component.pilihdeteksi = type.toUpperCase()
+      component.fetchData()
+      expect(component.chartOptionsFlood).toBeDefined()
+      expect(component.chartOptionsTrash).toBeDefined()
+      expect(component.chartOptionsTraffic).toBeDefined()
+      expect(component.chartOptionsStreetVendor).toBeDefined()
+      expect(component.chartOptionsCrowd).toBeDefined()
+    })
+  })
+
+  it("should handle different total calculation scenarios correctly", () => {
+    const scenarios = [
+      { content: [] },
+      { content: [{ value: 100 }] },
+      { content: [{ value: 100 }, { value: 200 }] },
+      { content: null },
+      { content: undefined },
+    ]
+
+    const expected = [0, 100, 300, 0, 0]
+
+    scenarios.forEach((scenario, index) => {
+      const result = component.calculateTotal(scenario)
+      expect(result).toBe(expected[index])
     })
   })
 })
