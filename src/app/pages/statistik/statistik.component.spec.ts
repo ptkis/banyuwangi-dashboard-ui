@@ -498,27 +498,27 @@ describe("StatistikComponent", () => {
       { labels: [], data: null, seriesNames: [] }, // Missing data object
       { labels: [], data: {}, seriesNames: null }, // Missing seriesNames
       { labels: null, data: {}, seriesNames: [] }  // Missing labels
-    ];
+    ]
 
     invalidDataScenarios.forEach(invalidData => {
-      component.updateChartFlood(invalidData);
-      expect(component.chartOptionsFlood).toBeDefined(); // Ensure it doesn't crash and retains default/previous options
+      component.updateChartFlood(invalidData)
+      expect(component.chartOptionsFlood).toBeDefined() // Ensure it doesn't crash and retains default/previous options
 
-      component.updateChartTrash(invalidData);
-      expect(component.chartOptionsTrash).toBeDefined();
+      component.updateChartTrash(invalidData)
+      expect(component.chartOptionsTrash).toBeDefined()
 
-      component.updateChartTraffic(invalidData);
-      expect(component.chartOptionsTraffic).toBeDefined();
+      component.updateChartTraffic(invalidData)
+      expect(component.chartOptionsTraffic).toBeDefined()
 
-      component.updateChartStreetVendor(invalidData);
-      expect(component.chartOptionsStreetVendor).toBeDefined();
+      component.updateChartStreetVendor(invalidData)
+      expect(component.chartOptionsStreetVendor).toBeDefined()
 
-      component.updateChartCrowd(invalidData);
-      expect(component.chartOptionsCrowd).toBeDefined();
+      component.updateChartCrowd(invalidData)
+      expect(component.chartOptionsCrowd).toBeDefined()
 
-      component.updateTotalChartFlood(invalidData); // Also test the total chart update
+      component.updateTotalChartFlood(invalidData) // Also test the total chart update
       // We might need a more specific expectation for total chart if its default differs
-      expect(component.chartOptionsFlood).toBeDefined();
-    });
+      expect(component.chartOptionsFlood).toBeDefined()
+    })
   })
 })
