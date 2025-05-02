@@ -18,6 +18,9 @@ var config = {
   globals: {
     "ts-jest": {
       isolatedModules: true,
+      diagnostics: {
+        ignoreCodes: [151001]
+      }
     },
   },
   collectCoverage: false,

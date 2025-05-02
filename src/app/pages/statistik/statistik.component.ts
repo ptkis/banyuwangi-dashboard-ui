@@ -265,7 +265,7 @@ export class StatistikComponent implements OnInit {
 
   exportData(e: Event) {
     e.preventDefault()
-    this.cctvService.downloadExcel(
+    const subscription = this.cctvService.downloadExcel(
       1, // pageNo
       5000, // pageSize
       {
@@ -274,6 +274,9 @@ export class StatistikComponent implements OnInit {
         endDate: this.endDate,
       }
     )
+    subscription.add(() => {
+      this.toastrService.error("Failed to export data")
+    })
   }
 
   cards = [

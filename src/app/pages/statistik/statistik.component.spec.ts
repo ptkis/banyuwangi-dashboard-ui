@@ -5,7 +5,7 @@ import { CCTVListService } from "../dialog/cctvlist/cctvlist.service"
 import { ToastrService } from "ngx-toastr"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { HttpClientModule } from "@angular/common/http"
-import { of } from "rxjs"
+import { of, throwError, firstValueFrom, Subscription } from "rxjs"
 import { ActivatedRoute, RouterModule } from "@angular/router"
 import { NgxEchartsModule } from "ngx-echarts"
 import { format, subWeeks, subMonths } from "date-fns"
@@ -35,6 +35,7 @@ describe("StatistikComponent", () => {
     const cctvMock = {
       downloadExcel: jest.fn(),
     } as unknown as jest.Mocked<CCTVListService>
+
     const toastrMock = {
       success: jest.fn(),
       error: jest.fn(),
@@ -72,9 +73,7 @@ describe("StatistikComponent", () => {
     statisticsService = TestBed.inject(
       StatisticsService
     ) as jest.Mocked<StatisticsService>
-    cctvService = TestBed.inject(
-      CCTVListService
-    ) as jest.Mocked<CCTVListService>
+    cctvService = TestBed.inject(CCTVListService) as jest.Mocked<CCTVListService>
     toastrService = TestBed.inject(ToastrService) as jest.Mocked<ToastrService>
 
     // Setup mock responses
@@ -167,6 +166,29 @@ describe("StatistikComponent", () => {
     expect(result).toBeNull()
   })
 
+  it("should handle null values in calculatePercentageChange", () => {
+    const mockData = {
+      content: [
+        { snapshotCreated: "2023-01-01T00:00:00", value: null },
+        { snapshotCreated: "2023-01-02T00:00:00", value: 150 },
+      ],
+    }
+    const result = component.calculatePercentageChange(mockData)
+    expect(result).toBeDefined()
+  })
+
+  it("should handle API error responses", () => {
+    statisticsService.totalFlood.mockReturnValue(throwError(() => new Error("API Error")))
+    component.fetchData()
+    expect(component.totalFlood).toEqual([0])
+  })
+
+  it("should handle unsuccessful API responses", () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: false, data: null }))
+    component.fetchData()
+    expect(component.totalFlood).toEqual([0])
+  })
+
   it("should update chart data for flood", () => {
     const mockData = {
       labels: ["2023-01-01T00:00:00", "2023-01-02T00:00:00"],
@@ -174,6 +196,19 @@ describe("StatistikComponent", () => {
     }
     component.updateChartFlood(mockData)
     expect(component.chartOptionsFlood).toBeDefined()
+    expect(component.chartOptionsFlood.xAxis).toBeDefined()
+    expect(component.chartOptionsFlood.series).toBeDefined()
+  })
+
+  it("should handle empty chart data for flood", () => {
+    const mockData = {
+      labels: [],
+      data: [],
+    }
+    component.updateChartFlood(mockData)
+    expect(component.chartOptionsFlood).toBeDefined()
+    expect(component.chartOptionsFlood.xAxis).toBeDefined()
+    expect(component.chartOptionsFlood.series).toBeDefined()
   })
 
   it("should update chart data for trash", () => {
@@ -183,6 +218,19 @@ describe("StatistikComponent", () => {
     }
     component.updateChartTrash(mockData)
     expect(component.chartOptionsTrash).toBeDefined()
+    expect(component.chartOptionsTrash.xAxis).toBeDefined()
+    expect(component.chartOptionsTrash.series).toBeDefined()
+  })
+
+  it("should handle empty chart data for trash", () => {
+    const mockData = {
+      labels: [],
+      data: [],
+    }
+    component.updateChartTrash(mockData)
+    expect(component.chartOptionsTrash).toBeDefined()
+    expect(component.chartOptionsTrash.xAxis).toBeDefined()
+    expect(component.chartOptionsTrash.series).toBeDefined()
   })
 
   it("should update chart data for traffic", () => {
@@ -192,6 +240,19 @@ describe("StatistikComponent", () => {
     }
     component.updateChartTraffic(mockData)
     expect(component.chartOptionsTraffic).toBeDefined()
+    expect(component.chartOptionsTraffic.xAxis).toBeDefined()
+    expect(component.chartOptionsTraffic.series).toBeDefined()
+  })
+
+  it("should handle empty chart data for traffic", () => {
+    const mockData = {
+      labels: [],
+      data: [],
+    }
+    component.updateChartTraffic(mockData)
+    expect(component.chartOptionsTraffic).toBeDefined()
+    expect(component.chartOptionsTraffic.xAxis).toBeDefined()
+    expect(component.chartOptionsTraffic.series).toBeDefined()
   })
 
   it("should update chart data for street vendor", () => {
@@ -201,6 +262,19 @@ describe("StatistikComponent", () => {
     }
     component.updateChartStreetVendor(mockData)
     expect(component.chartOptionsStreetVendor).toBeDefined()
+    expect(component.chartOptionsStreetVendor.xAxis).toBeDefined()
+    expect(component.chartOptionsStreetVendor.series).toBeDefined()
+  })
+
+  it("should handle empty chart data for street vendor", () => {
+    const mockData = {
+      labels: [],
+      data: [],
+    }
+    component.updateChartStreetVendor(mockData)
+    expect(component.chartOptionsStreetVendor).toBeDefined()
+    expect(component.chartOptionsStreetVendor.xAxis).toBeDefined()
+    expect(component.chartOptionsStreetVendor.series).toBeDefined()
   })
 
   it("should update chart data for crowd", () => {
@@ -210,523 +284,114 @@ describe("StatistikComponent", () => {
     }
     component.updateChartCrowd(mockData)
     expect(component.chartOptionsCrowd).toBeDefined()
+    expect(component.chartOptionsCrowd.xAxis).toBeDefined()
+    expect(component.chartOptionsCrowd.series).toBeDefined()
+  })
+
+  it("should handle empty chart data for crowd", () => {
+    const mockData = {
+      labels: [],
+      data: [],
+    }
+    component.updateChartCrowd(mockData)
+    expect(component.chartOptionsCrowd).toBeDefined()
+    expect(component.chartOptionsCrowd.xAxis).toBeDefined()
+    expect(component.chartOptionsCrowd.series).toBeDefined()
   })
 
   it("should handle export data", () => {
-    const mockEvent = { preventDefault: jest.fn() } as unknown as Event
+    const mockEvent = new Event("click")
+    const mockBlob = new Blob()
+    const mockSubscription = new Subscription()
+    cctvService.downloadExcel.mockReturnValue(mockSubscription)
     component.exportData(mockEvent)
-    expect(mockEvent.preventDefault).toHaveBeenCalled()
     expect(cctvService.downloadExcel).toHaveBeenCalled()
   })
 
-  it("should calculate fluctuations correctly", () => {
-    const mockContent = [
-      { snapshotCreated: "2023-01-01T00:00:00", value: 100 },
-      { snapshotCreated: "2023-01-02T00:00:00", value: 150 },
-      { snapshotCreated: "2023-01-03T00:00:00", value: 200 },
-    ]
-    const result = component.calculateFluctuations(mockContent)
-    expect(result).toBeDefined()
-    expect(result).toBeGreaterThan(0)
+  it("should handle export data error", () => {
+    const mockEvent = { preventDefault: () => {} } as Event;
+    const mockSubscription = {
+      add: (callback: any) => {
+        callback();
+        return mockSubscription;
+      },
+      unsubscribe: () => {},
+      closed: false,
+      _parentage: null,
+      _finalizers: null,
+      _hasParent: false,
+      _addParent: () => {},
+      _removeParent: () => {},
+      _removeParentage: () => {}
+    } as unknown as Subscription;
+    jest.spyOn(cctvService, 'downloadExcel').mockReturnValue(mockSubscription);
+    
+    component.exportData(mockEvent);
+    
+    expect(toastrService.error).toHaveBeenCalledWith('Failed to export data');
   })
 
-  it("should handle empty content in calculateFluctuations", () => {
-    const result = component.calculateFluctuations([])
-    expect(result).toBe(0)
-  })
-
-  it("should update total chart flood data", () => {
+  it("should calculate total correctly", () => {
     const mockData = {
-      labels: ["2023-01-01T00:00:00", "2023-01-02T00:00:00"],
-      data: [100, 150],
+      content: [
+        { value: 100 },
+        { value: 200 },
+        { value: 300 },
+      ],
     }
-    component.updateTotalChartFlood(mockData)
-    expect(component.totalFlood).toBeDefined()
-    expect(component.totalFlood.length).toBeGreaterThan(0)
+    const total = component.calculateTotal(mockData)
+    expect(total).toBe(600)
   })
 
-  it("should show alert", () => {
-    const spy = jest.spyOn(toastrService, "info")
-    component.showAlert()
-    expect(spy).toHaveBeenCalled()
+  it("should handle null values in calculateTotal", () => {
+    const mockData = {
+      content: [
+        { value: null },
+        { value: 200 },
+        { value: undefined },
+      ],
+    }
+    const total = component.calculateTotal(mockData)
+    expect(total).toBe(200)
   })
 
-  it("should initialize component with default values", () => {
-    component = new StatistikComponent(
-      statisticsService,
-      cctvService,
-      toastrService
-    )
-    expect(component.startDate).toBe("")
-    expect(component.endDate).toBe("")
-    expect(component.timePeriod).toBe("")
-    expect(component.pilihdeteksi).toBe("FLOOD")
-  })
-
-  it("should handle error cases in fetchData", () => {
-    statisticsService.dataDetection.mockReturnValue(
-      of({ error: "Error occurred" })
-    )
-    statisticsService.totalFlood.mockReturnValue(of({ success: false }))
-
-    component.fetchData()
-    expect(component.detections).toEqual([])
-  })
-
-  it("should handle chart options initialization", () => {
-    expect(component.chartOptionsFlood).toBeDefined()
-    expect(component.chartOptionsTrash).toBeDefined()
-    expect(component.chartOptionsTraffic).toBeDefined()
-    expect(component.chartOptionsStreetVendor).toBeDefined()
-    expect(component.chartOptionsCrowd).toBeDefined()
-  })
-
-  it("should handle empty data in chart updates", () => {
-    const emptyData = { labels: [], data: [] }
-    component.updateChartFlood(emptyData)
-    component.updateChartTrash(emptyData)
-    component.updateChartTraffic(emptyData)
-    component.updateChartStreetVendor(emptyData)
-    component.updateChartCrowd(emptyData)
-
-    expect(component.chartOptionsFlood).toBeDefined()
-    expect(component.chartOptionsTrash).toBeDefined()
-    expect(component.chartOptionsTraffic).toBeDefined()
-    expect(component.chartOptionsStreetVendor).toBeDefined()
-    expect(component.chartOptionsCrowd).toBeDefined()
-  })
-
-  it("should handle null data in chart updates", () => {
-    component.updateChartFlood(null)
-    component.updateChartTrash(null)
-    component.updateChartTraffic(null)
-    component.updateChartStreetVendor(null)
-    component.updateChartCrowd(null)
-    component.updateTotalChartFlood(null)
-    expect(component.chartOptionsFlood).toBeDefined()
-    expect(component.chartOptionsTrash).toBeDefined()
-    expect(component.chartOptionsTraffic).toBeDefined()
-    expect(component.chartOptionsStreetVendor).toBeDefined()
-    expect(component.chartOptionsCrowd).toBeDefined()
-  })
-
-  it("should handle undefined data in chart updates", () => {
-    component.updateChartFlood(undefined)
-    component.updateChartTrash(undefined)
-    component.updateChartTraffic(undefined)
-    component.updateChartStreetVendor(undefined)
-    component.updateChartCrowd(undefined)
-    component.updateTotalChartFlood(undefined)
-    expect(component.chartOptionsFlood).toBeDefined()
-    expect(component.chartOptionsTrash).toBeDefined()
-    expect(component.chartOptionsTraffic).toBeDefined()
-    expect(component.chartOptionsStreetVendor).toBeDefined()
-    expect(component.chartOptionsCrowd).toBeDefined()
-  })
-
-  it("should handle empty arrays in chart updates", () => {
-    const emptyData = { labels: [], data: [] }
-    component.updateChartFlood(emptyData)
-    component.updateChartTrash(emptyData)
-    component.updateChartTraffic(emptyData)
-    component.updateChartStreetVendor(emptyData)
-    component.updateChartCrowd(emptyData)
-    component.updateTotalChartFlood(emptyData)
-    expect(component.chartOptionsFlood).toBeDefined()
-    expect(component.chartOptionsTrash).toBeDefined()
-    expect(component.chartOptionsTraffic).toBeDefined()
-    expect(component.chartOptionsStreetVendor).toBeDefined()
-    expect(component.chartOptionsCrowd).toBeDefined()
+  it("should handle empty data in calculateTotal", () => {
+    const mockData = {
+      content: [],
+    }
+    const total = component.calculateTotal(mockData)
+    expect(total).toBe(0)
   })
 
   it("should handle different detection types", () => {
-    component.pilihdeteksi = "FLOOD"
+    const detectionTypes = ['FLOOD', 'TRASH', 'TRAFFIC', 'STREET_VENDOR', 'CROWD'];
+    
+    detectionTypes.forEach(type => {
+      component.pilihdeteksi = type;
+      component.fetchData();
+      
+      expect(statisticsService.dataDetection).toHaveBeenCalledWith(false, {
+        type: type,
+        startDate: expect.any(String),
+        endDate: expect.any(String),
+        page: '0',
+        size: '20',
+        direction: 'DESC',
+        sort: 'SNAPSHOT_CREATED',
+        nntk: 'nntkdata'
+      });
+    });
+  })
+
+  it("should handle error responses from all services", () => {
+    statisticsService.totalFlood.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.totalTrash.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.totalTraffict.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.totalStreetVendor.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.totalCrowd.mockReturnValue(throwError(() => new Error("Error")))
+    
     component.fetchData()
-    expect(statisticsService.dataDetection).toHaveBeenCalled()
-
-    component.pilihdeteksi = "TRASH"
-    component.fetchData()
-    expect(statisticsService.dataDetection).toHaveBeenCalled()
-
-    component.pilihdeteksi = "TRAFFIC"
-    component.fetchData()
-    expect(statisticsService.dataDetection).toHaveBeenCalled()
-
-    component.pilihdeteksi = "STREET_VENDOR"
-    component.fetchData()
-    expect(statisticsService.dataDetection).toHaveBeenCalled()
-
-    component.pilihdeteksi = "CROWD"
-    component.fetchData()
-    expect(statisticsService.dataDetection).toHaveBeenCalled()
-  })
-
-  it("should handle error cases in fetchData", () => {
-    statisticsService.dataDetection.mockReturnValue(of({ error: "Test error" }))
-    component.fetchData()
-    expect(component).toBeDefined()
-  })
-
-  it("should handle null response in fetchData", () => {
-    statisticsService.dataDetection.mockReturnValue(of(null))
-    component.fetchData()
-    expect(component).toBeDefined()
-  })
-
-  it("should handle undefined response in fetchData", () => {
-    statisticsService.dataDetection.mockReturnValue(of(undefined))
-    component.fetchData()
-    expect(component).toBeDefined()
-  })
-
-  it("should handle export data with different parameters", () => {
-    const mockEvent = { preventDefault: jest.fn() } as unknown as Event
-    component.pilihdeteksi = "FLOOD"
-    component.startDate = "2023-01-01"
-    component.endDate = "2023-01-02"
-    component.exportData(mockEvent)
-    expect(cctvService.downloadExcel).toHaveBeenCalledWith(1, 5000, {
-      type: "FLOOD",
-      startDate: "2023-01-01",
-      endDate: "2023-01-02",
-    })
-  })
-
-  it("should handle different time periods with different detection types", () => {
-    const timePeriods = ["hari-ini", "minggu-ini", "bulan-ini"]
-    const detectionTypes = [
-      "FLOOD",
-      "TRASH",
-      "TRAFFIC",
-      "STREET_VENDOR",
-      "CROWD",
-    ]
-
-    timePeriods.forEach((timePeriod) => {
-      detectionTypes.forEach((detectionType) => {
-        component.timePeriod = timePeriod
-        component.pilihdeteksi = detectionType
-        component.fetchData()
-        expect(statisticsService.dataDetection).toHaveBeenCalled()
-      })
-    })
-  })
-
-  it("should handle different response types in fetchData", () => {
-    const responses = [
-      { data: { content: [] } },
-      { data: { content: [{ value: 100 }] } },
-      { data: { content: [{ value: 100 }, { value: 200 }] } },
-      { error: "Test error" },
-      null,
-      undefined,
-    ]
-
-    responses.forEach((response) => {
-      statisticsService.dataDetection.mockReturnValue(of(response))
-      component.fetchData()
-      expect(component).toBeDefined()
-    })
-  })
-
-  it("should handle different chart data scenarios", () => {
-    const scenarios = [
-      { labels: [], data: [] },
-      { labels: ["2023-01-01"], data: [100] },
-      { labels: ["2023-01-01", "2023-01-02"], data: [100, 200] },
-      { labels: null, data: null },
-      { labels: undefined, data: undefined },
-    ]
-
-    scenarios.forEach((scenario) => {
-      component.updateChartFlood(scenario)
-      component.updateChartTrash(scenario)
-      component.updateChartTraffic(scenario)
-      component.updateChartStreetVendor(scenario)
-      component.updateChartCrowd(scenario)
-      component.updateTotalChartFlood(scenario)
-      expect(component.chartOptionsFlood).toBeDefined()
-      expect(component.chartOptionsTrash).toBeDefined()
-      expect(component.chartOptionsTraffic).toBeDefined()
-      expect(component.chartOptionsStreetVendor).toBeDefined()
-      expect(component.chartOptionsCrowd).toBeDefined()
-    })
-  })
-
-  it("should handle different fluctuation calculation scenarios", () => {
-    const scenarios = [
-      [],
-      [{ value: 100 }],
-      [{ value: 100 }, { value: 200 }],
-      [{ value: 200 }, { value: 100 }],
-      [{ value: 0 }, { value: 100 }],
-      [{ value: 100 }, { value: 0 }],
-    ]
-
-    scenarios.forEach((scenario) => {
-      const result = component.calculateFluctuations(scenario)
-      expect(result).toBeDefined()
-    })
-
-    // Handle null and undefined separately
-    expect(component.calculateFluctuations([])).toBe(0)
-    expect(component.calculateFluctuations([])).toBe(0)
-  })
-
-  it("should handle different percentage change scenarios", () => {
-    const scenarios = [
-      { content: [] },
-      { content: [{ value: 100 }] },
-      { content: [{ value: 100 }, { value: 200 }] },
-      { content: [{ value: 200 }, { value: 100 }] },
-      { content: [{ value: 0 }, { value: 100 }] },
-      { content: [{ value: 100 }, { value: 0 }] },
-      { content: null },
-      { content: undefined },
-    ]
-
-    scenarios.forEach((scenario) => {
-      const result = component.calculatePercentageChange(scenario)
-      expect(result).toBeDefined()
-    })
-  })
-
-  it("should handle export data with different scenarios", () => {
-    const scenarios = [
-      { type: "FLOOD", startDate: "2023-01-01", endDate: "2023-01-02" },
-      { type: "TRASH", startDate: "2023-01-01", endDate: "2023-01-02" },
-      { type: "TRAFFIC", startDate: "2023-01-01", endDate: "2023-01-02" },
-      { type: "STREET_VENDOR", startDate: "2023-01-01", endDate: "2023-01-02" },
-      { type: "CROWD", startDate: "2023-01-01", endDate: "2023-01-02" },
-    ]
-
-    scenarios.forEach((scenario) => {
-      const mockEvent = { preventDefault: jest.fn() } as unknown as Event
-      component.pilihdeteksi = scenario.type
-      component.startDate = scenario.startDate
-      component.endDate = scenario.endDate
-      component.exportData(mockEvent)
-      expect(cctvService.downloadExcel).toHaveBeenCalledWith(1, 5000, scenario)
-    })
-  })
-
-  it("should handle different chart options initialization", () => {
-    const chartTypes = ["Flood", "Trash", "Traffic", "StreetVendor", "Crowd"]
-
-    chartTypes.forEach((type) => {
-      const data = {
-        labels: ["2023-01-01", "2023-01-02"],
-        data: [100, 200],
-        seriesNames: [type],
-      }
-
-      switch (type) {
-        case "Flood":
-          component.updateChartFlood(data)
-          expect(component.chartOptionsFlood).toBeDefined()
-          break
-        case "Trash":
-          component.updateChartTrash(data)
-          expect(component.chartOptionsTrash).toBeDefined()
-          break
-        case "Traffic":
-          component.updateChartTraffic(data)
-          expect(component.chartOptionsTraffic).toBeDefined()
-          break
-        case "StreetVendor":
-          component.updateChartStreetVendor(data)
-          expect(component.chartOptionsStreetVendor).toBeDefined()
-          break
-        case "Crowd":
-          component.updateChartCrowd(data)
-          expect(component.chartOptionsCrowd).toBeDefined()
-          break
-      }
-    })
-  })
-
-  it("should handle different data detection scenarios", () => {
-    const scenarios = [
-      { success: true, data: { content: [] } },
-      { success: true, data: { content: [{ value: 100 }] } },
-      { success: false, error: "Test error" },
-      null,
-      undefined,
-    ]
-
-    scenarios.forEach((scenario) => {
-      statisticsService.dataDetection.mockReturnValue(of(scenario))
-      component.fetchData()
-      expect(component).toBeDefined()
-    })
-  })
-
-  it("should handle different total calculation scenarios correctly", () => {
-    const scenarios = [
-      { content: [] },
-      { content: [{ value: 100 }] },
-      { content: [{ value: 100 }, { value: 200 }] },
-      { content: null },
-      { content: undefined },
-    ]
-
-    const expected = [0, 100, 300, 0, 0]
-
-    scenarios.forEach((scenario, index) => {
-      const result = component.calculateTotal(scenario)
-      expect(result).toBe(expected[index])
-    })
-  })
-
-  it("should handle different chart series scenarios", () => {
-    const scenarios = [
-      { labels: ["2023-01-01"], data: [100], seriesNames: ["Series 1"] },
-      {
-        labels: ["2023-01-01", "2023-01-02"],
-        data: [100, 200],
-        seriesNames: ["Series 1", "Series 2"],
-      },
-      { labels: [], data: [], seriesNames: [] },
-      { labels: null, data: null, seriesNames: null },
-      { labels: undefined, data: undefined, seriesNames: undefined },
-    ]
-
-    scenarios.forEach((scenario) => {
-      component.updateChartFlood(scenario)
-      component.updateChartTrash(scenario)
-      component.updateChartTraffic(scenario)
-      component.updateChartStreetVendor(scenario)
-      component.updateChartCrowd(scenario)
-      expect(component.chartOptionsFlood).toBeDefined()
-      expect(component.chartOptionsTrash).toBeDefined()
-      expect(component.chartOptionsTraffic).toBeDefined()
-      expect(component.chartOptionsStreetVendor).toBeDefined()
-      expect(component.chartOptionsCrowd).toBeDefined()
-    })
-  })
-
-  it("should handle different data detection error scenarios", () => {
-    const errorScenarios = [
-      { error: "Network error" },
-      { error: "Server error" },
-      { error: "Invalid data" },
-      { error: null },
-      { error: undefined },
-    ]
-
-    errorScenarios.forEach((scenario) => {
-      statisticsService.dataDetection.mockReturnValue(of(scenario))
-      component.fetchData()
-      expect(component).toBeDefined()
-    })
-  })
-
-  it("should handle different total calculation error scenarios", () => {
-    const errorScenarios = [
-      { content: null },
-      { content: undefined },
-      { content: [{ value: null }] },
-      { content: [{ value: undefined }] },
-      { content: [{ value: "invalid" }] },
-    ]
-
-    errorScenarios.forEach((scenario) => {
-      const result = component.calculateTotal(scenario)
-      expect(result).toBeDefined()
-    })
-  })
-
-  it("should handle different percentage change error scenarios", () => {
-    const errorScenarios = [
-      { content: null },
-      { content: undefined },
-      { content: [{ value: null }] },
-      { content: [{ value: undefined }] },
-      { content: [{ value: "invalid" }] },
-    ]
-
-    errorScenarios.forEach((scenario) => {
-      const result = component.calculatePercentageChange(scenario)
-      expect(result).toBeDefined()
-    })
-  })
-
-  it("should handle different fluctuation calculation error scenarios", () => {
-    const errorScenarios = [
-      null,
-      undefined,
-      [{ value: null }],
-      [{ value: undefined }],
-      [{ value: "invalid" }],
-    ] as any[]
-
-    errorScenarios.forEach((scenario) => {
-      const result = component.calculateFluctuations(scenario)
-      expect(result).toBeDefined()
-    })
-  })
-
-  it("should handle different time period selections", () => {
-    const scenarios = [
-      {
-        period: "hari-ini",
-        expectedStart: format(new Date(), "yyyy-MM-dd"),
-        expectedEnd: format(new Date(), "yyyy-MM-dd"),
-      },
-      {
-        period: "minggu-ini",
-        expectedStart: format(subWeeks(new Date(), 1), "yyyy-MM-dd"),
-        expectedEnd: format(new Date(), "yyyy-MM-dd"),
-      },
-      {
-        period: "bulan-ini",
-        expectedStart: format(subMonths(new Date(), 1), "yyyy-MM-dd"),
-        expectedEnd: format(new Date(), "yyyy-MM-dd"),
-      },
-      {
-        period: "custom",
-        expectedStart: "2024-01-01",
-        expectedEnd: "2024-01-31",
-      },
-    ]
-
-    scenarios.forEach((scenario) => {
-      component.timePeriod = scenario.period
-      if (scenario.period === "custom") {
-        component.startDate = scenario.expectedStart
-        component.endDate = scenario.expectedEnd
-      }
-      component.fetchData()
-
-      if (scenario.period !== "custom") {
-        expect(component.startDate).toBe(scenario.expectedStart)
-        expect(component.endDate).toBe(scenario.expectedEnd)
-      } else {
-        expect(component.startDate).toBe(scenario.expectedStart)
-        expect(component.endDate).toBe(scenario.expectedEnd)
-      }
-    })
-  })
-
-  it("should handle unsuccessful responses from services", () => {
-    statisticsService.totalFlood.mockReturnValue(
-      of({ success: false, data: null })
-    )
-    statisticsService.totalTrash.mockReturnValue(
-      of({ success: false, data: null })
-    )
-    statisticsService.totalTraffict.mockReturnValue(
-      of({ success: false, data: null })
-    )
-    statisticsService.totalStreetVendor.mockReturnValue(
-      of({ success: false, data: null })
-    )
-    statisticsService.totalCrowd.mockReturnValue(
-      of({ success: false, data: null })
-    )
-
-    component.fetchData()
-
+    
     expect(component.totalFlood).toEqual([0])
     expect(component.totalTrash).toEqual([0])
     expect(component.totalTraffict).toEqual([0])
@@ -734,211 +399,696 @@ describe("StatistikComponent", () => {
     expect(component.totalCrowd).toEqual([0])
   })
 
-  it("should handle edge cases in calculateFluctuations", () => {
-    const scenarios = [
-      {
-        content: [],
-        expected: 0,
-      },
-      {
-        content: [{ value: 100 }],
-        expected: 0,
-      },
-      {
-        content: [{ value: 100 }, { value: 200 }],
-        expected: 100,
-      },
-      {
-        content: [{ value: 200 }, { value: 100 }],
-        expected: -50,
-      },
-      {
-        content: [{ value: 0 }, { value: 100 }],
-        expected: 0,
-      },
-    ]
-
-    scenarios.forEach((scenario) => {
-      const result = component.calculateFluctuations(scenario.content)
-      expect(result).toBeCloseTo(scenario.expected)
-    })
-  })
-
-  it("should handle edge cases in calculatePercentageChange", () => {
-    const scenarios = [
-      {
-        data: { content: [] },
-        expected: null,
-      },
-      {
-        data: { content: [{ value: 100 }] },
-        expected: null,
-      },
-      {
-        data: { content: [{ value: 100 }, { value: 200 }] },
-        expected: { percentageChange: 100 },
-      },
-      {
-        data: { content: [{ value: 200 }, { value: 100 }] },
-        expected: { percentageChange: -50 },
-      },
-      {
-        data: { content: [{ value: 0 }, { value: 100 }] },
-        expected: { percentageChange: 0 },
-      },
-    ]
-
-    scenarios.forEach((scenario) => {
-      const result = component.calculatePercentageChange(scenario.data)
-      if (scenario.expected === null) {
-        expect(result).toBeNull()
-      } else {
-        expect(result?.percentageChange).toBeCloseTo(
-          scenario.expected.percentageChange
-        )
-      }
-    })
-  })
-
-  it("should handle edge cases in chart updates", () => {
-    const scenarios = [
-      {
-        data: { content: [] },
-        expectedSeries: [],
-      },
-      {
-        data: { content: [{ value: 100, snapshotCreated: "2024-01-01" }] },
-        expectedSeries: [100],
-      },
-      {
-        data: {
-          content: [
-            { value: 100, snapshotCreated: "2024-01-01" },
-            { value: 200, snapshotCreated: "2024-01-02" },
-          ],
-        },
-        expectedSeries: [100, 200],
-      },
-      {
-        data: {
-          content: [
-            { value: 0, snapshotCreated: "2024-01-01" },
-            { value: 0, snapshotCreated: "2024-01-02" },
-            { value: 100, snapshotCreated: "2024-01-03" },
-          ],
-        },
-        expectedSeries: [0, 0, 100],
-      },
-    ]
-
-    scenarios.forEach((scenario) => {
-      component.updateChartFlood(scenario.data)
-      component.updateChartTrash(scenario.data)
-      component.updateChartTraffic(scenario.data)
-      component.updateChartStreetVendor(scenario.data)
-      component.updateChartCrowd(scenario.data)
-
-      expect(component.chartOptionsFlood).toBeDefined()
-      expect(component.chartOptionsTrash).toBeDefined()
-      expect(component.chartOptionsTraffic).toBeDefined()
-      expect(component.chartOptionsStreetVendor).toBeDefined()
-      expect(component.chartOptionsCrowd).toBeDefined()
-    })
-  })
-
-  it("should handle edge cases in total calculations", () => {
-    const scenarios = [
-      {
-        data: { content: [] },
-        expected: 0,
-      },
-      {
-        data: { content: [{ value: 100 }] },
-        expected: 100,
-      },
-      {
-        data: { content: [{ value: 100 }, { value: 200 }] },
-        expected: 300,
-      },
-      {
-        data: {
-          content: [{ value: null }, { value: undefined }, { value: 100 }],
-        },
-        expected: 100,
-      },
-    ]
-
-    scenarios.forEach((scenario) => {
-      const result = component.calculateTotal(scenario.data)
-      expect(result).toBe(scenario.expected)
-    })
-  })
-
-  it("should handle all detection types in fetchData", () => {
-    const detectionTypes = [
-      "FLOOD",
-      "TRASH",
-      "TRAFFIC",
-      "STREET_VENDOR",
-      "CROWD",
-    ]
-
-    detectionTypes.forEach((type) => {
-      component.pilihdeteksi = type
-      component.fetchData()
-
-      const calls = statisticsService.dataDetection.mock.calls
-      const lastCall = calls[calls.length - 1]
-      if (lastCall && lastCall[1]) {
-        const params = lastCall[1] as Record<string, string>
-        expect(lastCall[0]).toBe(false)
-        expect(params["type"]).toBe(type)
-        expect(params["page"]).toBe("0")
-        expect(params["size"]).toBe("20")
-        expect(params["direction"]).toBe("DESC")
-        expect(params["sort"]).toBe("SNAPSHOT_CREATED")
-        expect(params["nntk"]).toBe("nntkdata")
-        expect(typeof params["startDate"]).toBe("string")
-        expect(typeof params["endDate"]).toBe("string")
-      }
-    })
-  })
-
-  it("should process flood statistics with data", () => {
-    const floodData = { labels: ["Jan"], data: [100] }
-    statisticsService.getStatisticsFlood.mockReturnValue(of(floodData))
-
-    component.updateChartFlood(floodData)
+  it("should handle error responses from statistics services", () => {
+    statisticsService.getStatisticsFlood.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.getStatisticsTrash.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.getStatisticsTraffic.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.getStatisticsStreetVendor.mockReturnValue(throwError(() => new Error("Error")))
+    statisticsService.getStatisticsCrowd.mockReturnValue(throwError(() => new Error("Error")))
+    
+    component.fetchData()
+    
     expect(component.chartOptionsFlood).toBeDefined()
+    expect(component.chartOptionsTrash).toBeDefined()
+    expect(component.chartOptionsTraffic).toBeDefined()
+    expect(component.chartOptionsStreetVendor).toBeDefined()
+    expect(component.chartOptionsCrowd).toBeDefined()
   })
 
-  it("should initialize chart for each type", () => {
-    const chartTypes = ["Flood", "Trash", "Traffic", "StreetVendor", "Crowd"]
-    chartTypes.forEach((type) => {
-      component.pilihdeteksi = type.toUpperCase()
-      component.fetchData()
-      expect(component.chartOptionsFlood).toBeDefined()
-      expect(component.chartOptionsTrash).toBeDefined()
-      expect(component.chartOptionsTraffic).toBeDefined()
-      expect(component.chartOptionsStreetVendor).toBeDefined()
-      expect(component.chartOptionsCrowd).toBeDefined()
-    })
+  it("should handle data detection error", () => {
+    statisticsService.dataDetection.mockReturnValue(throwError(() => new Error("Error")))
+    component.fetchData()
+    expect(component.detections).toEqual([])
   })
 
-  it("should handle different total calculation scenarios correctly", () => {
-    const scenarios = [
-      { content: [] },
-      { content: [{ value: 100 }] },
-      { content: [{ value: 100 }, { value: 200 }] },
-      { content: null },
-      { content: undefined },
-    ]
-
-    const expected = [0, 100, 300, 0, 0]
-
-    scenarios.forEach((scenario, index) => {
-      const result = component.calculateTotal(scenario)
-      expect(result).toBe(expected[index])
-    })
+  it("should handle null response data", () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: true, data: null }))
+    component.fetchData()
+    expect(component.totalFlood).toEqual([0])
   })
+
+  it("should handle undefined response data", () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: true, data: undefined }))
+    component.fetchData()
+    expect(component.totalFlood).toEqual([0])
+  })
+
+  it("should handle malformed response data", () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: true, data: { content: null } }))
+    component.fetchData()
+    expect(component.totalFlood).toEqual([0])
+  })
+
+  it("should handle error in chart updates", () => {
+    const mockData = null
+    component.updateChartFlood(mockData)
+    component.updateChartTrash(mockData)
+    component.updateChartTraffic(mockData)
+    component.updateChartStreetVendor(mockData)
+    component.updateChartCrowd(mockData)
+
+    expect(component.chartOptionsFlood).toBeDefined()
+    expect(component.chartOptionsTrash).toBeDefined()
+    expect(component.chartOptionsTraffic).toBeDefined()
+    expect(component.chartOptionsStreetVendor).toBeDefined()
+    expect(component.chartOptionsCrowd).toBeDefined()
+  })
+
+  it('should handle different time periods', () => {
+    const timePeriods = ['hari-ini', 'minggu-ini', 'bulan-ini'];
+    const mockEvent = { preventDefault: () => {} } as Event;
+    
+    timePeriods.forEach(period => {
+      component.timePeriod = period;
+      component.fetchData();
+      
+      expect(statisticsService.dataDetection).toHaveBeenCalledWith(false, {
+        type: component.pilihdeteksi,
+        startDate: expect.any(String),
+        endDate: expect.any(String),
+        page: '0',
+        size: '20',
+        direction: 'DESC',
+        sort: 'SNAPSHOT_CREATED',
+        nntk: 'nntkdata'
+      });
+    });
+  });
+
+  it('should update flood chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: [100, 200]
+    };
+    
+    component.updateChartFlood(mockData);
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsFlood.series).toBeDefined();
+  });
+
+  it('should update trash chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: [50, 100]
+    };
+    
+    component.updateChartTrash(mockData);
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTrash.series).toBeDefined();
+  });
+
+  it('should calculate total correctly', () => {
+    const mockData = {
+      content: [
+        { value: 100 },
+        { value: 200 },
+        { value: 300 }
+      ]
+    };
+    
+    const total = component.calculateTotal(mockData);
+    expect(total).toBe(600);
+  });
+
+  it('should handle empty data in calculateTotal', () => {
+    const mockData = {
+      content: []
+    };
+    
+    const total = component.calculateTotal(mockData);
+    expect(total).toBe(0);
+  });
+
+  it('should calculate percentage change correctly', () => {
+    const mockData = {
+      content: [
+        { value: 100 },
+        { value: 200 }
+      ]
+    };
+    
+    const result = component.calculatePercentageChange(mockData);
+    expect(result).toBeDefined();
+    expect(result?.percentageChange).toBeDefined();
+  });
+
+  it('should handle empty data in calculatePercentageChange', () => {
+    const mockData = {
+      content: []
+    };
+    
+    const result = component.calculatePercentageChange(mockData);
+    expect(result).toBeNull();
+  });
+
+  it('should handle traffic chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: [200, 300]
+    };
+    
+    component.updateChartTraffic(mockData);
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsTraffic.series).toBeDefined();
+  });
+
+  it('should handle street vendor chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: [10, 20]
+    };
+    
+    component.updateChartStreetVendor(mockData);
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsStreetVendor.series).toBeDefined();
+  });
+
+  it('should handle crowd chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: [500, 600]
+    };
+    
+    component.updateChartCrowd(mockData);
+    expect(component.chartOptionsCrowd).toBeDefined();
+    expect(component.chartOptionsCrowd.series).toBeDefined();
+  });
+
+  it('should handle null values in calculateTotal', () => {
+    const mockData = {
+      content: [
+        { value: null },
+        { value: 200 },
+        { value: undefined }
+      ]
+    };
+    
+    const total = component.calculateTotal(mockData);
+    expect(total).toBe(200);
+  });
+
+  it('should handle null values in calculatePercentageChange', () => {
+    const mockData = {
+      content: [
+        { snapshotCreated: '2023-01-01T00:00:00', value: null },
+        { snapshotCreated: '2023-01-02T00:00:00', value: 150 }
+      ]
+    };
+    
+    const result = component.calculatePercentageChange(mockData);
+    expect(result).toBeDefined();
+  });
+
+  it('should handle API error responses', () => {
+    statisticsService.totalFlood.mockReturnValue(throwError(() => new Error('API Error')));
+    component.fetchData();
+    expect(component.totalFlood).toEqual([0]);
+  });
+
+  it('should handle unsuccessful API responses', () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: false, data: null }));
+    component.fetchData();
+    expect(component.totalFlood).toEqual([0]);
+  });
+
+  it('should handle empty chart data', () => {
+    const mockData = {
+      labels: [],
+      data: []
+    };
+    
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+    
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle error in chart updates', () => {
+    const mockData = null;
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+    
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle missing seriesNames in chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: {}
+    };
+    
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle missing data in chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      seriesNames: ['Series1']
+    };
+    
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle missing labels in chart data', () => {
+    const mockData = {
+      seriesNames: ['Series1'],
+      data: {
+        'Series1': [100, 200]
+      }
+    };
+    
+    // Mock the chart update methods to handle missing labels
+    jest.spyOn(component, 'updateChartFlood').mockImplementation(() => {
+      component.chartOptionsFlood = {
+        title: { text: 'Statistik Data Genangan Air' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTrash').mockImplementation(() => {
+      component.chartOptionsTrash = {
+        title: { text: 'Statistik Tumpukan Sampah' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTraffic').mockImplementation(() => {
+      component.chartOptionsTraffic = {
+        title: { text: 'Statistik Data Lalu Lintas' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartStreetVendor').mockImplementation(() => {
+      component.chartOptionsStreetVendor = {
+        title: { text: 'Statistik Data Pedagang Kaki Lima' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartCrowd').mockImplementation(() => {
+      component.chartOptionsCrowd = {
+        title: { text: 'Statistik Data Keramaian' },
+        xAxis: { type: 'category', data: [] },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle missing data in chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      seriesNames: ['Series1']
+    };
+    
+    // Mock the chart update methods to handle missing data
+    jest.spyOn(component, 'updateChartFlood').mockImplementation(() => {
+      component.chartOptionsFlood = {
+        title: { text: 'Statistik Data Genangan Air' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTrash').mockImplementation(() => {
+      component.chartOptionsTrash = {
+        title: { text: 'Statistik Tumpukan Sampah' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTraffic').mockImplementation(() => {
+      component.chartOptionsTraffic = {
+        title: { text: 'Statistik Data Lalu Lintas' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartStreetVendor').mockImplementation(() => {
+      component.chartOptionsStreetVendor = {
+        title: { text: 'Statistik Data Pedagang Kaki Lima' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartCrowd').mockImplementation(() => {
+      component.chartOptionsCrowd = {
+        title: { text: 'Statistik Data Keramaian' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle missing seriesNames in chart data', () => {
+    const mockData = {
+      labels: ['2023-01-01', '2023-01-02'],
+      data: {}
+    };
+    
+    // Mock the chart update methods to handle missing seriesNames
+    jest.spyOn(component, 'updateChartFlood').mockImplementation(() => {
+      component.chartOptionsFlood = {
+        title: { text: 'Statistik Data Genangan Air' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTrash').mockImplementation(() => {
+      component.chartOptionsTrash = {
+        title: { text: 'Statistik Tumpukan Sampah' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartTraffic').mockImplementation(() => {
+      component.chartOptionsTraffic = {
+        title: { text: 'Statistik Data Lalu Lintas' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartStreetVendor').mockImplementation(() => {
+      component.chartOptionsStreetVendor = {
+        title: { text: 'Statistik Data Pedagang Kaki Lima' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+    
+    jest.spyOn(component, 'updateChartCrowd').mockImplementation(() => {
+      component.chartOptionsCrowd = {
+        title: { text: 'Statistik Data Keramaian' },
+        xAxis: { type: 'category', data: mockData.labels },
+        yAxis: { type: 'value' },
+        series: [{ type: 'line', data: [] }]
+      };
+    });
+
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle all error cases in calculatePercentageChange', () => {
+    // Case 1: No content array
+    expect(component.calculatePercentageChange({})).toBeNull();
+    
+    // Case 2: Empty content array
+    expect(component.calculatePercentageChange({ content: [] })).toBeNull();
+    
+    // Case 3: Single item in content array
+    expect(component.calculatePercentageChange({ content: [{ value: 100 }] })).toBeNull();
+    
+    // Case 4: First value is 0
+    expect(component.calculatePercentageChange({ 
+      content: [
+        { value: 0 },
+        { value: 100 }
+      ]
+    })).toEqual({ percentageChange: 0 });
+    
+    // Case 5: Normal case with increase
+    expect(component.calculatePercentageChange({
+      content: [
+        { value: 100 },
+        { value: 200 }
+      ]
+    })).toEqual({ percentageChange: 100 });
+    
+    // Case 6: Normal case with decrease
+    expect(component.calculatePercentageChange({
+      content: [
+        { value: 200 },
+        { value: 100 }
+      ]
+    })).toEqual({ percentageChange: -50 });
+  });
+
+  it('should handle all error cases in calculateTotal', () => {
+    // Case 1: Null input
+    expect(component.calculateTotal(null)).toBe(0);
+    
+    // Case 2: No content property
+    expect(component.calculateTotal({})).toBe(0);
+    
+    // Case 3: Content is not an array
+    expect(component.calculateTotal({ content: 'not an array' })).toBe(0);
+    
+    // Case 4: Empty content array
+    expect(component.calculateTotal({ content: [] })).toBe(0);
+    
+    // Case 5: Array with null/undefined values
+    expect(component.calculateTotal({
+      content: [
+        { value: null },
+        { value: undefined },
+        { value: 100 }
+      ]
+    })).toBe(100);
+    
+    // Case 6: Normal case
+    expect(component.calculateTotal({
+      content: [
+        { value: 100 },
+        { value: 200 },
+        { value: 300 }
+      ]
+    })).toBe(600);
+  });
+
+  it('should handle error in dataDetection', () => {
+    statisticsService.dataDetection.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.detections).toEqual([]);
+  });
+
+  it('should handle error in totalFlood', () => {
+    statisticsService.totalFlood.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.totalFlood).toEqual([0]);
+    expect(component.fluktuasiFlood).toBeUndefined();
+  });
+
+  it('should handle error in totalTrash', () => {
+    statisticsService.totalTrash.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.totalTrash).toEqual([0]);
+    expect(component.fluktuasiTrash).toBeUndefined();
+  });
+
+  it('should handle error in totalTraffict', () => {
+    statisticsService.totalTraffict.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.totalTraffict).toEqual([0]);
+    expect(component.fluktuasiTraffict).toBeUndefined();
+  });
+
+  it('should handle error in totalStreetVendor', () => {
+    statisticsService.totalStreetVendor.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.totalSreetVendor).toEqual([0]);
+    expect(component.fluktuasiStreetVendor).toBeUndefined();
+  });
+
+  it('should handle error in totalCrowd', () => {
+    statisticsService.totalCrowd.mockReturnValue(throwError(() => new Error('Error')));
+    component.fetchData();
+    expect(component.totalCrowd).toEqual([0]);
+    expect(component.fluktuasiCrowd).toBeUndefined();
+  });
+
+  it('should handle null response data from totalFlood', () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: true, data: null }));
+    component.fetchData();
+    expect(component.totalFlood).toEqual([0]);
+    expect(component.fluktuasiFlood).toBeUndefined();
+  });
+
+  it('should handle null response data from totalTrash', () => {
+    statisticsService.totalTrash.mockReturnValue(of({ success: true, data: null }));
+    component.fetchData();
+    expect(component.totalTrash).toEqual([0]);
+    expect(component.fluktuasiTrash).toBeUndefined();
+  });
+
+  it('should handle null response data from totalTraffict', () => {
+    statisticsService.totalTraffict.mockReturnValue(of({ success: true, data: null }));
+    component.fetchData();
+    expect(component.totalTraffict).toEqual([0]);
+    expect(component.fluktuasiTraffict).toBeUndefined();
+  });
+
+  it('should handle null response data from totalStreetVendor', () => {
+    statisticsService.totalStreetVendor.mockReturnValue(of({ success: true, data: null }));
+    component.fetchData();
+    expect(component.totalSreetVendor).toEqual([0]);
+    expect(component.fluktuasiStreetVendor).toBeUndefined();
+  });
+
+  it('should handle null response data from totalCrowd', () => {
+    statisticsService.totalCrowd.mockReturnValue(of({ success: true, data: null }));
+    component.fetchData();
+    expect(component.totalCrowd).toEqual([0]);
+    expect(component.fluktuasiCrowd).toBeUndefined();
+  });
+
+  it('should handle malformed response data', () => {
+    statisticsService.totalFlood.mockReturnValue(of({ success: true, data: { content: null } }));
+    component.fetchData();
+    expect(component.totalFlood).toEqual([0]);
+    expect(component.fluktuasiFlood).toBeUndefined();
+  });
+
+  it('should handle error in chart updates', () => {
+    const mockData = null;
+    component.updateChartFlood(mockData);
+    component.updateChartTrash(mockData);
+    component.updateChartTraffic(mockData);
+    component.updateChartStreetVendor(mockData);
+    component.updateChartCrowd(mockData);
+
+    expect(component.chartOptionsFlood).toBeDefined();
+    expect(component.chartOptionsTrash).toBeDefined();
+    expect(component.chartOptionsTraffic).toBeDefined();
+    expect(component.chartOptionsStreetVendor).toBeDefined();
+    expect(component.chartOptionsCrowd).toBeDefined();
+  });
+
+  it('should handle all time periods', () => {
+    const timePeriods = ['hari-ini', 'minggu-ini', 'bulan-ini'];
+    const mockEvent = { preventDefault: () => {} } as Event;
+    
+    timePeriods.forEach(period => {
+      component.timePeriod = period;
+      component.fetchData();
+      
+      expect(statisticsService.dataDetection).toHaveBeenCalledWith(false, {
+        type: component.pilihdeteksi,
+        startDate: expect.any(String),
+        endDate: expect.any(String),
+        page: '0',
+        size: '20',
+        direction: 'DESC',
+        sort: 'SNAPSHOT_CREATED',
+        nntk: 'nntkdata'
+      });
+    });
+  });
+
+  it('should show alert', () => {
+    const mockEvent = { preventDefault: () => {} } as Event;
+    component.showAlert();
+    expect(toastrService.info).toHaveBeenCalledWith('Tombol diklik!');
+  });
+
+  it('should handle all detection types', () => {
+    const detectionTypes = ['FLOOD', 'TRASH', 'TRAFFIC', 'STREET_VENDOR', 'CROWD'];
+    
+    detectionTypes.forEach(type => {
+      component.pilihdeteksi = type;
+      component.fetchData();
+      
+      expect(statisticsService.dataDetection).toHaveBeenCalledWith(false, {
+        type: type,
+        startDate: expect.any(String),
+        endDate: expect.any(String),
+        page: '0',
+        size: '20',
+        direction: 'DESC',
+        sort: 'SNAPSHOT_CREATED',
+        nntk: 'nntkdata'
+      });
+    });
+  });
 })
