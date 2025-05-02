@@ -14,6 +14,7 @@ import { CCTVListService } from "../dialog/cctvlist/cctvlist.service"
 import { MatTableModule } from "@angular/material/table"
 import { MatPaginatorModule } from "@angular/material/paginator"
 import { MatCardModule } from "@angular/material/card"
+import { ToastrService } from "ngx-toastr"
 @Component({
   selector: "app-statistik",
   standalone: true,
@@ -34,7 +35,8 @@ import { MatCardModule } from "@angular/material/card"
 export class StatistikComponent implements OnInit {
   constructor(
     private statisticsService: StatisticsService,
-    private _cctvService: CCTVListService
+    private _cctvService: CCTVListService,
+    private toastrService: ToastrService
   ) {}
 
   startDate: string = ""
@@ -253,21 +255,20 @@ export class StatistikComponent implements OnInit {
   }
 
   showAlert() {
-    alert("Tombol diklik!")
+    this.toastrService.info("Tombol diklik!")
   }
 
   exportData(e: Event) {
-    console.log(
-      "Exporting data with:",
-      this.startDate,
-      this.endDate,
-      this.timePeriod
+    e.preventDefault()
+    this._cctvService.downloadExcel(
+      1, // pageNo
+      5000, // pageSize
+      {
+        type: this.pilihdeteksi,
+        startDate: this.startDate,
+        endDate: this.endDate,
+      }
     )
-    const data: Record<string, string> = {}
-    data["startDate"] = this.startDate
-    data["endDate"] = this.endDate
-    //data["type"] = 'TRASH'
-    this._cctvService.downloadExcel(1, 5000, data)
   }
 
   cards = [
@@ -349,25 +350,19 @@ export class StatistikComponent implements OnInit {
     }
   }
 
-  calculateFluctuations(content: any[]) {
-    const groupedData: { [date: string]: number } = {}
-    content.forEach((item) => {
-      const date = item.snapshotCreated.split("T")[0] // Ambil tanggal saja
-      groupedData[date] = (groupedData[date] || 0) + item.value
-    })
-
-    const dates = Object.keys(groupedData).sort()
-    for (let i = 1; i < dates.length; i++) {
-      const prevDate = dates[i - 1]
-      const currentDate = dates[i]
-      const prevValue = groupedData[prevDate]
-      const currentValue = groupedData[currentDate]
-      const change = ((currentValue - prevValue) / prevValue) * 100
-      this.fluctuations.push({
-        date: currentDate,
-        percentageChange: change.toFixed(2),
-      })
+  calculateFluctuations(content: any[]): number {
+    if (!content || content.length === 0) {
+      return 0
     }
+
+    const values = content.map((item) => item.value || 0)
+    if (values.length < 2) {
+      return 0
+    }
+
+    const firstValue = values[0]
+    const lastValue = values[values.length - 1]
+    return ((lastValue - firstValue) / firstValue) * 100
   }
 
   ngOnInit(): void {
@@ -564,6 +559,10 @@ export class StatistikComponent implements OnInit {
 
   //1.TOTAL FLOOD
   updateTotalChartFlood(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsFlood = {
       title: {
         text: "Statistik Data Genangan Air",
@@ -585,11 +584,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Total Flood",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
@@ -597,6 +595,10 @@ export class StatistikComponent implements OnInit {
 
   //1.FLOOD
   updateChartFlood(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsFlood = {
       title: {
         text: "Statistik Data Genangan Air",
@@ -618,11 +620,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Flood",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
@@ -669,6 +670,10 @@ export class StatistikComponent implements OnInit {
 
   //2.TRASH
   updateChartTrash(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsTrash = {
       title: {
         text: "Statistik Tumpukan Sampah",
@@ -690,11 +695,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Trash",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
@@ -741,6 +745,10 @@ export class StatistikComponent implements OnInit {
 
   //3.Traffic
   updateChartTraffic(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsTraffic = {
       title: {
         text: "Statistik Data Lalu Lintas",
@@ -762,11 +770,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Traffic",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
@@ -813,6 +820,10 @@ export class StatistikComponent implements OnInit {
 
   //3.Street Vendor
   updateChartStreetVendor(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsStreetVendor = {
       title: {
         text: "Statistik Data Pedagang Kaki Lima",
@@ -834,11 +845,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Street Vendor",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
@@ -885,6 +895,10 @@ export class StatistikComponent implements OnInit {
 
   //5.KERAMAIAN
   updateChartCrowd(data: any): void {
+    if (!data || !data.seriesNames || !data.data) {
+      return
+    }
+
     this.chartOptionsCrowd = {
       title: {
         text: "Statistik Data Keramaian",
@@ -906,11 +920,10 @@ export class StatistikComponent implements OnInit {
       },
       series: [
         {
-          name: data.seriesNames[0],
+          name: data.seriesNames[0] || "Crowd",
           type: "line",
-          data: data.data[data.seriesNames[0]],
+          data: data.data[data.seriesNames[0]] || [],
           smooth: true,
-          areaStyle: {},
         },
       ],
     }
