@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/extend-expect"
 import "jest-canvas-mock"
 import { jestPreviewConfigure } from "jest-preview"
 import "@ng-web-apis/universal/mocks"
+import { expect, jest } from "@jest/globals"
 
 jestPreviewConfigure({ autoPreview: true })
 

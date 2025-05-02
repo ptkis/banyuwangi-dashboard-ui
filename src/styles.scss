@@ -14,7 +14,7 @@ $dark-dividers: rgba($dark-primary-text, 0.12);
 $dark-focused: rgba($dark-primary-text, 0.12);
 
 $mat-light-theme-foreground: (
-  base: black,
+  base: rgb(245, 243, 243),
   divider: $dark-dividers,
   dividers: $dark-dividers,
   disabled: $dark-disabled-text,
@@ -33,7 +33,7 @@ $mat-light-theme-foreground: (
 );
 
 // Dark Theme text
-$light-text: #ffffff;
+$light-text: #080808;
 $light-primary-text: $light-text;
 $light-accent-text: rgba($light-primary-text, 0.7);
 $light-disabled-text: rgba($light-primary-text, 0.5);
@@ -47,7 +47,7 @@ $mat-dark-theme-foreground: (
   disabled: $light-disabled-text,
   disabled-button: rgba($light-text, 0.3),
   disabled-text: $light-disabled-text,
-  elevation: black,
+  elevation: rgb(212, 212, 212),
   hint-text: $light-disabled-text,
   secondary-text: $light-accent-text,
   accent-text: $light-accent-text,
@@ -90,7 +90,7 @@ $mat-light-theme-background: (
 );
 
 // Dark bg
-$dark-background: #2c2c2c;
+$dark-background: #b4b1b1;
 $dark-bg-lighter-5: lighten($dark-background, 5%);
 $dark-bg-lighter-10: lighten($dark-background, 10%);
 $dark-bg-lighter-20: lighten($dark-background, 20%);
@@ -123,18 +123,18 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #23639e;
+  --primary-color: #bdc2c7;
   --primary-lighter-color: #bdd0e2;
-  --primary-darker-color: #154782;
+  --primary-darker-color: #8c939b;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
 }
 $mat-primary: (
-  main: #23639e,
+  main: #929da7,
   lighter: #bdd0e2,
-  darker: #154782,
-  200: #23639e,
+  darker: #91969b,
+  200: #616468,
   // For slide toggle,
   contrast:
     (
@@ -268,7 +268,7 @@ $altTheme: (
 body {
   font-size: 14px;
   line-height: 19px;
-  background-color: #020c1c;
+  background-color: #d9dbdd;
   height: 100%;
   color: #fff;
   padding-bottom: 16px;
