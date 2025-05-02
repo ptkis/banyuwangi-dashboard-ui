@@ -100,21 +100,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataFlood = response.data
-          this.totalFlood = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiFlood = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiFlood = [result.percentageChange]
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataFlood = response.data
+            this.totalFlood = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiFlood = result ? [result.percentageChange] : undefined
+          } else {
+            this.totalFlood = [0]
+            this.fluktuasiFlood = undefined
           }
+        },
+        error: () => {
+          this.totalFlood = [0]
+          this.fluktuasiFlood = undefined
         }
       })
 
@@ -124,22 +124,22 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataTrash = response.data
-          this.totalTrash = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiTrash = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          console.log("nilai fluktuasi sampah" + result)
-          if (result) {
-            this.fluktuasiTrash = [result.percentageChange]
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataTrash = response.data
+            this.totalTrash = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            console.log("nilai fluktuasi sampah" + result)
+            this.fluktuasiTrash = result ? [result.percentageChange] : undefined
+          } else {
+            this.totalTrash = [0]
+            this.fluktuasiTrash = undefined
           }
+        },
+        error: () => {
+          this.totalTrash = [0]
+          this.fluktuasiTrash = undefined
         }
       })
     this.statisticsService
@@ -148,21 +148,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataTraffict = response.data
-          this.totalTraffict = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          //this.fluktuasiTraffict = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiTraffict = [result.percentageChange]
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataTraffict = response.data
+            this.totalTraffict = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiTraffict = result ? [result.percentageChange] : undefined
+          } else {
+            this.totalTraffict = [0]
+            this.fluktuasiTraffict = undefined
           }
+        },
+        error: () => {
+          this.totalTraffict = [0]
+          this.fluktuasiTraffict = undefined
         }
       })
     this.statisticsService
@@ -171,21 +171,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataStreetVendor = response.data
-          this.totalSreetVendor = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiStreetVendor = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiStreetVendor = [result.percentageChange]
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataStreetVendor = response.data
+            this.totalSreetVendor = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiStreetVendor = result ? [result.percentageChange] : undefined
+          } else {
+            this.totalSreetVendor = [0]
+            this.fluktuasiStreetVendor = undefined
           }
+        },
+        error: () => {
+          this.totalSreetVendor = [0]
+          this.fluktuasiStreetVendor = undefined
         }
       })
     this.statisticsService
@@ -194,21 +194,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataCrowd = response.data
-          this.totalCrowd = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiCrowd = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiCrowd = [result.percentageChange]
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataCrowd = response.data
+            this.totalCrowd = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiCrowd = result ? [result.percentageChange] : undefined
+          } else {
+            this.totalCrowd = [0]
+            this.fluktuasiCrowd = undefined
           }
+        },
+        error: () => {
+          this.totalCrowd = [0]
+          this.fluktuasiCrowd = undefined
         }
       })
 
@@ -403,21 +403,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataFlood = response.data
-          this.totalFlood = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiFlood = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiFlood = result.percentageChange
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataFlood = response.data
+            this.totalFlood = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiFlood = result ? result.percentageChange : undefined
+          } else {
+            this.totalFlood = [0]
+            this.fluktuasiFlood = undefined
           }
+        },
+        error: () => {
+          this.totalFlood = [0]
+          this.fluktuasiFlood = undefined
         }
       })
     this.statisticsService
@@ -426,22 +426,22 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataTrash = response.data
-          this.totalTrash = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiTrash = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          console.log("nilai fluktuasi sampah" + result)
-          if (result) {
-            this.fluktuasiTrash = result.percentageChange
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataTrash = response.data
+            this.totalTrash = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            console.log("nilai fluktuasi sampah" + result)
+            this.fluktuasiTrash = result ? result.percentageChange : undefined
+          } else {
+            this.totalTrash = [0]
+            this.fluktuasiTrash = undefined
           }
+        },
+        error: () => {
+          this.totalTrash = [0]
+          this.fluktuasiTrash = undefined
         }
       })
     this.statisticsService
@@ -450,21 +450,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataTraffict = response.data
-          this.totalTraffict = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          //this.fluktuasiTraffict = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiTraffict = result.percentageChange
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataTraffict = response.data
+            this.totalTraffict = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiTraffict = result ? result.percentageChange : undefined
+          } else {
+            this.totalTraffict = [0]
+            this.fluktuasiTraffict = undefined
           }
+        },
+        error: () => {
+          this.totalTraffict = [0]
+          this.fluktuasiTraffict = undefined
         }
       })
     this.statisticsService
@@ -473,21 +473,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataStreetVendor = response.data
-          this.totalSreetVendor = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiStreetVendor = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiStreetVendor = result.percentageChange
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataStreetVendor = response.data
+            this.totalSreetVendor = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiStreetVendor = result ? result.percentageChange : undefined
+          } else {
+            this.totalSreetVendor = [0]
+            this.fluktuasiStreetVendor = undefined
           }
+        },
+        error: () => {
+          this.totalSreetVendor = [0]
+          this.fluktuasiStreetVendor = undefined
         }
       })
     this.statisticsService
@@ -496,21 +496,21 @@ export class StatistikComponent implements OnInit {
         startDate: this.startDate,
         endDate: this.endDate,
       })
-      .subscribe((response) => {
-        if (response.success) {
-          this.dataCrowd = response.data
-          this.totalCrowd = [
-            response.data.content.reduce(
-              (sum: number, item: { value?: number }) =>
-                sum + (item.value || 0),
-              0
-            ),
-          ]
-          // this.fluktuasiCrowd = [this.calculateFluctuations(response.data.content)]
-          const result = this.calculatePercentageChange(response.data)
-          if (result) {
-            this.fluktuasiCrowd = result.percentageChange
+      .subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.content) {
+            this.dataCrowd = response.data
+            this.totalCrowd = [this.calculateTotal(response.data)]
+            const result = this.calculatePercentageChange(response.data)
+            this.fluktuasiCrowd = result ? result.percentageChange : undefined
+          } else {
+            this.totalCrowd = [0]
+            this.fluktuasiCrowd = undefined
           }
+        },
+        error: () => {
+          this.totalCrowd = [0]
+          this.fluktuasiCrowd = undefined
         }
       })
 
@@ -563,7 +563,7 @@ export class StatistikComponent implements OnInit {
 
   //1.TOTAL FLOOD
   updateTotalChartFlood(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 
@@ -599,7 +599,7 @@ export class StatistikComponent implements OnInit {
 
   //1.FLOOD
   updateChartFlood(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 
@@ -674,7 +674,7 @@ export class StatistikComponent implements OnInit {
 
   //2.TRASH
   updateChartTrash(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 
@@ -749,7 +749,7 @@ export class StatistikComponent implements OnInit {
 
   //3.Traffic
   updateChartTraffic(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 
@@ -824,7 +824,7 @@ export class StatistikComponent implements OnInit {
 
   //3.Street Vendor
   updateChartStreetVendor(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 
@@ -899,7 +899,7 @@ export class StatistikComponent implements OnInit {
 
   //5.KERAMAIAN
   updateChartCrowd(data: any): void {
-    if (!data || !data.seriesNames || !data.data) {
+    if (!data || !data.seriesNames || !data.data || !data.labels) {
       return
     }
 

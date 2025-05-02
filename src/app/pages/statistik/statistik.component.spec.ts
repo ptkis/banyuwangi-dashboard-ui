@@ -9,6 +9,7 @@ import { of, throwError, firstValueFrom, Subscription } from "rxjs"
 import { ActivatedRoute, RouterModule } from "@angular/router"
 import { NgxEchartsModule } from "ngx-echarts"
 import { format, subWeeks, subMonths } from "date-fns"
+import * as echarts from "echarts"
 
 describe("StatistikComponent", () => {
   let component: StatistikComponent
@@ -81,22 +82,22 @@ describe("StatistikComponent", () => {
       of({ data: { content: [] } })
     )
     statisticsService.totalFlood.mockReturnValue(
-      of({ success: true, data: { content: [] } })
+      of({ success: true, data: { content: [{ value: 10 }, { value: 20 }] } })
     )
     statisticsService.totalTrash.mockReturnValue(
-      of({ success: true, data: { content: [] } })
+      of({ success: true, data: { content: [{ value: 10 }, { value: 20 }] } })
     )
     statisticsService.totalTraffict.mockReturnValue(
-      of({ success: true, data: { content: [] } })
+      of({ success: true, data: { content: [{ value: 10 }, { value: 20 }] } })
     )
     statisticsService.totalStreetVendor.mockReturnValue(
-      of({ success: true, data: { content: [] } })
+      of({ success: true, data: { content: [{ value: 10 }, { value: 20 }] } })
     )
     statisticsService.totalCrowd.mockReturnValue(
-      of({ success: true, data: { content: [] } })
+      of({ success: true, data: { content: [{ value: 10 }, { value: 20 }] } })
     )
     statisticsService.getStatisticsFlood.mockReturnValue(
-      of({ labels: [], data: [] })
+      of({ labels: [], data: [], seriesNames: [] })
     )
     statisticsService.getStatisticsTrash.mockReturnValue(
       of({ labels: [], data: [] })
@@ -447,5 +448,77 @@ describe("StatistikComponent", () => {
         nntk: "nntkdata"
       })
     })
+  })
+
+  it("should calculate fluctuations correctly", () => {
+    const content = [{ value: 10 }, { value: 15 }]
+    const result = component.calculateFluctuations(content)
+    expect(result).toBe(50)
+  })
+
+  it("should handle zero first value in calculateFluctuations", () => {
+    const content = [{ value: 0 }, { value: 15 }]
+    const result = component.calculateFluctuations(content)
+    expect(result).toBe(0)
+  })
+
+  it("should handle less than two entries in calculateFluctuations", () => {
+    const content = [{ value: 10 }]
+    const result = component.calculateFluctuations(content)
+    expect(result).toBe(0)
+  })
+
+  it("should update total chart for flood", () => {
+    const mockData = {
+      labels: ["2023-01-01T00:00:00", "2023-01-02T00:00:00"],
+      data: { "Total Flood": [100, 150] }, // Ensure data structure matches usage
+      seriesNames: ["Total Flood"]
+    }
+    component.updateTotalChartFlood(mockData)
+    expect(component.chartOptionsFlood).toBeDefined()
+    expect(component.chartOptionsFlood.series).toBeDefined()
+    // Type assertion to treat series as an array
+    const seriesArray = component.chartOptionsFlood.series as echarts.SeriesOption[]
+    expect(seriesArray[0].name).toBe("Total Flood")
+    expect(seriesArray[0].data).toEqual([100, 150])
+  })
+
+  it("should handle missing data in updateTotalChartFlood", () => {
+    component.updateTotalChartFlood(null)
+    expect(component.chartOptionsFlood).toBeDefined() // Check if default options are still there or handled gracefully
+
+    component.updateTotalChartFlood({ labels: [], data: {}, seriesNames: [] })
+    expect(component.chartOptionsFlood).toBeDefined()
+  })
+
+  it("should handle null or invalid data in all chart update methods", () => {
+    const invalidDataScenarios = [
+      null,
+      undefined,
+      { labels: [], data: null, seriesNames: [] }, // Missing data object
+      { labels: [], data: {}, seriesNames: null }, // Missing seriesNames
+      { labels: null, data: {}, seriesNames: [] }  // Missing labels
+    ];
+
+    invalidDataScenarios.forEach(invalidData => {
+      component.updateChartFlood(invalidData);
+      expect(component.chartOptionsFlood).toBeDefined(); // Ensure it doesn't crash and retains default/previous options
+
+      component.updateChartTrash(invalidData);
+      expect(component.chartOptionsTrash).toBeDefined();
+
+      component.updateChartTraffic(invalidData);
+      expect(component.chartOptionsTraffic).toBeDefined();
+
+      component.updateChartStreetVendor(invalidData);
+      expect(component.chartOptionsStreetVendor).toBeDefined();
+
+      component.updateChartCrowd(invalidData);
+      expect(component.chartOptionsCrowd).toBeDefined();
+
+      component.updateTotalChartFlood(invalidData); // Also test the total chart update
+      // We might need a more specific expectation for total chart if its default differs
+      expect(component.chartOptionsFlood).toBeDefined();
+    });
   })
 })
