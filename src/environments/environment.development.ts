@@ -7,9 +7,9 @@ import { environment as prodEnvironment } from "./environment.prod"
 export const environment = {
   ...prodEnvironment,
   production: false,
-  keycloakUrl: "https://auth.banyuwangikab.go.id/",
-  // serverBaseUrl: "https://dev-api-ai.banyuwangikab.go.id",
-  serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
+  keycloakUrl: "https://dev-auth.banyuwangikab.go.id/",
+  serverBaseUrl: "https://dev-api-ai.banyuwangikab.go.id",
+   // serverBaseUrl: "https://api-ai.banyuwangikab.go.id",
   firebase: {
     apiKey: "${FIREBASE_API_KEY}",
     authDomain: "smartdashboard-bwi.firebaseapp.com",
